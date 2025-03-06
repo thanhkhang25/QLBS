@@ -7,6 +7,7 @@ package GUI;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.MouseEvent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -102,7 +103,7 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
-        nopDonXinNghiButton.setText("Nộp đơn xin nghỉ");
+        nopDonXinNghiButton.setText("Thông Báo Nghỉ");
         nopDonXinNghiButton.setPreferredSize(new java.awt.Dimension(220, 42));
         nopDonXinNghiButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -328,8 +329,6 @@ public class MainWindow extends javax.swing.JFrame {
     private void SetUpPanel(){
         quanLySachPanel.setPreferredSize(new Dimension(1140, 720));        
         quanLySachPanel.setBackground(Color.GRAY);
-        quanLyNhanVienPanel.setPreferredSize(new Dimension(1140, 720));
-        quanLyNhanVienPanel.setBackground(Color.RED);
         quanLyNhaCungCapPanel.setPreferredSize(new Dimension(1140, 720));        
         quanLyNhaCungCapPanel.setBackground(Color.YELLOW);
         quanLyTaiKhoanPanel.setPreferredSize(new Dimension(1140, 720));
@@ -406,4 +405,10 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JButton thongKeButton;
     private javax.swing.JButton thongKeKhoHangButton;
     // End of variables declaration//GEN-END:variables
+
+    void ThemNVMouseClicked(MouseEvent evt) {
+        // TODO add your handling code here:
+        ThemNV n = new ThemNV();
+        n.setVisible(true);
+    }
 }

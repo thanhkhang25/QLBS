@@ -194,7 +194,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="nopDonXinNghiButton">
           <Properties>
-            <Property name="text" type="java.lang.String" value="N&#x1ed9;p &#x111;&#x1a1;n xin ngh&#x1ec9;"/>
+            <Property name="text" type="java.lang.String" value="Th&#xf4;ng B&#xe1;o Ngh&#x1ec9;"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[220, 42]"/>
             </Property>
