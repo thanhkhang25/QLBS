@@ -64,7 +64,7 @@ public class QuanLyTaiKhoan extends javax.swing.JPanel {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Mã", "Tên", "Số điện thoại", "Mail", "Chi Nhánh"
+                "Mã NV", "Tên NV", "Chi Nhánh", "Mật khẩu", "Trạng Thái"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -192,7 +192,7 @@ public class QuanLyTaiKhoan extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 166, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 441, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3)
                     .addComponent(jButton4)

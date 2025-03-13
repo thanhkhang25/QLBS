@@ -57,13 +57,13 @@ public class QuanLyNhaCungCap extends javax.swing.JPanel {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Mã", "Tên", "Số điện thoại", "Địa chỉ", "Trạng thái"
+                "Mã", "Tên", "Số điện thoại", "Địa chỉ", "Trạng thái", "Email"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
