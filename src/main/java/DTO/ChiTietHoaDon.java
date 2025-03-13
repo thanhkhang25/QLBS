@@ -1,83 +1,71 @@
 package DTO;
 
-public class SalesReceiptDetails {
-    private int ID;
-    private Integer receiptID;  // Integer, allows NULL (foreign key)
-    private Integer productID;  // Integer, allows NULL (foreign key)
-    private int quantity;
-    private double salePrice; // double for DECIMAL(12,2)
+public class ChiTietHoaDon {
+    private int maHoaDon;
+    private int maSach;  
+    private int soLuong;
+    private double donGia; // double for DECIMAL(12,2)
 
     // Constructors
-    public SalesReceiptDetails() {
+    public ChiTietHoaDon() {
     }
 
-    // Constructor without ID (for new details)
-    public SalesReceiptDetails(Integer receiptID, Integer productID, int quantity, double salePrice) {
-        this.receiptID = receiptID;
-        this.productID = productID;
-        this.quantity = quantity;
-        this.salePrice = salePrice;
+    // Constructor without maHoaDon (for new details)
+    public ChiTietHoaDon(int maSach, int soLuong, double donGia) {
+        this.maSach = maSach;
+        this.soLuong = soLuong;
+        this.donGia = donGia;
     }
 
-    // Constructor with ID (for existing details)
-    public SalesReceiptDetails(int ID, Integer receiptID, Integer productID, int quantity, double salePrice) {
-        this.ID = ID;
-        this.receiptID = receiptID;
-        this.productID = productID;
-        this.quantity = quantity;
-        this.salePrice = salePrice;
+    // Constructor with maHoaDon (for existing details)
+    public ChiTietHoaDon(int maHoaDon, int maSach, int soLuong, double donGia) {
+        this.maHoaDon = maHoaDon;
+        this.maSach = maSach;
+        this.soLuong = soLuong;
+        this.donGia = donGia;
     }
 
     // Getters and Setters
-    public int getID() {
-        return ID;
+    public int getmaHoaDon() {
+        return maHoaDon;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setmaHoaDon(int maHoaDon) {
+        this.maHoaDon = maHoaDon;
     }
 
-    public Integer getReceiptID() {
-        return receiptID;
+    public int getmaSach() {
+        return maSach;
     }
 
-    public void setReceiptID(Integer receiptID) {
-        this.receiptID = receiptID;
+    public void setmaSach(int maSach) {
+        this.maSach = maSach;
     }
 
-    public Integer getProductID() {
-        return productID;
+    public int getsoLuong() {
+        return soLuong;
     }
 
-    public void setProductID(Integer productID) {
-        this.productID = productID;
+    public void setsoLuong(int soLuong) {
+        this.soLuong = soLuong;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public double getdonGia() {
+        return donGia;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public double getSalePrice() {
-        return salePrice;
-    }
-
-    public void setSalePrice(double salePrice) {
-        this.salePrice = salePrice;
+    public void setdonGia(double donGia) {
+        this.donGia = donGia;
     }
 
     // toString() method
     @Override
     public String toString() {
-        return "SalesReceiptDetails{" +
-                "ID=" + ID +
-                ", receiptID=" + receiptID +
-                ", productID=" + productID +
-                ", quantity=" + quantity +
-                ", salePrice=" + salePrice +
+        return "ChiTietHoaDon{" +
+                "maHoaDon=" + maHoaDon +
+                ", maSach=" + maSach +
+                ", soLuong=" + soLuong +
+                ", donGia=" + donGia +
                 '}';
     }
 }

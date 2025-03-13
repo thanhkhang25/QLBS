@@ -1,83 +1,62 @@
 package DTO;
 
-public class WarehouseReceiptDetails {
-    private int ID;
-    private Integer receiptID; // Integer, allows NULL (foreign key)
-    private Integer productID; // Integer, allows NULL (foreign key)
-    private int quantity;
-    private double cost; // double for DECIMAL(12,2)
+import java.sql.Date;
+
+public class LichSuGiaBan {
+    private int maSach;
+    private double giaBan; 
+    private Date ngayApDung;
 
     // Constructors
-    public WarehouseReceiptDetails() {
+    public LichSuGiaBan() {
     }
 
-    // Constructor without ID (for new details)
-    public WarehouseReceiptDetails(Integer receiptID, Integer productID, int quantity, double cost) {
-        this.receiptID = receiptID;
-        this.productID = productID;
-        this.quantity = quantity;
-        this.cost = cost;
+    // Constructor without maPX (for new details)
+    public LichSuGiaBan(double giaBan, Date ngayApDung) {
+        this.giaBan = giaBan;
+        this.ngayApDung = ngayApDung;
     }
 
-    // Constructor with ID (for existing details)
-    public WarehouseReceiptDetails(int ID, Integer receiptID, Integer productID, int quantity, double cost) {
-        this.ID = ID;
-        this.receiptID = receiptID;
-        this.productID = productID;
-        this.quantity = quantity;
-        this.cost = cost;
+    // Constructor with maPX (for existing details)
+    public LichSuGiaBan(int maSach, double giaBan, Date ngayApDung) {
+        this.maSach = maSach;
+        this.giaBan = giaBan;
+        this.ngayApDung = ngayApDung;
     }
 
     // Getters and Setters
-    public int getID() {
-        return ID;
+
+    public int getmaSach() {
+        return maSach;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setmaSach(int maSach) {
+        this.maSach = maSach;
+    }
+    
+    public double getgiaBan(){
+        return giaBan;
+    }
+    
+    public void setgiaBan(double giaBan){
+        this.giaBan = giaBan;
     }
 
-    public Integer getReceiptID() {
-        return receiptID;
+    public Date getngayApDung() {
+        return ngayApDung;
     }
 
-    public void setReceiptID(Integer receiptID) {
-        this.receiptID = receiptID;
-    }
-
-    public Integer getProductID() {
-        return productID;
-    }
-
-    public void setProductID(Integer productID) {
-        this.productID = productID;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public double getCost() {
-        return cost;
-    }
-
-    public void setCost(double cost) {
-        this.cost = cost;
+    public void setngayApDung(Date ngayApDung) {
+        this.ngayApDung = ngayApDung;
     }
 
     // toString() method
     @Override
     public String toString() {
-        return "WarehouseReceiptDetails{" +
-                "ID=" + ID +
-                ", receiptID=" + receiptID +
-                ", productID=" + productID +
-                ", quantity=" + quantity +
-                ", cost=" + cost +
+        return "LichSuGiaBan{" +
+                "maSach=" + maSach +
+                ", giaBan=" + giaBan +
+                ", ngayApDung=" + ngayApDung +
                 '}';
     }
 }

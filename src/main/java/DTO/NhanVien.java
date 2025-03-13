@@ -10,115 +10,147 @@ import java.sql.Date;
  *
  * @author xuand
  */
-public class Employees {
-    private int ID;
-    private String position;
-    private double baseSalary;  // Changed to double to match DECIMAL(12,2)
-    private double salaryCoefficient; // Changed to double to match DECIMAL(5,2)
-    private double allowance; // Changed to double to match DECIMAL(10,2)
-    private Date startDate;
-    private boolean status; // Renamed to match the BIT type (true/false)
+public class NhanVien {
+    private int maNV;
+    private String tenNV;
+    private Date ngaySinh;
+    private Gender gioiTinh;
+    private String sdt;
+    private String email;
+    private String diaChi;
+    private String chiNhanh;
+    private boolean trangThai; //(true/false)
 
 
-    public Employees() {
+    // Enum for gender
+    public enum Gender {
+        MALE, FEMALE, OTHER
+    }
+    
+    // Enum for Role
+    public enum Role {
+        Admin, QuanLyKho, QuanLyNhanVien, NhanVien 
+    }
+    public NhanVien() {
 
     }
 
-    // Constructor with ID only (useful for lookups or deletions)
-    public Employees(int ID) {
-        this.ID = ID;
+    // Constructor with maNV only (useful for lookups or deletions)
+    public NhanVien(int maNV) {
+        this.maNV = maNV;
     }
     
     // Constructor with all data (for example when inserting into a database.)
-    public Employees(int ID, String position, double baseSalary, double salaryCoefficient, double allowance, Date startDate, boolean status) {
-        this.ID = ID;
-        this.position = position;
-        this.baseSalary = baseSalary;
-        this.salaryCoefficient = salaryCoefficient;
-        this.allowance = allowance;
-        this.startDate = startDate;
-        this.status = status;
+    public NhanVien(int maNV, String tenNV, Date ngaySinh, Gender gioiTinh, String sdt, String email, String diaChi, String chiNhanh, boolean trangThai) {
+        this.maNV = maNV;
+        this.tenNV = tenNV;
+        this.ngaySinh = ngaySinh;
+        this.gioiTinh = gioiTinh;
+        this.sdt = sdt;
+        this.email = email;
+        this.diaChi = diaChi;
+        this.chiNhanh = chiNhanh;
+        this.trangThai = trangThai;
     }
     
     // Constructor when id is not provided. For database insertions when id is auto_increment.
-     public Employees( String position, double baseSalary, double salaryCoefficient, double allowance, Date startDate, boolean status) {        
-        this.position = position;
-        this.baseSalary = baseSalary;
-        this.salaryCoefficient = salaryCoefficient;
-        this.allowance = allowance;
-        this.startDate = startDate;
-        this.status = status;
+     public NhanVien( String tenNV, Date ngaySinh, Gender gioiTinh, String sdt, String email, String diaChi, String chiNhanh, boolean trangThai) {        
+        this.tenNV = tenNV;
+        this.ngaySinh = ngaySinh;
+        this.gioiTinh = gioiTinh;
+        this.sdt = sdt;
+        this.email = email;
+        this.diaChi = diaChi;
+        this.chiNhanh = chiNhanh;
+        this.trangThai = trangThai;
     }
 
 
     // Getters and Setters
-    public int getID() {
-        return ID;
+    public int getmaNV() {
+        return maNV;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setmaNV(int maNV) {
+        this.maNV = maNV;
     }
 
-    public String getPosition() {
-        return position;
+    public String gettenNV() {
+        return tenNV;
     }
 
-    public void setPosition(String position) {
-        this.position = position;
-    }
-
-    public double getBaseSalary() {
-        return baseSalary;
-    }
-
-    public void setBaseSalary(double baseSalary) {
-        this.baseSalary = baseSalary;
-    }
-
-    public double getSalaryCoefficient() {
-        return salaryCoefficient;
-    }
-
-    public void setSalaryCoefficient(double salaryCoefficient) {
-        this.salaryCoefficient = salaryCoefficient;
-    }
-
-    public double getAllowance() {
-        return allowance;
-    }
-
-    public void setAllowance(double allowance) {
-        this.allowance = allowance;
+    public void settenNV(String tenNV) {
+        this.tenNV = tenNV;
     }
     
-    public Date getStartDate() {
-        return startDate;
+    public Date getngaySinh() {
+        return ngaySinh;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
+    public void setngaySinh(Date ngaySinh) {
+        this.ngaySinh = ngaySinh;
     }
 
-    public boolean isStatus() {  // Use isStatus() for boolean getters
-        return status;
+    public Gender getgioiTinh() {
+        return gioiTinh;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setgioiTinh(Gender gioiTinh) {
+        this.gioiTinh = gioiTinh;
+    }    
+    
+    public String getsdt() {
+        return sdt;
     }
 
+    public void setsdt(String sdt) {
+        this.sdt = sdt;
+    }
+
+    public String getemail() {
+        return email;
+    }
+
+    public void setemail(String email) {
+        this.email = email;
+    }
+    
+    public String getdiaChi() {
+        return diaChi;
+    }
+
+    public void setdiaChi(String diaChi) {
+        this.diaChi = diaChi;
+    }
+   
+    public String getchiNhanh() {
+        return chiNhanh;
+    }
+
+    public void setchiNhanh(String chiNhanh) {
+        this.chiNhanh = chiNhanh;
+    }
+    
+    public boolean gettrangThai() {
+        return trangThai;
+    }
+
+    public void settrangThai(Boolean trangThai) {
+        this.trangThai = trangThai;
+    }
     //  toString() method (optional but very useful for debugging)
     @Override
     public String toString() {
-        return "NHANVIEN{" +
-                "ID=" + ID +
-                ", position='" + position + '\'' +
-                ", baseSalary=" + baseSalary +
-                ", salaryCoefficient=" + salaryCoefficient +
-                ", allowance=" + allowance +
-                ", startDate=" + startDate +
-                ", status=" + status +
+        return "NhanVien{" +
+                "maNV=" + maNV +
+                ", tenNV='" + tenNV +
+                ", ngaySinh=" + ngaySinh +
+                ", gioiTinh=" + gioiTinh +
+                ", sdt=" + sdt +
+                ", email=" + email +
+                ", diaChi=" + diaChi +
+                ", chiNhanh=" + chiNhanh +
+                ", trangThai=" + trangThai +
                 '}';
     }
 }

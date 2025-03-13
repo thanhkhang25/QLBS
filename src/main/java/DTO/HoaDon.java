@@ -2,89 +2,93 @@ package DTO;
 
 import java.sql.Date;
 
-public class SalesReceipts {
-    private int ID;
-    private Integer sellerID; // Integer, allows NULL (foreign key)
-    private Date saleDate;
-    private double totalAmount; // double for DECIMAL(12,2)
-    private Status status;     // Using enum
+public class HoaDon {
+    private int maHoaDon;
+    private int maNV;
+    private Date ngayBan;
+    private int maKM;
+    private double tongTien; // double for DECIMAL(12,2)
+    private Status trangThai;     // Using enum
 
-    // Enum for status
+    // Enum for trangThai
     public enum Status {
         PENDING, COMPLETED, CANCELLED
     }
 
     // Constructors
-    public SalesReceipts() {
+    public HoaDon() {
     }
 
-    // Constructor without ID (for new receipts)
-    public SalesReceipts(Integer sellerID, Date saleDate, double totalAmount, Status status) {
-        this.sellerID = sellerID;
-        this.saleDate = saleDate;
-        this.totalAmount = totalAmount;
-        this.status = status;
+    // Constructor without maHoaDon (for new receipts)
+    public HoaDon(int maNV, Date ngayBan, int maKM, double tongTien, Status trangThai) {
+        this.maNV = maNV;
+        this.ngayBan = ngayBan;
+        this.maKM = maKM;
+        this.tongTien = tongTien;
+        this.trangThai = trangThai;
     }
 
-    // Constructor with ID (for existing receipts)
-    public SalesReceipts(int ID, Integer sellerID, Date saleDate, double totalAmount, Status status) {
-        this.ID = ID;
-        this.sellerID = sellerID;
-        this.saleDate = saleDate;
-        this.totalAmount = totalAmount;
-        this.status = status;
+    // Constructor with maHoaDon (for existing receipts)
+    public HoaDon(int maHoaDon, int maNV, int maKM, Date ngayBan, double tongTien, Status trangThai) {
+        this.maHoaDon = maHoaDon;
+        this.maNV = maNV;
+        this.ngayBan = ngayBan;
+        this.maKM = maKM;
+        this.tongTien = tongTien;
+        this.trangThai = trangThai;
     }
 
     // Getters and Setters
-    public int getID() {
-        return ID;
+    public int getmaHoaDon() {
+        return maHoaDon;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setmaHoaDon(int maHoaDon) {
+        this.maHoaDon = maHoaDon;
     }
 
-    public Integer getSellerID() {
-        return sellerID;
+    public int getmaNV() {
+        return maNV;
     }
 
-    public void setSellerID(Integer sellerID) {
-        this.sellerID = sellerID;
+    public void setmaNV(int maNV) {
+        this.maNV = maNV;
     }
 
-    public Date getSaleDate() {
-        return saleDate;
+    public Date getngayBan() {
+        return ngayBan;
     }
 
-    public void setSaleDate(Date saleDate) {
-        this.saleDate = saleDate;
+    public void setngayBan(Date ngayBan) {
+        this.ngayBan = ngayBan;
     }
 
-    public double getTotalAmount() {
-        return totalAmount;
+    public double gettongTien() {
+        return tongTien;
     }
 
-    public void setTotalAmount(double totalAmount) {
-        this.totalAmount = totalAmount;
+    public void settongTien(double tongTien) {
+        this.tongTien = tongTien;
     }
 
-    public Status getStatus() {
-        return status;
+    public Status gettrangThai() {
+        return trangThai;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    public void settrangThai(Status trangThai) {
+        this.trangThai = trangThai;
     }
 
     // toString() method
     @Override
     public String toString() {
-        return "SalesReceipts{" +
-                "ID=" + ID +
-                ", sellerID=" + sellerID +
-                ", saleDate=" + saleDate +
-                ", totalAmount=" + totalAmount +
-                ", status=" + status +
+        return "HoaDon{" +
+                "maHoaDon=" + maHoaDon +
+                ", maNV=" + maNV +
+                ", ngayBan=" + ngayBan +
+                ", maKM=" + maKM +
+                ", tongTien=" + tongTien +
+                ", trangThai=" + trangThai +
                 '}';
     }
 }

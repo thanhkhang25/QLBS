@@ -1,88 +1,100 @@
 package DTO;
 
-public class Suppliers {
-    private int ID;
-    private String name;
-    private String address;
-    private String phoneNumber;
-    private Status status; // Using the enum
+public class NhaCungCap {
+    private int maNCC;
+    private String tenNCC;
+    private String diaChi;
+    private String email;
+    private String sdt;
+    private Status trangThai; // Using the enum
 
-    // Enum for status
+    // Enum for trangThai
     public enum Status {
         ACTIVE, INACTIVE
     }
 
     // Constructors
-    public Suppliers() {
+    public NhaCungCap() {
     }
 
-    // Constructor without ID (for new suppliers)
-    public Suppliers(String name, String address, String phoneNumber, Status status) {
-        this.name = name;
-        this.address = address;
-        this.phoneNumber = phoneNumber;
-        this.status = status;
+    // Constructor without maNCC (for new suppliers)
+    public NhaCungCap(String tenNCC, String diaChi, String email, String sdt, Status trangThai) {
+        this.tenNCC = tenNCC;
+        this.diaChi = diaChi;
+        this.email = email;
+        this.sdt = sdt;
+        this.trangThai = trangThai;
     }
 
-    // Constructor with ID (for existing suppliers)
-    public Suppliers(int ID, String name, String address, String phoneNumber, Status status) {
-        this.ID = ID;
-        this.name = name;
-        this.address = address;
-        this.phoneNumber = phoneNumber;
-        this.status = status;
+    // Constructor with maNCC (for existing suppliers)
+    public NhaCungCap(int maNCC, String tenNCC, String diaChi, String email, String sdt, Status trangThai) {
+        this.maNCC = maNCC;
+        this.tenNCC = tenNCC;
+        this.diaChi = diaChi;
+        this.email = email; 
+        this.sdt = sdt;
+        this.trangThai = trangThai;
     }
 
     // Getters and Setters
-    public int getID() {
-        return ID;
+    public int getmaNCC() {
+        return maNCC;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setmaNCC(int maNCC) {
+        this.maNCC = maNCC;
     }
 
-    public String getName() {
-        return name;
+    public String gettenNCC() {
+        return tenNCC;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void settenNCC(String tenNCC) {
+        this.tenNCC = tenNCC;
     }
 
-    public String getAddress() {
-        return address;
+    public String getdiaChi() {
+        return diaChi;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setdiaChi(String diaChi) {
+        this.diaChi = diaChi;
+    }
+    
+    public String getemail(){
+        return email;
+    }
+    
+    public void setemail(String email){
+        this.email = email;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getsdt() {
+        return sdt;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setsdt(String sdt) {
+        this.sdt = sdt;
     }
 
-    public Status getStatus() {
-        return status;
+    public Status gettrangThai() {
+        return trangThai;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    public void settrangThai(Status trangThai) {
+        this.trangThai = trangThai;
     }
 
     // toString() method
     @Override
     public String toString() {
-        return "Suppliers{" +
-                "ID=" + ID +
-                ", name='" + name + '\'' +
-                ", address='" + address + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", status=" + status +
+        return "NhaCungCap{" +
+                "maNCC=" + maNCC +
+                ", tenNCC='" + tenNCC + '\'' +
+                ", diaChi='" + diaChi + '\'' +
+                ", email='" + email + '\'' +
+                ", sdt='" + sdt + '\'' +
+                ", trangThai=" + trangThai +
                 '}';
     }
 }

@@ -2,101 +2,150 @@ package DTO;
 
 import java.sql.Date;
 
-public class WarehouseReceipts {
-    private int ID;
-    private Integer supplierID;  // Integer, allows NULL (foreign key)
-    private Integer enteredBy;    // Integer, allows NULL (foreign key)
-    private Date entryDate;
-    private Status status;      // Using enum
-    private double totalAmount; // double for DECIMAL(12,2)
+public class DonXinNghi {
+    private int maDon;
+    private int maNV; 
+    private Date ngayNopDon;
+    private String lyDo;
+    private int soNgayNghi;
+    private Date ngayBatDau;
+    private Date ngayKetThuc;
+    private int maNguoiDuyet;
+    private Date ngayDuyet;
+    private Status trangThai;      // Using enum
 
-    // Enum for status
+    // Enum for trangThai
     public enum Status {
-        PENDING, COMPLETED, CANCELLED
+        ChuaXuLy, DaDuyet, TuChoi
     }
 
     // Constructors
-    public WarehouseReceipts() {
+    public DonXinNghi() {
     }
 
-    // Constructor without ID (for new receipts)
-    public WarehouseReceipts(Integer supplierID, Integer enteredBy, Date entryDate, Status status, double totalAmount) {
-        this.supplierID = supplierID;
-        this.enteredBy = enteredBy;
-        this.entryDate = entryDate;
-        this.status = status;
-        this.totalAmount = totalAmount;
+    // Constructor without maDon (Tao moi)
+    public DonXinNghi(int maNV, Date ngayNopDon, String lyDo, int soNgayNghi, Date ngayBatDau, Date ngayKetThuc, int maNguoiDuyet, Date ngayDuyet, Status trangThai) {
+        this.maNV = maNV;
+        this.ngayNopDon = ngayNopDon;
+        this.lyDo = lyDo;
+        this.soNgayNghi = soNgayNghi;
+        this.ngayBatDau = ngayBatDau;
+        this.ngayKetThuc = ngayKetThuc;
+        this.maNguoiDuyet = maNguoiDuyet;
+        this.ngayDuyet = ngayDuyet;
+        this.trangThai = trangThai;
     }
 
-    // Constructor with ID (for existing receipts)
-    public WarehouseReceipts(int ID, Integer supplierID, Integer enteredBy, Date entryDate, Status status, double totalAmount) {
-        this.ID = ID;
-        this.supplierID = supplierID;
-        this.enteredBy = enteredBy;
-        this.entryDate = entryDate;
-        this.status = status;
-        this.totalAmount = totalAmount;
+    // Constructor with maDon (for existing receipts)
+    public DonXinNghi(int maDon,int maNV, Date ngayNopDon, String lyDo, int soNgayNghi, Date ngayBatDau, Date ngayKetThuc, int maNguoiDuyet, Date ngayDuyet, Status trangThai) {
+        this.maDon = maDon;
+        this.maNV = maNV;
+        this.ngayNopDon = ngayNopDon;
+        this.lyDo = lyDo;
+        this.soNgayNghi = soNgayNghi;
+        this.ngayBatDau = ngayBatDau;
+        this.ngayKetThuc = ngayKetThuc;
+        this.maNguoiDuyet = maNguoiDuyet;
+        this.ngayDuyet = ngayDuyet;
+        this.trangThai = trangThai;
     }
 
     // Getters and Setters
-    public int getID() {
-        return ID;
+    public int getmaDon() {
+        return maDon;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setmaDon(int maDon) {
+        this.maDon = maDon;
     }
 
-    public Integer getSupplierID() {
-        return supplierID;
+    public int getmaNV() {
+        return maNV;
     }
 
-    public void setSupplierID(Integer supplierID) {
-        this.supplierID = supplierID;
+    public void setmaNV(int maNV) {
+        this.maNV = maNV;
     }
 
-    public Integer getEnteredBy() {
-        return enteredBy;
+    public Date getngayNopDon() {
+        return ngayNopDon;
     }
 
-    public void setEnteredBy(Integer enteredBy) {
-        this.enteredBy = enteredBy;
+    public void setngayNopDon(Date ngayNopDon) {
+        this.ngayNopDon = ngayNopDon;
+    }
+    
+    public String getlyDo(){
+        return lyDo;
+    }
+    
+    public void setlyDo(String lyDo){
+        this.lyDo = lyDo;
     }
 
-    public Date getEntryDate() {
-        return entryDate;
+    public int getsoNgayNghi(){
+        return soNgayNghi;
+    }
+    
+    public void setsoNgayNghi(int soNgayNghi){
+        this.soNgayNghi = soNgayNghi;
+    }
+    
+    public Date getngayBatDau() {
+        return ngayBatDau;
+    }
+    
+    public void setngayBatDau(Date ngayBatDau) {
+        this.ngayBatDau = ngayBatDau;
+    }
+    
+    public Date getngayKetThuc() {
+        return ngayKetThuc;
     }
 
-    public void setEntryDate(Date entryDate) {
-        this.entryDate = entryDate;
+    public void setngayKetThuc(Date ngayKetThuc) {
+        this.ngayKetThuc = ngayKetThuc;
+    }
+    
+    public int getmaNguoiDuyet() {
+        return maNguoiDuyet;
     }
 
-    public Status getStatus() {
-        return status;
+    public void setmaNguoiDuyet(int maNguoiDuyet) {
+        this.maNguoiDuyet = maNguoiDuyet;
+    }
+    
+    public Date getngayDuyet() {
+        return ngayDuyet;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    public void setngayDuyet(Date ngayDuyet) {
+        this.ngayDuyet = ngayDuyet;
+    }
+    
+    public Status gettrangThai() {
+        return trangThai;
     }
 
-    public double getTotalAmount() {
-        return totalAmount;
+    public void settrangThai(Status trangThai) {
+        this.trangThai = trangThai;
     }
 
-    public void setTotalAmount(double totalAmount) {
-        this.totalAmount = totalAmount;
-    }
 
     // toString() method
     @Override
     public String toString() {
-        return "WarehouseReceipts{" +
-                "ID=" + ID +
-                ", supplierID=" + supplierID +
-                ", enteredBy=" + enteredBy +
-                ", entryDate=" + entryDate +
-                ", status=" + status +
-                ", totalAmount=" + totalAmount +
+        return "DonXinNghi{" +
+                "maDon=" + maDon +
+                ", maNV=" + maNV +
+                ", ngayNopDon=" + ngayNopDon +
+                ", lyDo=" + lyDo +
+                ", soNgayNghi=" + soNgayNghi +
+                ", ngayBatDau=" + ngayBatDau +
+                ", ngayKetThuc=" + ngayKetThuc +
+                ", maNguoiDuyet=" + maNV +
+                ", ngayDuyet=" + ngayDuyet +
+                ", trangThai=" + trangThai +
                 '}';
     }
 }

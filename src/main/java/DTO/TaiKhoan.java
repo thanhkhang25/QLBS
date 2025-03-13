@@ -4,121 +4,110 @@
  */
 package DTO;
 
-import java.sql.Date;
-
 /**
  *
  * @author xuand
  */
-public class Employees {
-    private int ID;
-    private String position;
-    private double baseSalary;  // Changed to double to match DECIMAL(12,2)
-    private double salaryCoefficient; // Changed to double to match DECIMAL(5,2)
-    private double allowance; // Changed to double to match DECIMAL(10,2)
-    private Date startDate;
-    private boolean status; // Renamed to match the BIT type (true/false)
+public class TaiKhoan {
+    private int maTK;
+    private int maNV; 
+    private String matKhau;
+    private Role chucVu;
+    private String chiNhanh;
+    private boolean trangThai; //(true/false)
 
 
-    public Employees() {
+    // Enum for Role
+    public enum Role {
+        Admin, QuanLyKho, QuanLyNhanVien, NhanVien 
+    }
+    public TaiKhoan() {
 
     }
 
-    // Constructor with ID only (useful for lookups or deletions)
-    public Employees(int ID) {
-        this.ID = ID;
+    // Constructor with maNV only (useful for lookups or deletions)
+    public TaiKhoan(int maNV) {
+        this.maNV = maNV;
     }
     
     // Constructor with all data (for example when inserting into a database.)
-    public Employees(int ID, String position, double baseSalary, double salaryCoefficient, double allowance, Date startDate, boolean status) {
-        this.ID = ID;
-        this.position = position;
-        this.baseSalary = baseSalary;
-        this.salaryCoefficient = salaryCoefficient;
-        this.allowance = allowance;
-        this.startDate = startDate;
-        this.status = status;
+    public TaiKhoan(int maTK, int maNV, String matKhau, Role chucVu, String diaChi, String chiNhanh, boolean trangThai) {
+        this.maTK = maTK;
+        this.maNV = maNV;
+        this.matKhau = matKhau;
+        this.chucVu = chucVu;
+        this.chiNhanh = chiNhanh;
+        this.trangThai = trangThai;
     }
     
     // Constructor when id is not provided. For database insertions when id is auto_increment.
-     public Employees( String position, double baseSalary, double salaryCoefficient, double allowance, Date startDate, boolean status) {        
-        this.position = position;
-        this.baseSalary = baseSalary;
-        this.salaryCoefficient = salaryCoefficient;
-        this.allowance = allowance;
-        this.startDate = startDate;
-        this.status = status;
+     public TaiKhoan(int maNV, String matKhau, Role chucVu, String diaChi, String chiNhanh, boolean trangThai) {        
+        this.maNV = maNV;
+        this.matKhau = matKhau;
+        this.chucVu = chucVu;
+        this.chiNhanh = chiNhanh;
+        this.trangThai = trangThai;
     }
 
 
     // Getters and Setters
-    public int getID() {
-        return ID;
+    public int getmaTK() {
+        return maTK;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setmaTK(int maTK) {
+        this.maTK = maTK;
+    } 
+    
+    public int getmaNV() {
+        return maNV;
     }
 
-    public String getPosition() {
-        return position;
+    public void setmaNV(int maNV) {
+        this.maNV = maNV;
     }
 
-    public void setPosition(String position) {
-        this.position = position;
+    public String getmatKhau() {
+        return matKhau;
     }
 
-    public double getBaseSalary() {
-        return baseSalary;
-    }
-
-    public void setBaseSalary(double baseSalary) {
-        this.baseSalary = baseSalary;
-    }
-
-    public double getSalaryCoefficient() {
-        return salaryCoefficient;
-    }
-
-    public void setSalaryCoefficient(double salaryCoefficient) {
-        this.salaryCoefficient = salaryCoefficient;
-    }
-
-    public double getAllowance() {
-        return allowance;
-    }
-
-    public void setAllowance(double allowance) {
-        this.allowance = allowance;
+    public void setmatKhau(String matKhau) {
+        this.matKhau = matKhau;
     }
     
-    public Date getStartDate() {
-        return startDate;
+    public Role getchucVu() {
+        return chucVu;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
+    public void setchucVu(Role chucVu) {
+        this.chucVu = chucVu;
+    }
+   
+    public String getchiNhanh() {
+        return chiNhanh;
     }
 
-    public boolean isStatus() {  // Use isStatus() for boolean getters
-        return status;
+    public void setchiNhanh(String chiNhanh) {
+        this.chiNhanh = chiNhanh;
+    }
+    
+    public boolean gettrangThai() {
+        return trangThai;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void settrangThai(Boolean trangThai) {
+        this.trangThai = trangThai;
     }
-
     //  toString() method (optional but very useful for debugging)
     @Override
     public String toString() {
-        return "NHANVIEN{" +
-                "ID=" + ID +
-                ", position='" + position + '\'' +
-                ", baseSalary=" + baseSalary +
-                ", salaryCoefficient=" + salaryCoefficient +
-                ", allowance=" + allowance +
-                ", startDate=" + startDate +
-                ", status=" + status +
+        return "TaiKhoan{" +
+                "maTK=" + maTK +
+                ", maNV='" + maNV +
+                ", matKhau='" + matKhau +
+                ", chucVu=" + chucVu +
+                ", chiNhanh=" + chiNhanh +
+                ", trangThai=" + trangThai +
                 '}';
     }
 }

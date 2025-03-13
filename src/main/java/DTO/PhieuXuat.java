@@ -2,101 +2,89 @@ package DTO;
 
 import java.sql.Date;
 
-public class WarehouseReceipts {
-    private int ID;
-    private Integer supplierID;  // Integer, allows NULL (foreign key)
-    private Integer enteredBy;    // Integer, allows NULL (foreign key)
-    private Date entryDate;
-    private Status status;      // Using enum
-    private double totalAmount; // double for DECIMAL(12,2)
+public class PhieuXuat {
+    private int maPX;
+    private int maNV; 
+    private Date ngayXuat;
+    private String chiNhanh;
+    private Status trangThai;      // Using enum
 
-    // Enum for status
+    // Enum for trangThai
     public enum Status {
         PENDING, COMPLETED, CANCELLED
     }
 
     // Constructors
-    public WarehouseReceipts() {
+    public PhieuXuat() {
     }
 
-    // Constructor without ID (for new receipts)
-    public WarehouseReceipts(Integer supplierID, Integer enteredBy, Date entryDate, Status status, double totalAmount) {
-        this.supplierID = supplierID;
-        this.enteredBy = enteredBy;
-        this.entryDate = entryDate;
-        this.status = status;
-        this.totalAmount = totalAmount;
+    // Constructor without maPX (for new receipts)
+    public PhieuXuat(int maNV, Date ngayXuat,String chiNhanh, Status trangThai) {
+        this.maNV = maNV;
+        this.ngayXuat = ngayXuat;
+        this.chiNhanh = chiNhanh;
+        this.trangThai = trangThai;
     }
 
-    // Constructor with ID (for existing receipts)
-    public WarehouseReceipts(int ID, Integer supplierID, Integer enteredBy, Date entryDate, Status status, double totalAmount) {
-        this.ID = ID;
-        this.supplierID = supplierID;
-        this.enteredBy = enteredBy;
-        this.entryDate = entryDate;
-        this.status = status;
-        this.totalAmount = totalAmount;
+    // Constructor with maPX (for existing receipts)
+    public PhieuXuat(int maPX, int maNV, Date ngayXuat, String chiNhanh, Status trangThai) {
+        this.maPX = maPX;
+        this.maNV = maNV;
+        this.ngayXuat = ngayXuat;
+        this.trangThai = trangThai;
     }
 
     // Getters and Setters
-    public int getID() {
-        return ID;
+    public int getmaPX() {
+        return maPX;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setmaPX(int maPX) {
+        this.maPX = maPX;
     }
 
-    public Integer getSupplierID() {
-        return supplierID;
+    public int getmaNV() {
+        return maNV;
     }
 
-    public void setSupplierID(Integer supplierID) {
-        this.supplierID = supplierID;
+    public void setmaNV(int maNV) {
+        this.maNV = maNV;
     }
 
-    public Integer getEnteredBy() {
-        return enteredBy;
+    public Date getngayXuat() {
+        return ngayXuat;
     }
 
-    public void setEnteredBy(Integer enteredBy) {
-        this.enteredBy = enteredBy;
+    public void setngayXuat(Date ngayXuat) {
+        this.ngayXuat = ngayXuat;
+    }
+    
+    public String getchiNhanh(){
+        return chiNhanh;
+    }
+    
+    public void setchiNhanh(String chiNhanh){
+        this.chiNhanh = chiNhanh;
     }
 
-    public Date getEntryDate() {
-        return entryDate;
+    public Status gettrangThai() {
+        return trangThai;
     }
 
-    public void setEntryDate(Date entryDate) {
-        this.entryDate = entryDate;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    public double getTotalAmount() {
-        return totalAmount;
-    }
-
-    public void setTotalAmount(double totalAmount) {
-        this.totalAmount = totalAmount;
+    public void settrangThai(Status trangThai) {
+        this.trangThai = trangThai;
     }
 
     // toString() method
     @Override
     public String toString() {
-        return "WarehouseReceipts{" +
-                "ID=" + ID +
-                ", supplierID=" + supplierID +
-                ", enteredBy=" + enteredBy +
-                ", entryDate=" + entryDate +
-                ", status=" + status +
-                ", totalAmount=" + totalAmount +
+        return "PhieuXuat{" +
+                "maPX=" + maPX +
+                ", maNV=" + maNV +
+                ", ngayXuat=" + ngayXuat +
+                ", maPX=" + maPX +
+                ", chiNhanh=" + chiNhanh +
+                ", trangThai=" + trangThai +
                 '}';
     }
 }

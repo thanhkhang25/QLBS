@@ -2,101 +2,101 @@ package DTO;
 
 import java.sql.Date;
 
-public class WarehouseReceipts {
-    private int ID;
-    private Integer supplierID;  // Integer, allows NULL (foreign key)
-    private Integer enteredBy;    // Integer, allows NULL (foreign key)
-    private Date entryDate;
-    private Status status;      // Using enum
-    private double totalAmount; // double for DECIMAL(12,2)
+public class PhieuNhap {
+    private int maPN;
+    private int maNCC; 
+    private int maNV;
+    private Date ngayNhap;
+    private Status trangThai;      // Using enum
+    private double tongTien; // double for DECIMAL(12,2)
 
-    // Enum for status
+    // Enum for trangThai
     public enum Status {
         PENDING, COMPLETED, CANCELLED
     }
 
     // Constructors
-    public WarehouseReceipts() {
+    public PhieuNhap() {
     }
 
-    // Constructor without ID (for new receipts)
-    public WarehouseReceipts(Integer supplierID, Integer enteredBy, Date entryDate, Status status, double totalAmount) {
-        this.supplierID = supplierID;
-        this.enteredBy = enteredBy;
-        this.entryDate = entryDate;
-        this.status = status;
-        this.totalAmount = totalAmount;
+    // Constructor without maPN (for new receipts)
+    public PhieuNhap(int maNCC, int maNV, Date ngayNhap, Status trangThai, double tongTien) {
+        this.maNCC = maNCC;
+        this.maNV = maNV;
+        this.ngayNhap = ngayNhap;
+        this.trangThai = trangThai;
+        this.tongTien = tongTien;
     }
 
-    // Constructor with ID (for existing receipts)
-    public WarehouseReceipts(int ID, Integer supplierID, Integer enteredBy, Date entryDate, Status status, double totalAmount) {
-        this.ID = ID;
-        this.supplierID = supplierID;
-        this.enteredBy = enteredBy;
-        this.entryDate = entryDate;
-        this.status = status;
-        this.totalAmount = totalAmount;
+    // Constructor with maPN (for existing receipts)
+    public PhieuNhap(int maPN, int maNCC, int maNV, Date ngayNhap, Status trangThai, double tongTien) {
+        this.maPN = maPN;
+        this.maNCC = maNCC;
+        this.maNV = maNV;
+        this.ngayNhap = ngayNhap;
+        this.trangThai = trangThai;
+        this.tongTien = tongTien;
     }
 
     // Getters and Setters
-    public int getID() {
-        return ID;
+    public int getmaPN() {
+        return maPN;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setmaPN(int maPN) {
+        this.maPN = maPN;
     }
 
-    public Integer getSupplierID() {
-        return supplierID;
+    public int getmaNCC() {
+        return maNCC;
     }
 
-    public void setSupplierID(Integer supplierID) {
-        this.supplierID = supplierID;
+    public void setmaNCC(int maNCC) {
+        this.maNCC = maNCC;
     }
 
-    public Integer getEnteredBy() {
-        return enteredBy;
+    public int getmaNV() {
+        return maNV;
     }
 
-    public void setEnteredBy(Integer enteredBy) {
-        this.enteredBy = enteredBy;
+    public void setmaNV(int maNV) {
+        this.maNV = maNV;
     }
 
-    public Date getEntryDate() {
-        return entryDate;
+    public Date getngayNhap() {
+        return ngayNhap;
     }
 
-    public void setEntryDate(Date entryDate) {
-        this.entryDate = entryDate;
+    public void setngayNhap(Date ngayNhap) {
+        this.ngayNhap = ngayNhap;
     }
 
-    public Status getStatus() {
-        return status;
+    public Status gettrangThai() {
+        return trangThai;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    public void settrangThai(Status trangThai) {
+        this.trangThai = trangThai;
     }
 
-    public double getTotalAmount() {
-        return totalAmount;
+    public double gettongTien() {
+        return tongTien;
     }
 
-    public void setTotalAmount(double totalAmount) {
-        this.totalAmount = totalAmount;
+    public void settongTien(double tongTien) {
+        this.tongTien = tongTien;
     }
 
     // toString() method
     @Override
     public String toString() {
-        return "WarehouseReceipts{" +
-                "ID=" + ID +
-                ", supplierID=" + supplierID +
-                ", enteredBy=" + enteredBy +
-                ", entryDate=" + entryDate +
-                ", status=" + status +
-                ", totalAmount=" + totalAmount +
+        return "PhieuNhap{" +
+                "maPN=" + maPN +
+                ", maNCC=" + maNCC +
+                ", maNV=" + maNV +
+                ", ngayNhap=" + ngayNhap +
+                ", trangThai=" + trangThai +
+                ", tongTien=" + tongTien +
                 '}';
     }
 }

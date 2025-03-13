@@ -1,102 +1,87 @@
 package DTO;
 
 import java.sql.Date;
+import java.sql.Time;
 
-public class WarehouseReceipts {
-    private int ID;
-    private Integer supplierID;  // Integer, allows NULL (foreign key)
-    private Integer enteredBy;    // Integer, allows NULL (foreign key)
-    private Date entryDate;
-    private Status status;      // Using enum
-    private double totalAmount; // double for DECIMAL(12,2)
+public class ChamCong {
+    private int maCC;
+    private int maNV; 
+    private Date ngay;
+    private String loaiChamCong;
+    private Time thoiGianChamCong;      
 
-    // Enum for status
-    public enum Status {
-        PENDING, COMPLETED, CANCELLED
-    }
 
     // Constructors
-    public WarehouseReceipts() {
+    public ChamCong() {
     }
 
-    // Constructor without ID (for new receipts)
-    public WarehouseReceipts(Integer supplierID, Integer enteredBy, Date entryDate, Status status, double totalAmount) {
-        this.supplierID = supplierID;
-        this.enteredBy = enteredBy;
-        this.entryDate = entryDate;
-        this.status = status;
-        this.totalAmount = totalAmount;
+    // Constructor without maCC (for new receipts)
+    public ChamCong(int maNV, Date ngay,String loaiChamCong, Time thoiGianChamCong) {
+        this.maNV = maNV;
+        this.ngay = ngay;
+        this.loaiChamCong = loaiChamCong;
+        this.thoiGianChamCong = thoiGianChamCong;
     }
 
-    // Constructor with ID (for existing receipts)
-    public WarehouseReceipts(int ID, Integer supplierID, Integer enteredBy, Date entryDate, Status status, double totalAmount) {
-        this.ID = ID;
-        this.supplierID = supplierID;
-        this.enteredBy = enteredBy;
-        this.entryDate = entryDate;
-        this.status = status;
-        this.totalAmount = totalAmount;
+    // Constructor with maCC (for existing receipts)
+    public ChamCong(int maCC, int maNV, Date ngay, String loaiChamCong, Time thoiGianChamCong) {
+        this.maCC = maCC;
+        this.maNV = maNV;
+        this.ngay = ngay;
+        this.loaiChamCong = loaiChamCong;
+        this.thoiGianChamCong = thoiGianChamCong;
     }
 
     // Getters and Setters
-    public int getID() {
-        return ID;
+    public int getmaCC() {
+        return maCC;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setmaCC(int maCC) {
+        this.maCC = maCC;
     }
 
-    public Integer getSupplierID() {
-        return supplierID;
+    public int getmaNV() {
+        return maNV;
     }
 
-    public void setSupplierID(Integer supplierID) {
-        this.supplierID = supplierID;
+    public void setmaNV(int maNV) {
+        this.maNV = maNV;
     }
 
-    public Integer getEnteredBy() {
-        return enteredBy;
+    public Date getngay() {
+        return ngay;
     }
 
-    public void setEnteredBy(Integer enteredBy) {
-        this.enteredBy = enteredBy;
+    public void setngay(Date ngay) {
+        this.ngay = ngay;
+    }
+    
+    public String getloaiChamCong(){
+        return loaiChamCong;
+    }
+    
+    public void setloaiChamCong(String loaiChamCong){
+        this.loaiChamCong = loaiChamCong;
     }
 
-    public Date getEntryDate() {
-        return entryDate;
+    public Time getthoiGianChamCong() {
+        return thoiGianChamCong;
     }
 
-    public void setEntryDate(Date entryDate) {
-        this.entryDate = entryDate;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    public double getTotalAmount() {
-        return totalAmount;
-    }
-
-    public void setTotalAmount(double totalAmount) {
-        this.totalAmount = totalAmount;
+    public void setthoiGianChamCong(Time thoiGianChamCong) {
+        this.thoiGianChamCong = thoiGianChamCong;
     }
 
     // toString() method
     @Override
     public String toString() {
-        return "WarehouseReceipts{" +
-                "ID=" + ID +
-                ", supplierID=" + supplierID +
-                ", enteredBy=" + enteredBy +
-                ", entryDate=" + entryDate +
-                ", status=" + status +
-                ", totalAmount=" + totalAmount +
+        return "ChamCong{" +
+                "maCC=" + maCC +
+                ", maNV=" + maNV +
+                ", ngay=" + ngay +
+                ", loaiChamCong=" + loaiChamCong +
+                ", thoiGianChamCong=" + thoiGianChamCong +
                 '}';
     }
 }
