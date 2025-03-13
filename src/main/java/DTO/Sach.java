@@ -1,12 +1,11 @@
 package DTO;
 
-public class Publishers {
+public class Suppliers {
     private int ID;
     private String name;
     private String address;
     private String phoneNumber;
-    private String email;
-    private Status status;  //Using Enum
+    private Status status; // Using the enum
 
     // Enum for status
     public enum Status {
@@ -14,25 +13,23 @@ public class Publishers {
     }
 
     // Constructors
-    public Publishers() {
+    public Suppliers() {
     }
 
-    // Constructor without ID (for new publishers)
-    public Publishers(String name, String address, String phoneNumber, String email, Status status) {
+    // Constructor without ID (for new suppliers)
+    public Suppliers(String name, String address, String phoneNumber, Status status) {
         this.name = name;
         this.address = address;
         this.phoneNumber = phoneNumber;
-        this.email = email;
         this.status = status;
     }
 
-    // Constructor with ID (for existing publishers)
-    public Publishers(int ID, String name, String address, String phoneNumber, String email, Status status) {
+    // Constructor with ID (for existing suppliers)
+    public Suppliers(int ID, String name, String address, String phoneNumber, Status status) {
         this.ID = ID;
         this.name = name;
         this.address = address;
         this.phoneNumber = phoneNumber;
-        this.email = email;
         this.status = status;
     }
 
@@ -69,14 +66,6 @@ public class Publishers {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public Status getStatus() {
         return status;
     }
@@ -88,12 +77,11 @@ public class Publishers {
     // toString() method
     @Override
     public String toString() {
-        return "Publishers{" +
+        return "Suppliers{" +
                 "ID=" + ID +
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
-                ", email='" + email + '\'' +
                 ", status=" + status +
                 '}';
     }
