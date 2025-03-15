@@ -19,7 +19,7 @@ public class TaiKhoan {
 
     // Enum for Role
     public enum Role {
-        Admin, QuanLyKho, QuanLyNhanVien, NhanVien 
+        ADMIN, QUAN_LY_KHO, QUAN_LY_NHAN_VIEN, NHAN_VIEN 
     }
     public TaiKhoan() {
 
@@ -51,53 +51,55 @@ public class TaiKhoan {
 
 
     // Getters and Setters
-    public int getmaTK() {
+
+    public int getMaTK() {
         return maTK;
     }
 
-    public void setmaTK(int maTK) {
+    public void setMaTK(int maTK) {
         this.maTK = maTK;
-    } 
-    
-    public int getmaNV() {
+    }
+
+    public int getMaNV() {
         return maNV;
     }
 
-    public void setmaNV(int maNV) {
+    public void setMaNV(int maNV) {
         this.maNV = maNV;
     }
 
-    public String getmatKhau() {
+    public String getMatKhau() {
         return matKhau;
     }
 
-    public void setmatKhau(String matKhau) {
+    public void setMatKhau(String matKhau) {
         this.matKhau = matKhau;
     }
-    
-    public Role getchucVu() {
+
+    public Role getChucVu() {
         return chucVu;
     }
 
-    public void setchucVu(Role chucVu) {
+    public void setChucVu(Role chucVu) {
         this.chucVu = chucVu;
     }
-   
-    public String getchiNhanh() {
+
+    public String getChiNhanh() {
         return chiNhanh;
     }
 
-    public void setchiNhanh(String chiNhanh) {
+    public void setChiNhanh(String chiNhanh) {
         this.chiNhanh = chiNhanh;
     }
-    
-    public boolean gettrangThai() {
+
+    public boolean isTrangThai() { // Đối với kiểu boolean, dùng "is" thay vì "get"
         return trangThai;
     }
 
-    public void settrangThai(Boolean trangThai) {
+    public void setTrangThai(boolean trangThai) {
         this.trangThai = trangThai;
     }
+
     //  toString() method (optional but very useful for debugging)
     @Override
     public String toString() {

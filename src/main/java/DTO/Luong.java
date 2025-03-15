@@ -1,151 +1,183 @@
 package DTO;
 
-import java.sql.Date;
 
-public class DonXinNghi {
-    private int maDon;
+public class Luong {
+    private int maLuong;
     private int maNV; 
-    private Date ngayNopDon;
-    private String lyDo;
-    private int soNgayNghi;
-    private Date ngayBatDau;
-    private Date ngayKetThuc;
-    private int maNguoiDuyet;
-    private Date ngayDuyet;
-    private Status trangThai;      // Using enum
-
-    // Enum for trangThai
-    public enum Status {
-        ChuaXuLy, DaDuyet, TuChoi
-    }
+    private int thang;
+    private int nam;
+    private int soNgayLam;
+    private double luongCoBan;
+    private double thuong;
+    private double khauTru;
+    private double phuCapXang;
+    private double phuCapBHYT;
+    private double phuCapBHXH;
+    private double phuCapBHTN;
+    private double tongLuongNhan;
 
     // Constructors
-    public DonXinNghi() {
+    public Luong() {
     }
 
-    // Constructor without maDon (Tao moi)
-    public DonXinNghi(int maNV, Date ngayNopDon, String lyDo, int soNgayNghi, Date ngayBatDau, Date ngayKetThuc, int maNguoiDuyet, Date ngayDuyet, Status trangThai) {
+    // Constructor without maLuong (Tao moi)
+    public Luong(int maNV, int thang, int nam, int soNgayLam, double luongCoBan, double thuong, double khauTru, double phuCapXang, double phuCapBHYT, double phuCapBHXH, double phuCapBHTN, double tongLuongNhan) {
         this.maNV = maNV;
-        this.ngayNopDon = ngayNopDon;
-        this.lyDo = lyDo;
-        this.soNgayNghi = soNgayNghi;
-        this.ngayBatDau = ngayBatDau;
-        this.ngayKetThuc = ngayKetThuc;
-        this.maNguoiDuyet = maNguoiDuyet;
-        this.ngayDuyet = ngayDuyet;
-        this.trangThai = trangThai;
+        this.thang = thang;
+        this.nam = nam;
+        this.soNgayLam = soNgayLam;
+        this.luongCoBan = luongCoBan;
+        this.thuong = thuong;
+        this.khauTru = khauTru;
+        this.phuCapXang = phuCapXang;
+        this.phuCapBHYT = phuCapBHYT;
+        this.phuCapBHXH = phuCapBHXH;
+        this.phuCapBHTN = phuCapBHTN;
+        this.tongLuongNhan = tongLuongNhan;
     }
 
-    // Constructor with maDon (for existing receipts)
-    public DonXinNghi(int maDon,int maNV, Date ngayNopDon, String lyDo, int soNgayNghi, Date ngayBatDau, Date ngayKetThuc, int maNguoiDuyet, Date ngayDuyet, Status trangThai) {
-        this.maDon = maDon;
+    // Constructor with maLuong (for existing receipts)
+    public Luong(int maLuong,int maNV, int thang, int nam, int soNgayLam, double luongCoBan, double thuong, double khauTru, double phuCapXang, double phuCapBHYT, double phuCapBHXH, double phuCapBHTN, double tongLuongNhan) {
+        this.maLuong = maLuong;
         this.maNV = maNV;
-        this.ngayNopDon = ngayNopDon;
-        this.lyDo = lyDo;
-        this.soNgayNghi = soNgayNghi;
-        this.ngayBatDau = ngayBatDau;
-        this.ngayKetThuc = ngayKetThuc;
-        this.maNguoiDuyet = maNguoiDuyet;
-        this.ngayDuyet = ngayDuyet;
-        this.trangThai = trangThai;
+        this.thang = thang;
+        this.nam = nam;
+        this.soNgayLam = soNgayLam;
+        this.luongCoBan = luongCoBan;
+        this.thuong = thuong;
+        this.khauTru = khauTru;
+        this.phuCapXang = phuCapXang;
+        this.phuCapBHYT = phuCapBHYT;
+        this.phuCapBHXH = phuCapBHXH;
+        this.phuCapBHTN = phuCapBHTN;
+        this.tongLuongNhan = tongLuongNhan;
     }
 
     // Getters and Setters
-    public int getmaDon() {
-        return maDon;
-    }
+        public int getMaLuong() {
+           return maLuong;
+       }
 
-    public void setmaDon(int maDon) {
-        this.maDon = maDon;
-    }
+       public void setMaLuong(int maLuong) {
+           this.maLuong = maLuong;
+       }
 
-    public int getmaNV() {
-        return maNV;
-    }
+       public int getMaNV() {
+           return maNV;
+       }
 
-    public void setmaNV(int maNV) {
-        this.maNV = maNV;
-    }
+       public void setMaNV(int maNV) {
+           this.maNV = maNV;
+       }
 
-    public Date getngayNopDon() {
-        return ngayNopDon;
-    }
+       public int getThang() {
+           return thang;
+       }
 
-    public void setngayNopDon(Date ngayNopDon) {
-        this.ngayNopDon = ngayNopDon;
-    }
+       public void setThang(int thang) {
+           this.thang = thang;
+       }
+
+       public int getNam() {
+           return nam;
+       }
+
+       public void setNam(int nam) {
+           this.nam = nam;
+       }
+
+       public int getSoNgayLam() {
+           return soNgayLam;
+       }
+
+       public void setSoNgayLam(int soNgayLam) {
+           this.soNgayLam = soNgayLam;
+       }
+
     
-    public String getlyDo(){
-        return lyDo;
-    }
-    
-    public void setlyDo(String lyDo){
-        this.lyDo = lyDo;
+    public double getLuongCoBan() {
+        return luongCoBan;
     }
 
-    public int getsoNgayNghi(){
-        return soNgayNghi;
-    }
-    
-    public void setsoNgayNghi(int soNgayNghi){
-        this.soNgayNghi = soNgayNghi;
-    }
-    
-    public Date getngayBatDau() {
-        return ngayBatDau;
-    }
-    
-    public void setngayBatDau(Date ngayBatDau) {
-        this.ngayBatDau = ngayBatDau;
-    }
-    
-    public Date getngayKetThuc() {
-        return ngayKetThuc;
+    public void setLuongCoBan(double luongCoBan) {
+        this.luongCoBan = luongCoBan;
     }
 
-    public void setngayKetThuc(Date ngayKetThuc) {
-        this.ngayKetThuc = ngayKetThuc;
-    }
-    
-    public int getmaNguoiDuyet() {
-        return maNguoiDuyet;
+    public double getThuong() {
+        return thuong;
     }
 
-    public void setmaNguoiDuyet(int maNguoiDuyet) {
-        this.maNguoiDuyet = maNguoiDuyet;
-    }
-    
-    public Date getngayDuyet() {
-        return ngayDuyet;
+    public void setThuong(double thuong) {
+        this.thuong = thuong;
     }
 
-    public void setngayDuyet(Date ngayDuyet) {
-        this.ngayDuyet = ngayDuyet;
-    }
-    
-    public Status gettrangThai() {
-        return trangThai;
+    public double getKhauTru() {
+        return khauTru;
     }
 
-    public void settrangThai(Status trangThai) {
-        this.trangThai = trangThai;
+    public void setKhauTru(double khauTru) {
+        this.khauTru = khauTru;
     }
+
+    public double getPhuCapXang() {
+        return phuCapXang;
+    }
+
+    public void setPhuCapXang(double phuCapXang) {
+        this.phuCapXang = phuCapXang;
+    }
+
+    public double getPhuCapBHYT() {
+        return phuCapBHYT;
+    }
+
+    public void setPhuCapBHYT(double phuCapBHYT) {
+        this.phuCapBHYT = phuCapBHYT;
+    }
+
+    public double getPhuCapBHXH() {
+        return phuCapBHXH;
+    }
+
+    public void setPhuCapBHXH(double phuCapBHXH) {
+        this.phuCapBHXH = phuCapBHXH;
+    }
+
+    public double getPhuCapBHTN() {
+        return phuCapBHTN;
+    }
+
+    public void setPhuCapBHTN(double phuCapBHTN) {
+        this.phuCapBHTN = phuCapBHTN;
+    }
+
+    public double getTongLuongNhan() {
+        return luongCoBan + thuong - khauTru + phuCapXang + phuCapBHYT + phuCapBHXH + phuCapBHTN;
+    }
+
+    public void setTongLuongNhan(double tongLuongNhan) {
+        this.tongLuongNhan = tongLuongNhan;
+    }
+
 
 
     // toString() method
     @Override
     public String toString() {
-        return "DonXinNghi{" +
-                "maDon=" + maDon +
+        return "Luong{" +
+                "maLuong=" + maLuong +
                 ", maNV=" + maNV +
-                ", ngayNopDon=" + ngayNopDon +
-                ", lyDo=" + lyDo +
-                ", soNgayNghi=" + soNgayNghi +
-                ", ngayBatDau=" + ngayBatDau +
-                ", ngayKetThuc=" + ngayKetThuc +
-                ", maNguoiDuyet=" + maNV +
-                ", ngayDuyet=" + ngayDuyet +
-                ", trangThai=" + trangThai +
+                ", thang=" + thang +
+                ", nam=" + nam +
+                ", soNgayLam=" + soNgayLam +
+                ", luongCoBan=" + luongCoBan +
+                ", thuong=" + thuong +
+                ", khauTru=" + khauTru +
+                ", phuCapXang=" + phuCapXang +
+                ", phuCapBHYT=" + phuCapBHYT +
+                ", phuCapBHXH=" + phuCapBHXH +
+                ", phuCapBHTN=" + phuCapBHTN +
+                ", tongLuongNhan=" + tongLuongNhan +
                 '}';
     }
 }

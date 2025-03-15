@@ -10,7 +10,7 @@ public class Sach {
 
     // Enum for trangThai
     public enum Status {
-        ACTIVE, INACTIVE
+        AVAILABLE, OUT_OF_STOCK
     }
 
     // Constructors
@@ -37,51 +37,52 @@ public class Sach {
     }
 
     // Getters and Setters
-    public int getmaSach() {
+
+    public int getMaSach() {
         return maSach;
     }
 
-    public void setmaSach(int maSach) {
+    public void setMaSach(int maSach) {
         this.maSach = maSach;
     }
 
-    public String gettenSach() {
+    public String getTenSach() {
         return tenSach;
     }
 
-    public void settenSach(String tenSach) {
+    public void setTenSach(String tenSach) {
         this.tenSach = tenSach;
     }
 
-    public String gettheLoai() {
+    public String getTheLoai() {
         return theLoai;
     }
 
-    public void settheLoai(String theLoai) {
+    public void setTheLoai(String theLoai) {
         this.theLoai = theLoai;
     }
-    
-    public String gettacGia(){
+
+    public String getTacGia() {
         return tacGia;
     }
-    
-    public void settacGia(String tacGia){
+
+    public void setTacGia(String tacGia) {
         this.tacGia = tacGia;
     }
 
-    public String getchiNhanh() {
+    public String getChiNhanh() {
         return chiNhanh;
     }
 
-    public void setchiNhanh(String chiNhanh) {
+    public void setChiNhanh(String chiNhanh) {
         this.chiNhanh = chiNhanh;
     }
 
-    public Status gettrangThai() {
+    public Status getTrangThai() {
         return trangThai;
     }
 
-    public void settrangThai(Status trangThai) {
+    public void setTrangThai(Status trangThai) {
         this.trangThai = trangThai;
     }
 

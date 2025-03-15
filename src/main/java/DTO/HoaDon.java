@@ -39,43 +39,43 @@ public class HoaDon {
     }
 
     // Getters and Setters
-    public int getmaHoaDon() {
+    public int getMaHoaDon() {
         return maHoaDon;
     }
 
-    public void setmaHoaDon(int maHoaDon) {
+    public void setMaHoaDon(int maHoaDon) {
         this.maHoaDon = maHoaDon;
     }
 
-    public int getmaNV() {
+    public int getMaNV() {
         return maNV;
     }
 
-    public void setmaNV(int maNV) {
+    public void setMaNV(int maNV) {
         this.maNV = maNV;
     }
 
-    public Date getngayBan() {
+    public Date getNgayBan() {
         return ngayBan;
     }
 
-    public void setngayBan(Date ngayBan) {
+    public void setNgayBan(Date ngayBan) {
         this.ngayBan = ngayBan;
     }
 
-    public double gettongTien() {
+    public double getTongTien() {
         return tongTien;
     }
 
-    public void settongTien(double tongTien) {
+    public void setTongTien(double tongTien) {
         this.tongTien = tongTien;
     }
 
-    public Status gettrangThai() {
+    public Status getTrangThai() {
         return trangThai;
     }
 
-    public void settrangThai(Status trangThai) {
+    public void setTrangThai(Status trangThai) {
         this.trangThai = trangThai;
     }
 

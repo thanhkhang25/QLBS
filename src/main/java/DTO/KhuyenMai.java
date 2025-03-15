@@ -1,99 +1,100 @@
 package DTO;
 
-public class Sach {
-    private int maSach;
-    private String tenSach;
-    private String theLoai;
-    private String tacGia;
-    private String chiNhanh;
-    private Status trangThai; // Using the enum
+import java.util.Date;
 
-    // Enum for trangThai
+public class KhuyenMai {
+    private int maKM;
+    private String tenKM;
+    private Date ngayBatDau;
+    private Date ngayKetThuc;
+    private double phanTramGiam;
+    private Status trangThai; // Enum cho trạng thái
+
+    // Enum cho trạng thái khuyến mãi
     public enum Status {
         ACTIVE, INACTIVE
     }
 
     // Constructors
-    public Sach() {
+    public KhuyenMai() {
     }
 
-    // Constructor without maSach (for new suppliers)
-    public Sach(String tenSach, String theLoai, String tacGia, String chiNhanh, Status trangThai) {
-        this.tenSach = tenSach;
-        this.theLoai = theLoai;
-        this.tacGia = tacGia;
-        this.chiNhanh = chiNhanh;
+    public KhuyenMai(String tenKM, Date ngayBatDau, Date ngayKetThuc, double phanTramGiam, Status trangThai) {
+        this.tenKM = tenKM;
+        this.ngayBatDau = ngayBatDau;
+        this.ngayKetThuc = ngayKetThuc;
+        this.phanTramGiam = phanTramGiam;
         this.trangThai = trangThai;
     }
 
-    // Constructor with maSach (for existing suppliers)
-    public Sach(int maSach, String tenSach, String theLoai, String tacGia, String chiNhanh, Status trangThai) {
-        this.maSach = maSach;
-        this.tenSach = tenSach;
-        this.theLoai = theLoai;
-        this.tacGia = tacGia; 
-        this.chiNhanh = chiNhanh;
+    public KhuyenMai(int maKM, String tenKM, Date ngayBatDau, Date ngayKetThuc, double phanTramGiam, Status trangThai) {
+        this.maKM = maKM;
+        this.tenKM = tenKM;
+        this.ngayBatDau = ngayBatDau;
+        this.ngayKetThuc = ngayKetThuc;
+        this.phanTramGiam = phanTramGiam;
         this.trangThai = trangThai;
     }
 
     // Getters and Setters
-    public int getmaSach() {
-        return maSach;
+
+    public int getMaKM() {
+        return maKM;
     }
 
-    public void setmaSach(int maSach) {
-        this.maSach = maSach;
+    public void setMaKM(int maKM) {
+        this.maKM = maKM;
     }
 
-    public String gettenSach() {
-        return tenSach;
+    public String getTenKM() {
+        return tenKM;
     }
 
-    public void settenSach(String tenSach) {
-        this.tenSach = tenSach;
+    public void setTenKM(String tenKM) {
+        this.tenKM = tenKM;
     }
 
-    public String gettheLoai() {
-        return theLoai;
+    public Date getNgayBatDau() {
+        return ngayBatDau;
     }
 
-    public void settheLoai(String theLoai) {
-        this.theLoai = theLoai;
-    }
-    
-    public String gettacGia(){
-        return tacGia;
-    }
-    
-    public void settacGia(String tacGia){
-        this.tacGia = tacGia;
+    public void setNgayBatDau(Date ngayBatDau) {
+        this.ngayBatDau = ngayBatDau;
     }
 
-    public String getchiNhanh() {
-        return chiNhanh;
+    public Date getNgayKetThuc() {
+        return ngayKetThuc;
     }
 
-    public void setchiNhanh(String chiNhanh) {
-        this.chiNhanh = chiNhanh;
+    public void setNgayKetThuc(Date ngayKetThuc) {
+        this.ngayKetThuc = ngayKetThuc;
     }
 
-    public Status gettrangThai() {
+    public double getPhanTramGiam() {
+        return phanTramGiam;
+    }
+
+    public void setPhanTramGiam(double phanTramGiam) {
+        this.phanTramGiam = phanTramGiam;
+    }
+
+    public Status getTrangThai() {
         return trangThai;
     }
 
-    public void settrangThai(Status trangThai) {
+    public void setTrangThai(Status trangThai) {
         this.trangThai = trangThai;
     }
 
     // toString() method
     @Override
     public String toString() {
-        return "Sach{" +
-                "maSach=" + maSach +
-                ", tenSach='" + tenSach + '\'' +
-                ", theLoai='" + theLoai + '\'' +
-                ", tacGia='" + tacGia + '\'' +
-                ", chiNhanh='" + chiNhanh + '\'' +
+        return "KhuyenMai{" +
+                "maKM=" + maKM +
+                ", tenKM='" + tenKM + '\'' +
+                ", ngayBatDau=" + ngayBatDau +
+                ", ngayKetThuc=" + ngayKetThuc +
+                ", phanTramGiam=" + phanTramGiam +
                 ", trangThai=" + trangThai +
                 '}';
     }

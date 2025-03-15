@@ -26,35 +26,35 @@ public class ChiTietPhieuNhap {
     }
 
     // Getters and Setters
-    public int getmaPN() {
+    public int getMaPN() {
         return maPN;
     }
 
-    public void setmaPN(int maPN) {
+    public void setMaPN(int maPN) {
         this.maPN = maPN;
     }
 
-    public int getmaSach() {
+    public int getMaSach() {
         return maSach;
     }
 
-    public void setmaSach(int maSach) {
+    public void setMaSach(int maSach) {
         this.maSach = maSach;
     }
 
-    public int getsoLuong() {
+    public int getSoLuong() {
         return soLuong;
     }
 
-    public void setsoLuong(int soLuong) {
+    public void setSoLuong(int soLuong) {
         this.soLuong = soLuong;
     }
 
-    public double getgiaNhap() {
+    public double getGiaNhap() {
         return giaNhap;
     }
 
-    public void setgiaNhap(double giaNhap) {
+    public void setGiaNhap(double giaNhap) {
         this.giaNhap = giaNhap;
     }
 

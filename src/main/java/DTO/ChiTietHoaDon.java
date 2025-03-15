@@ -25,38 +25,39 @@ public class ChiTietHoaDon {
         this.donGia = donGia;
     }
 
-    // Getters and Setters
-    public int getmaHoaDon() {
-        return maHoaDon;
-    }
+        // Getters and Setters
+       public int getMaHoaDon() {
+           return maHoaDon;
+       }
 
-    public void setmaHoaDon(int maHoaDon) {
-        this.maHoaDon = maHoaDon;
-    }
+       public void setMaHoaDon(int maHoaDon) {
+           this.maHoaDon = maHoaDon;
+       }
 
-    public int getmaSach() {
-        return maSach;
-    }
+       public int getMaSach() {
+           return maSach;
+       }
 
-    public void setmaSach(int maSach) {
-        this.maSach = maSach;
-    }
+       public void setMaSach(int maSach) {
+           this.maSach = maSach;
+       }
 
-    public int getsoLuong() {
-        return soLuong;
-    }
+       public int getSoLuong() {
+           return soLuong;
+       }
 
-    public void setsoLuong(int soLuong) {
-        this.soLuong = soLuong;
-    }
+       public void setSoLuong(int soLuong) {
+           this.soLuong = soLuong;
+       }
 
-    public double getdonGia() {
-        return donGia;
-    }
+       public double getDonGia() {
+           return donGia;
+       }
 
-    public void setdonGia(double donGia) {
-        this.donGia = donGia;
-    }
+       public void setDonGia(double donGia) {
+           this.donGia = donGia;
+       }
+
 
     // toString() method
     @Override

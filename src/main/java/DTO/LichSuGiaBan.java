@@ -26,29 +26,30 @@ public class LichSuGiaBan {
 
     // Getters and Setters
 
-    public int getmaSach() {
+    public int getMaSach() {
         return maSach;
     }
 
-    public void setmaSach(int maSach) {
+    public void setMaSach(int maSach) {
         this.maSach = maSach;
     }
-    
-    public double getgiaBan(){
+
+    public double getGiaBan() {
         return giaBan;
     }
-    
-    public void setgiaBan(double giaBan){
+
+    public void setGiaBan(double giaBan) {
         this.giaBan = giaBan;
     }
 
-    public Date getngayApDung() {
+    public Date getNgayApDung() {
         return ngayApDung;
     }
 
-    public void setngayApDung(Date ngayApDung) {
+    public void setNgayApDung(Date ngayApDung) {
         this.ngayApDung = ngayApDung;
     }
+
 
     // toString() method
     @Override

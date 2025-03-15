@@ -35,45 +35,47 @@ public class PhieuXuat {
     }
 
     // Getters and Setters
-    public int getmaPX() {
+
+    public int getMaPX() {
         return maPX;
     }
 
-    public void setmaPX(int maPX) {
+    public void setMaPX(int maPX) {
         this.maPX = maPX;
     }
 
-    public int getmaNV() {
+    public int getMaNV() {
         return maNV;
     }
 
-    public void setmaNV(int maNV) {
+    public void setMaNV(int maNV) {
         this.maNV = maNV;
     }
 
-    public Date getngayXuat() {
+    public Date getNgayXuat() {
         return ngayXuat;
     }
 
-    public void setngayXuat(Date ngayXuat) {
+    public void setNgayXuat(Date ngayXuat) {
         this.ngayXuat = ngayXuat;
     }
-    
-    public String getchiNhanh(){
+
+    public String getChiNhanh() {
         return chiNhanh;
     }
-    
-    public void setchiNhanh(String chiNhanh){
+
+    public void setChiNhanh(String chiNhanh) {
         this.chiNhanh = chiNhanh;
     }
 
-    public Status gettrangThai() {
+    public Status getTrangThai() {
         return trangThai;
     }
 
-    public void settrangThai(Status trangThai) {
+    public void setTrangThai(Status trangThai) {
         this.trangThai = trangThai;
     }
+
 
     // toString() method
     @Override

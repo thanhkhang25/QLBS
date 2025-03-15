@@ -33,43 +33,43 @@ public class ChamCong {
     }
 
     // Getters and Setters
-    public int getmaCC() {
+    public int getMaCC() {
         return maCC;
     }
 
-    public void setmaCC(int maCC) {
+    public void setMaCC(int maCC) {
         this.maCC = maCC;
     }
 
-    public int getmaNV() {
+    public int getMaNV() {
         return maNV;
     }
 
-    public void setmaNV(int maNV) {
+    public void setMaNV(int maNV) {
         this.maNV = maNV;
     }
 
-    public Date getngay() {
+    public Date getNgay() {
         return ngay;
     }
 
-    public void setngay(Date ngay) {
+    public void setNgay(Date ngay) {
         this.ngay = ngay;
     }
-    
-    public String getloaiChamCong(){
+
+    public String getLoaiChamCong() {
         return loaiChamCong;
     }
-    
-    public void setloaiChamCong(String loaiChamCong){
+
+    public void setLoaiChamCong(String loaiChamCong) {
         this.loaiChamCong = loaiChamCong;
     }
 
-    public Time getthoiGianChamCong() {
+    public Time getThoiGianChamCong() {
         return thoiGianChamCong;
     }
 
-    public void setthoiGianChamCong(Time thoiGianChamCong) {
+    public void setThoiGianChamCong(Time thoiGianChamCong) {
         this.thoiGianChamCong = thoiGianChamCong;
     }
 
