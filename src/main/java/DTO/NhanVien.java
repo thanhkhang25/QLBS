@@ -29,7 +29,7 @@ public class NhanVien {
     
     // Enum for Role
     public enum Role {
-        Admin, QuanLyKho, QuanLyNhanVien, NhanVien 
+        ADMIN, QUAN_LY_KHO, QUAN_LY_NHAN_VIEN, NHAN_VIEN 
     }
     public NhanVien() {
 
@@ -67,77 +67,79 @@ public class NhanVien {
 
 
     // Getters and Setters
-    public int getmaNV() {
+
+    public int getMaNV() {
         return maNV;
     }
 
-    public void setmaNV(int maNV) {
+    public void setMaNV(int maNV) {
         this.maNV = maNV;
     }
 
-    public String gettenNV() {
+    public String getTenNV() {
         return tenNV;
     }
 
-    public void settenNV(String tenNV) {
+    public void setTenNV(String tenNV) {
         this.tenNV = tenNV;
     }
-    
-    public Date getngaySinh() {
+
+    public Date getNgaySinh() {
         return ngaySinh;
     }
 
-    public void setngaySinh(Date ngaySinh) {
+    public void setNgaySinh(Date ngaySinh) {
         this.ngaySinh = ngaySinh;
     }
 
-    public Gender getgioiTinh() {
+    public Gender getGioiTinh() {
         return gioiTinh;
     }
 
-    public void setgioiTinh(Gender gioiTinh) {
+    public void setGioiTinh(Gender gioiTinh) {
         this.gioiTinh = gioiTinh;
-    }    
-    
-    public String getsdt() {
+    }
+
+    public String getSdt() {
         return sdt;
     }
 
-    public void setsdt(String sdt) {
+    public void setSdt(String sdt) {
         this.sdt = sdt;
     }
 
-    public String getemail() {
+    public String getEmail() {
         return email;
     }
 
-    public void setemail(String email) {
+    public void setEmail(String email) {
         this.email = email;
     }
-    
-    public String getdiaChi() {
+
+    public String getDiaChi() {
         return diaChi;
     }
 
-    public void setdiaChi(String diaChi) {
+    public void setDiaChi(String diaChi) {
         this.diaChi = diaChi;
     }
-   
-    public String getchiNhanh() {
+
+    public String getChiNhanh() {
         return chiNhanh;
     }
 
-    public void setchiNhanh(String chiNhanh) {
+    public void setChiNhanh(String chiNhanh) {
         this.chiNhanh = chiNhanh;
     }
-    
-    public boolean gettrangThai() {
+
+    public boolean isTrangThai() { // Theo chuẩn getter cho kiểu boolean
         return trangThai;
     }
 
-    public void settrangThai(Boolean trangThai) {
+    public void setTrangThai(boolean trangThai) {
         this.trangThai = trangThai;
     }
+
     //  toString() method (optional but very useful for debugging)
     @Override
     public String toString() {

@@ -21,29 +21,29 @@ public class ChiTietPhieuXuat {
         this.maSach = maSach;
         this.soLuong = soLuong;
     }
-
+    
     // Getters and Setters
-    public int getmaPX() {
+    public int getMaPX() {
         return maPX;
     }
 
-    public void setmaPX(int maPX) {
+    public void setMaPX(int maPX) {
         this.maPX = maPX;
     }
 
-    public int getmaSach() {
+    public int getMaSach() {
         return maSach;
     }
 
-    public void setmaSach(int maSach) {
+    public void setMaSach(int maSach) {
         this.maSach = maSach;
     }
 
-    public int getsoLuong() {
+    public int getSoLuong() {
         return soLuong;
     }
 
-    public void setsoLuong(int soLuong) {
+    public void setSoLuong(int soLuong) {
         this.soLuong = soLuong;
     }
 

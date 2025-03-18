@@ -35,53 +35,54 @@ public class NhaCungCap {
         this.sdt = sdt;
         this.trangThai = trangThai;
     }
-
+    
     // Getters and Setters
-    public int getmaNCC() {
+
+    public int getMaNCC() {
         return maNCC;
     }
 
-    public void setmaNCC(int maNCC) {
+    public void setMaNCC(int maNCC) {
         this.maNCC = maNCC;
     }
 
-    public String gettenNCC() {
+    public String getTenNCC() {
         return tenNCC;
     }
 
-    public void settenNCC(String tenNCC) {
+    public void setTenNCC(String tenNCC) {
         this.tenNCC = tenNCC;
     }
 
-    public String getdiaChi() {
+    public String getDiaChi() {
         return diaChi;
     }
 
-    public void setdiaChi(String diaChi) {
+    public void setDiaChi(String diaChi) {
         this.diaChi = diaChi;
     }
-    
-    public String getemail(){
+
+    public String getEmail() {
         return email;
     }
-    
-    public void setemail(String email){
+
+    public void setEmail(String email) {
         this.email = email;
     }
 
-    public String getsdt() {
+    public String getSdt() {
         return sdt;
     }
 
-    public void setsdt(String sdt) {
+    public void setSdt(String sdt) {
         this.sdt = sdt;
     }
 
-    public Status gettrangThai() {
+    public Status getTrangThai() {
         return trangThai;
     }
 
-    public void settrangThai(Status trangThai) {
+    public void setTrangThai(Status trangThai) {
         this.trangThai = trangThai;
     }
 

@@ -39,54 +39,56 @@ public class PhieuNhap {
     }
 
     // Getters and Setters
-    public int getmaPN() {
+
+    public int getMaPN() {
         return maPN;
     }
 
-    public void setmaPN(int maPN) {
+    public void setMaPN(int maPN) {
         this.maPN = maPN;
     }
 
-    public int getmaNCC() {
+    public int getMaNCC() {
         return maNCC;
     }
 
-    public void setmaNCC(int maNCC) {
+    public void setMaNCC(int maNCC) {
         this.maNCC = maNCC;
     }
 
-    public int getmaNV() {
+    public int getMaNV() {
         return maNV;
     }
 
-    public void setmaNV(int maNV) {
+    public void setMaNV(int maNV) {
         this.maNV = maNV;
     }
 
-    public Date getngayNhap() {
+    public Date getNgayNhap() {
         return ngayNhap;
     }
 
-    public void setngayNhap(Date ngayNhap) {
+    public void setNgayNhap(Date ngayNhap) {
         this.ngayNhap = ngayNhap;
     }
 
-    public Status gettrangThai() {
+    public Status getTrangThai() {
         return trangThai;
     }
 
-    public void settrangThai(Status trangThai) {
+    public void setTrangThai(Status trangThai) {
         this.trangThai = trangThai;
     }
 
-    public double gettongTien() {
+    public double getTongTien() {
         return tongTien;
     }
 
-    public void settongTien(double tongTien) {
+    public void setTongTien(double tongTien) {
         this.tongTien = tongTien;
     }
 
+    
     // toString() method
     @Override
     public String toString() {

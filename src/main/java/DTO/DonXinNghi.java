@@ -16,7 +16,7 @@ public class DonXinNghi {
 
     // Enum for trangThai
     public enum Status {
-        ChuaXuLy, DaDuyet, TuChoi
+        CHUA_XU_LY, DA_DUYET, TU_CHOI
     }
 
     // Constructors
@@ -51,86 +51,85 @@ public class DonXinNghi {
     }
 
     // Getters and Setters
-    public int getmaDon() {
+    public int getMaDon() {
         return maDon;
     }
 
-    public void setmaDon(int maDon) {
+    public void setMaDon(int maDon) {
         this.maDon = maDon;
     }
 
-    public int getmaNV() {
+    public int getMaNV() {
         return maNV;
     }
 
-    public void setmaNV(int maNV) {
+    public void setMaNV(int maNV) {
         this.maNV = maNV;
     }
 
-    public Date getngayNopDon() {
+    public Date getNgayNopDon() {
         return ngayNopDon;
     }
 
-    public void setngayNopDon(Date ngayNopDon) {
+    public void setNgayNopDon(Date ngayNopDon) {
         this.ngayNopDon = ngayNopDon;
     }
-    
-    public String getlyDo(){
+
+    public String getLyDo() {
         return lyDo;
     }
-    
-    public void setlyDo(String lyDo){
+
+    public void setLyDo(String lyDo) {
         this.lyDo = lyDo;
     }
 
-    public int getsoNgayNghi(){
+    public int getSoNgayNghi() {
         return soNgayNghi;
     }
-    
-    public void setsoNgayNghi(int soNgayNghi){
+
+    public void setSoNgayNghi(int soNgayNghi) {
         this.soNgayNghi = soNgayNghi;
     }
-    
-    public Date getngayBatDau() {
+
+    public Date getNgayBatDau() {
         return ngayBatDau;
     }
-    
-    public void setngayBatDau(Date ngayBatDau) {
+
+    public void setNgayBatDau(Date ngayBatDau) {
         this.ngayBatDau = ngayBatDau;
     }
-    
-    public Date getngayKetThuc() {
+
+    public Date getNgayKetThuc() {
         return ngayKetThuc;
     }
 
-    public void setngayKetThuc(Date ngayKetThuc) {
+    public void setNgayKetThuc(Date ngayKetThuc) {
         this.ngayKetThuc = ngayKetThuc;
     }
-    
-    public int getmaNguoiDuyet() {
+
+    public int getMaNguoiDuyet() {
         return maNguoiDuyet;
     }
 
-    public void setmaNguoiDuyet(int maNguoiDuyet) {
+    public void setMaNguoiDuyet(int maNguoiDuyet) {
         this.maNguoiDuyet = maNguoiDuyet;
     }
-    
-    public Date getngayDuyet() {
+
+    public Date getNgayDuyet() {
         return ngayDuyet;
     }
 
-    public void setngayDuyet(Date ngayDuyet) {
+    public void setNgayDuyet(Date ngayDuyet) {
         this.ngayDuyet = ngayDuyet;
     }
-    
-    public Status gettrangThai() {
+
+    public Status getTrangThai() {
         return trangThai;
     }
 
-    public void settrangThai(Status trangThai) {
+    public void setTrangThai(Status trangThai) {
         this.trangThai = trangThai;
     }
-
 
     // toString() method
     @Override
