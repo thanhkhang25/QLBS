@@ -19,7 +19,13 @@ public class QuanLyKhuyenMai extends javax.swing.JPanel {
      */
     public QuanLyKhuyenMai() {
         initComponents();
+        KhuyenMaiPanel.removeAll();
+        KhuyenMaiPanel.add(khuyenmaitheohoadon);
+        KhuyenMaiPanel.revalidate();
+        KhuyenMaiPanel.repaint(); 
     }
+    JPanel khuyenmaitheohoadon = new KhuyenMaiTheoHoaDon();
+    JPanel khuyenmaitheosach = new KhuyenMaiSach();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -30,211 +36,47 @@ public class QuanLyKhuyenMai extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        KhuyenMaiSach = new javax.swing.JButton();
-        KhuyenMaiChoHoaDon = new javax.swing.JButton();
-        KhuyenMaiTheoHoaDon = new javax.swing.JPanel();
-        KhuyenMaiHoaDon = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        CTKhuyenMaiHoaDon = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
-        jTextField9 = new javax.swing.JTextField();
-        jTextField10 = new javax.swing.JTextField();
-        jTextField12 = new javax.swing.JTextField();
-        jLabel16 = new javax.swing.JLabel();
+        KhuyenMaichoSachButton = new javax.swing.JButton();
+        KhuyenMaiChoHoaDonButton = new javax.swing.JButton();
+        KhuyenMaiPanel = new javax.swing.JPanel();
 
-        KhuyenMaiSach.setText("Khuyến Mãi Cho Sách");
-        KhuyenMaiSach.addActionListener(new java.awt.event.ActionListener() {
+        setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        KhuyenMaichoSachButton.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        KhuyenMaichoSachButton.setText("Khuyến Mãi Cho Sách");
+        KhuyenMaichoSachButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        KhuyenMaichoSachButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                KhuyenMaiSachActionPerformed(evt);
+                KhuyenMaichoSachButtonActionPerformed(evt);
             }
         });
 
-        KhuyenMaiChoHoaDon.setText("Khuyến Mãi Cho Hóa Đơn");
-        KhuyenMaiChoHoaDon.addActionListener(new java.awt.event.ActionListener() {
+        KhuyenMaiChoHoaDonButton.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        KhuyenMaiChoHoaDonButton.setText("Khuyến Mãi Cho Hóa Đơn");
+        KhuyenMaiChoHoaDonButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        KhuyenMaiChoHoaDonButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                KhuyenMaiChoHoaDonActionPerformed(evt);
+                KhuyenMaiChoHoaDonButtonActionPerformed(evt);
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "Mã Khuyến Mãi", "Giá Hóa Đơn ", "Phần Trăm Giảm", "Ngày Bắt Đầu", "Ngày Kết Thúc", "Trạng Thái"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
-
-        jLabel2.setText("Tìm kiếm ");
-
-        jTextField2.setText("jTextField1");
-
-        jButton5.setText("Tìm kiếm");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-
-        jButton6.setText("Xem tất cả");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
-            }
-        });
-
-        jButton7.setText("Thêm");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout KhuyenMaiHoaDonLayout = new javax.swing.GroupLayout(KhuyenMaiHoaDon);
-        KhuyenMaiHoaDon.setLayout(KhuyenMaiHoaDonLayout);
-        KhuyenMaiHoaDonLayout.setHorizontalGroup(
-            KhuyenMaiHoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(KhuyenMaiHoaDonLayout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                .addComponent(jButton7))
-            .addGroup(KhuyenMaiHoaDonLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1))
-        );
-        KhuyenMaiHoaDonLayout.setVerticalGroup(
-            KhuyenMaiHoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, KhuyenMaiHoaDonLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(KhuyenMaiHoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5)
-                    .addComponent(jButton6)
-                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1))
-        );
-
-        jLabel10.setText("Mã Khuyến Mãi");
-
-        jLabel11.setText("Loại Khuyến Mãi");
-
-        jLabel12.setText("Ngày Bắt Đầu");
-
-        jLabel13.setText("Ngày Kết Thúc");
-
-        jTextField8.setText("jTextField3");
-
-        jTextField9.setText("jTextField4");
-
-        jTextField10.setText("jTextField5");
-
-        jTextField12.setText("jTextField7");
-
-        jLabel16.setText("Chi Tiết Khuyến Mãi");
-
-        javax.swing.GroupLayout CTKhuyenMaiHoaDonLayout = new javax.swing.GroupLayout(CTKhuyenMaiHoaDon);
-        CTKhuyenMaiHoaDon.setLayout(CTKhuyenMaiHoaDonLayout);
-        CTKhuyenMaiHoaDonLayout.setHorizontalGroup(
-            CTKhuyenMaiHoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(CTKhuyenMaiHoaDonLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(CTKhuyenMaiHoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel13)
-                    .addGroup(CTKhuyenMaiHoaDonLayout.createSequentialGroup()
-                        .addGroup(CTKhuyenMaiHoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel11)
-                            .addComponent(jLabel12))
-                        .addGap(24, 24, 24)
-                        .addGroup(CTKhuyenMaiHoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(CTKhuyenMaiHoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jTextField8, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
-                                .addComponent(jTextField9)
-                                .addComponent(jTextField10)
-                                .addComponent(jTextField12))
-                            .addComponent(jLabel16))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        CTKhuyenMaiHoaDonLayout.setVerticalGroup(
-            CTKhuyenMaiHoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(CTKhuyenMaiHoaDonLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(jLabel16)
-                .addGap(18, 18, 18)
-                .addGroup(CTKhuyenMaiHoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(CTKhuyenMaiHoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel11)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(CTKhuyenMaiHoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel12)
-                    .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(CTKhuyenMaiHoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel13)
-                    .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(584, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout KhuyenMaiTheoHoaDonLayout = new javax.swing.GroupLayout(KhuyenMaiTheoHoaDon);
-        KhuyenMaiTheoHoaDon.setLayout(KhuyenMaiTheoHoaDonLayout);
-        KhuyenMaiTheoHoaDonLayout.setHorizontalGroup(
-            KhuyenMaiTheoHoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(KhuyenMaiTheoHoaDonLayout.createSequentialGroup()
-                .addComponent(KhuyenMaiHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(CTKhuyenMaiHoaDon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        KhuyenMaiTheoHoaDonLayout.setVerticalGroup(
-            KhuyenMaiTheoHoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(KhuyenMaiTheoHoaDonLayout.createSequentialGroup()
-                .addGroup(KhuyenMaiTheoHoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(KhuyenMaiTheoHoaDonLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(CTKhuyenMaiHoaDon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(KhuyenMaiHoaDon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
+        KhuyenMaiPanel.setBackground(new java.awt.Color(204, 255, 255));
+        KhuyenMaiPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        KhuyenMaiPanel.setLayout(new java.awt.CardLayout());
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(KhuyenMaiChoHoaDonButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(KhuyenMaichoSachButton)
+                .addContainerGap(813, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(KhuyenMaiTheoHoaDon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(KhuyenMaiChoHoaDon)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(KhuyenMaiSach)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addComponent(KhuyenMaiPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -242,58 +84,33 @@ public class QuanLyKhuyenMai extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(KhuyenMaiSach)
-                    .addComponent(KhuyenMaiChoHoaDon))
+                    .addComponent(KhuyenMaichoSachButton)
+                    .addComponent(KhuyenMaiChoHoaDonButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(KhuyenMaiTheoHoaDon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(KhuyenMaiPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 451, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void KhuyenMaiSachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KhuyenMaiSachActionPerformed
+    private void KhuyenMaichoSachButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KhuyenMaichoSachButtonActionPerformed
         // TODO add your handling code here:
-        
-    }//GEN-LAST:event_KhuyenMaiSachActionPerformed
+        KhuyenMaiPanel.removeAll();
+        KhuyenMaiPanel.add(khuyenmaitheosach);
+        KhuyenMaiPanel.revalidate();
+        KhuyenMaiPanel.repaint();
+    }//GEN-LAST:event_KhuyenMaichoSachButtonActionPerformed
 
-    private void KhuyenMaiChoHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KhuyenMaiChoHoaDonActionPerformed
+    private void KhuyenMaiChoHoaDonButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KhuyenMaiChoHoaDonButtonActionPerformed
         // TODO add your handling code here:
-        
-    }//GEN-LAST:event_KhuyenMaiChoHoaDonActionPerformed
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
-
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton7ActionPerformed
-
+        KhuyenMaiPanel.removeAll();
+        KhuyenMaiPanel.add(khuyenmaitheohoadon);
+        KhuyenMaiPanel.revalidate();
+        KhuyenMaiPanel.repaint();      
+    }//GEN-LAST:event_KhuyenMaiChoHoaDonButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel CTKhuyenMaiHoaDon;
-    private javax.swing.JButton KhuyenMaiChoHoaDon;
-    private javax.swing.JPanel KhuyenMaiHoaDon;
-    private javax.swing.JButton KhuyenMaiSach;
-    private javax.swing.JPanel KhuyenMaiTheoHoaDon;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
+    private javax.swing.JButton KhuyenMaiChoHoaDonButton;
+    private javax.swing.JPanel KhuyenMaiPanel;
+    private javax.swing.JButton KhuyenMaichoSachButton;
     // End of variables declaration//GEN-END:variables
 }
