@@ -360,7 +360,7 @@ public class MainWindow extends javax.swing.JFrame {
     };
     
     JPanel quanLySachPanel = new QuanLySach();
-    JPanel quanLyNhanVienPanel = new QuanLyNhanVIen();
+    JPanel quanLyNhanVienPanel = new QuanLyNhanVien();
     JPanel quanLyNhaCungCapPanel = new QuanLyNhaCungCap();
     JPanel quanLyTaiKhoanPanel = new QuanLyTaiKhoan();
     JPanel thongBaoNghiPanel = new ThongBaoNghi();

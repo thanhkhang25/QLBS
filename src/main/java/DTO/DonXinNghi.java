@@ -1,150 +1,94 @@
 package DTO;
 
-import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class DonXinNghi {
     private int maDon;
     private int maNV; 
-    private Date ngayNopDon;
-    private String lyDo;
-    private int soNgayNghi;
-    private Date ngayBatDau;
-    private Date ngayKetThuc;
     private int maNguoiDuyet;
-    private Date ngayDuyet;
-    private Status trangThai;      // Using enum
-
-    // Enum for trangThai
-    public enum Status {
-        CHUA_XU_LY, DA_DUYET, TU_CHOI
-    }
-
-    // Constructors
+    private LocalDateTime ngayNopDon;
+    private String noiDung;
+    private LocalDate ngayBatDau;
+    private int soNgayNghi;
+    private LocalDate ngayKetThuc;
+    private LocalDateTime ngayDuyet;
+    private String trangThai;
+    
     public DonXinNghi() {
     }
-
-    // Constructor without maDon (Tao moi)
-    public DonXinNghi(int maNV, Date ngayNopDon, String lyDo, int soNgayNghi, Date ngayBatDau, Date ngayKetThuc, int maNguoiDuyet, Date ngayDuyet, Status trangThai) {
-        this.maNV = maNV;
-        this.ngayNopDon = ngayNopDon;
-        this.lyDo = lyDo;
-        this.soNgayNghi = soNgayNghi;
-        this.ngayBatDau = ngayBatDau;
-        this.ngayKetThuc = ngayKetThuc;
-        this.maNguoiDuyet = maNguoiDuyet;
-        this.ngayDuyet = ngayDuyet;
-        this.trangThai = trangThai;
-    }
-
-    // Constructor with maDon (for existing receipts)
-    public DonXinNghi(int maDon,int maNV, Date ngayNopDon, String lyDo, int soNgayNghi, Date ngayBatDau, Date ngayKetThuc, int maNguoiDuyet, Date ngayDuyet, Status trangThai) {
+    public DonXinNghi(int maDon, int maNV, int maNguoiDuyet, LocalDateTime ngayNopDon, String noiDung,
+            LocalDate ngayBatDau, int soNgayNghi, LocalDate ngayKetThuc, LocalDateTime ngayDuyet, String trangThai) {
         this.maDon = maDon;
         this.maNV = maNV;
-        this.ngayNopDon = ngayNopDon;
-        this.lyDo = lyDo;
-        this.soNgayNghi = soNgayNghi;
-        this.ngayBatDau = ngayBatDau;
-        this.ngayKetThuc = ngayKetThuc;
         this.maNguoiDuyet = maNguoiDuyet;
+        this.ngayNopDon = ngayNopDon;
+        this.noiDung = noiDung;
+        this.ngayBatDau = ngayBatDau;
+        this.soNgayNghi = soNgayNghi;
+        this.ngayKetThuc = ngayKetThuc;
         this.ngayDuyet = ngayDuyet;
         this.trangThai = trangThai;
     }
 
-    // Getters and Setters
     public int getMaDon() {
         return maDon;
     }
-
     public void setMaDon(int maDon) {
         this.maDon = maDon;
     }
-
     public int getMaNV() {
         return maNV;
     }
-
     public void setMaNV(int maNV) {
         this.maNV = maNV;
     }
-
-    public Date getNgayNopDon() {
-        return ngayNopDon;
-    }
-
-    public void setNgayNopDon(Date ngayNopDon) {
-        this.ngayNopDon = ngayNopDon;
-    }
-
-    public String getLyDo() {
-        return lyDo;
-    }
-
-    public void setLyDo(String lyDo) {
-        this.lyDo = lyDo;
-    }
-
-    public int getSoNgayNghi() {
-        return soNgayNghi;
-    }
-
-    public void setSoNgayNghi(int soNgayNghi) {
-        this.soNgayNghi = soNgayNghi;
-    }
-
-    public Date getNgayBatDau() {
-        return ngayBatDau;
-    }
-
-    public void setNgayBatDau(Date ngayBatDau) {
-        this.ngayBatDau = ngayBatDau;
-    }
-
-    public Date getNgayKetThuc() {
-        return ngayKetThuc;
-    }
-
-    public void setNgayKetThuc(Date ngayKetThuc) {
-        this.ngayKetThuc = ngayKetThuc;
-    }
-
     public int getMaNguoiDuyet() {
         return maNguoiDuyet;
     }
-
     public void setMaNguoiDuyet(int maNguoiDuyet) {
         this.maNguoiDuyet = maNguoiDuyet;
     }
-
-    public Date getNgayDuyet() {
+    public LocalDateTime getNgayNopDon() {
+        return ngayNopDon;
+    }
+    public void setNgayNopDon(LocalDateTime ngayNopDon) {
+        this.ngayNopDon = ngayNopDon;
+    }
+    public String getNoiDung() {
+        return noiDung;
+    }
+    public void setNoiDung(String noiDung) {
+        this.noiDung = noiDung;
+    }
+    public LocalDate getNgayBatDau() {
+        return ngayBatDau;
+    }
+    public void setNgayBatDau(LocalDate ngayBatDau) {
+        this.ngayBatDau = ngayBatDau;
+    }
+    public int getSoNgayNghi() {
+        return soNgayNghi;
+    }
+    public void setSoNgayNghi(int soNgayNghi) {
+        this.soNgayNghi = soNgayNghi;
+    }
+    public LocalDate getNgayKetThuc() {
+        return ngayKetThuc;
+    }
+    public void setNgayKetThuc(LocalDate ngayKetThuc) {
+        this.ngayKetThuc = ngayKetThuc;
+    }
+    public LocalDateTime getNgayDuyet() {
         return ngayDuyet;
     }
-
-    public void setNgayDuyet(Date ngayDuyet) {
+    public void setNgayDuyet(LocalDateTime ngayDuyet) {
         this.ngayDuyet = ngayDuyet;
     }
-
-    public Status getTrangThai() {
+    public String getTrangThai() {
         return trangThai;
     }
-
-    public void setTrangThai(Status trangThai) {
+    public void setTrangThai(String trangThai) {
         this.trangThai = trangThai;
-    }
-
-    // toString() method
-    @Override
-    public String toString() {
-        return "DonXinNghi{" +
-                "maDon=" + maDon +
-                ", maNV=" + maNV +
-                ", ngayNopDon=" + ngayNopDon +
-                ", lyDo=" + lyDo +
-                ", soNgayNghi=" + soNgayNghi +
-                ", ngayBatDau=" + ngayBatDau +
-                ", ngayKetThuc=" + ngayKetThuc +
-                ", maNguoiDuyet=" + maNV +
-                ", ngayDuyet=" + ngayDuyet +
-                ", trangThai=" + trangThai +
-                '}';
     }
 }

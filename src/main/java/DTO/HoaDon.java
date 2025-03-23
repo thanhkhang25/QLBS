@@ -1,94 +1,68 @@
 package DTO;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 public class HoaDon {
     private int maHoaDon;
     private int maNV;
-    private Date ngayBan;
     private int maKM;
-    private double tongTien; // double for DECIMAL(12,2)
-    private Status trangThai;     // Using enum
+    private LocalDateTime ngayBan;
+    private double tongTien;
+    private String chiNhanh;
+    private String trangThai;
 
-    // Enum for trangThai
-    public enum Status {
-        PENDING, COMPLETED, CANCELLED
-    }
-
-    // Constructors
-    public HoaDon() {
-    }
-
-    // Constructor without maHoaDon (for new receipts)
-    public HoaDon(int maNV, Date ngayBan, int maKM, double tongTien, Status trangThai) {
-        this.maNV = maNV;
-        this.ngayBan = ngayBan;
-        this.maKM = maKM;
-        this.tongTien = tongTien;
-        this.trangThai = trangThai;
-    }
-
-    // Constructor with maHoaDon (for existing receipts)
-    public HoaDon(int maHoaDon, int maNV, int maKM, Date ngayBan, double tongTien, Status trangThai) {
+    public HoaDon() {}
+    public HoaDon(int maHoaDon, int maNV, int maKM, LocalDateTime ngayBan, double tongTien, String chiNhanh,
+            String trangThai) {
         this.maHoaDon = maHoaDon;
         this.maNV = maNV;
-        this.ngayBan = ngayBan;
         this.maKM = maKM;
+        this.ngayBan = ngayBan;
         this.tongTien = tongTien;
+        this.chiNhanh = chiNhanh;
         this.trangThai = trangThai;
     }
-
-    // Getters and Setters
+    
     public int getMaHoaDon() {
         return maHoaDon;
     }
-
     public void setMaHoaDon(int maHoaDon) {
         this.maHoaDon = maHoaDon;
     }
-
     public int getMaNV() {
         return maNV;
     }
-
     public void setMaNV(int maNV) {
         this.maNV = maNV;
     }
-
-    public Date getNgayBan() {
+    public int getMaKM() {
+        return maKM;
+    }
+    public void setMaKM(int maKM) {
+        this.maKM = maKM;
+    }
+    public LocalDateTime getNgayBan() {
         return ngayBan;
     }
-
-    public void setNgayBan(Date ngayBan) {
+    public void setNgayBan(LocalDateTime ngayBan) {
         this.ngayBan = ngayBan;
     }
-
     public double getTongTien() {
         return tongTien;
     }
-
     public void setTongTien(double tongTien) {
         this.tongTien = tongTien;
     }
-
-    public Status getTrangThai() {
+    public String getChiNhanh() {
+        return chiNhanh;
+    }
+    public void setChiNhanh(String chiNhanh) {
+        this.chiNhanh = chiNhanh;
+    }
+    public String getTrangThai() {
         return trangThai;
     }
-
-    public void setTrangThai(Status trangThai) {
+    public void setTrangThai(String trangThai) {
         this.trangThai = trangThai;
-    }
-
-    // toString() method
-    @Override
-    public String toString() {
-        return "HoaDon{" +
-                "maHoaDon=" + maHoaDon +
-                ", maNV=" + maNV +
-                ", ngayBan=" + ngayBan +
-                ", maKM=" + maKM +
-                ", tongTien=" + tongTien +
-                ", trangThai=" + trangThai +
-                '}';
     }
 }

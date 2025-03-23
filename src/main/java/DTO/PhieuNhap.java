@@ -1,104 +1,59 @@
 package DTO;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 public class PhieuNhap {
     private int maPN;
-    private int maNCC; 
     private int maNV;
-    private Date ngayNhap;
-    private Status trangThai;      // Using enum
-    private double tongTien; // double for DECIMAL(12,2)
+    private int maNCC; 
+    private LocalDateTime ngayNhap;
+    private double tongTien;
+    private String trangThai;
 
-    // Enum for trangThai
-    public enum Status {
-        PENDING, COMPLETED, CANCELLED
-    }
-
-    // Constructors
-    public PhieuNhap() {
-    }
-
-    // Constructor without maPN (for new receipts)
-    public PhieuNhap(int maNCC, int maNV, Date ngayNhap, Status trangThai, double tongTien) {
-        this.maNCC = maNCC;
-        this.maNV = maNV;
-        this.ngayNhap = ngayNhap;
-        this.trangThai = trangThai;
-        this.tongTien = tongTien;
-    }
-
-    // Constructor with maPN (for existing receipts)
-    public PhieuNhap(int maPN, int maNCC, int maNV, Date ngayNhap, Status trangThai, double tongTien) {
+    public PhieuNhap() {}
+    public PhieuNhap(int maPN, int maNV, int maNCC, LocalDateTime ngayNhap, double tongTien, String trangThai) {
         this.maPN = maPN;
-        this.maNCC = maNCC;
         this.maNV = maNV;
+        this.maNCC = maNCC;
         this.ngayNhap = ngayNhap;
-        this.trangThai = trangThai;
         this.tongTien = tongTien;
+        this.trangThai = trangThai;
     }
-
-    // Getters and Setters
 
     public int getMaPN() {
         return maPN;
     }
-
     public void setMaPN(int maPN) {
         this.maPN = maPN;
     }
-
-    public int getMaNCC() {
-        return maNCC;
-    }
-
-    public void setMaNCC(int maNCC) {
-        this.maNCC = maNCC;
-    }
-
     public int getMaNV() {
         return maNV;
     }
-
     public void setMaNV(int maNV) {
         this.maNV = maNV;
     }
-
-    public Date getNgayNhap() {
+    public int getMaNCC() {
+        return maNCC;
+    }
+    public void setMaNCC(int maNCC) {
+        this.maNCC = maNCC;
+    }
+    public LocalDateTime getNgayNhap() {
         return ngayNhap;
     }
-
-    public void setNgayNhap(Date ngayNhap) {
+    public void setNgayNhap(LocalDateTime ngayNhap) {
         this.ngayNhap = ngayNhap;
     }
-
-    public Status getTrangThai() {
-        return trangThai;
-    }
-
-    public void setTrangThai(Status trangThai) {
-        this.trangThai = trangThai;
-    }
-
     public double getTongTien() {
         return tongTien;
     }
-
     public void setTongTien(double tongTien) {
         this.tongTien = tongTien;
     }
-
-    
-    // toString() method
-    @Override
-    public String toString() {
-        return "PhieuNhap{" +
-                "maPN=" + maPN +
-                ", maNCC=" + maNCC +
-                ", maNV=" + maNV +
-                ", ngayNhap=" + ngayNhap +
-                ", trangThai=" + trangThai +
-                ", tongTien=" + tongTien +
-                '}';
+    public String getTrangThai() {
+        return trangThai;
+    }
+    public void setTrangThai(String trangThai) {
+        this.trangThai = trangThai;
     }
 }
