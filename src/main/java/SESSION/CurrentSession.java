@@ -1,10 +1,11 @@
 package SESSION;
 
 public class CurrentSession {
-    private static int maNV =20;
+    private static int maNV = 27;
     private static String tenNV;
     private static int maTK; // Thêm thuộc tính mã tài khoản
-
+    private static String chucVu="Quản lý nhân viên";
+    
     public static int getMaNV() {
         return maNV;
     }
@@ -29,10 +30,19 @@ public class CurrentSession {
         CurrentSession.maTK = maTK;
     }
     
+    public static String getChucVu(){
+        return chucVu;
+    }
+    
+    public static void setChucVu(String chucVu){
+        CurrentSession.chucVu = chucVu;
+    }
+    
     // Phương thức reset phiên nếu cần
     public static void clear() {
         maNV = 0;
         tenNV = null;
         maTK = 0;
+        chucVu = null;
     }
 }

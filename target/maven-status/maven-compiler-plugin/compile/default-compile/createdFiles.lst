@@ -1,3 +1,4 @@
+GUI\ThemTBN$3.class
 GUI\ThemHSL$2.class
 BUS\ChamCongBUS.class
 GUI\ChamCong.class
@@ -20,6 +21,7 @@ GUI\ThongBaoNghi$4.class
 GUI\QL_ThongTinCaNhanVaTaiKhoan.class
 GUI\ThemPX$2.class
 GUI\QuanLyPhieuNhap$3.class
+GUI\ThongBaoNghi$10.class
 DTO\ChiTietKhuyenMaiChoSach.class
 DTO\TaiKhoan.class
 GUI\CachTinhLuong$3.class
@@ -31,12 +33,14 @@ GUI\QuanLyPhieuXuat$3.class
 DAL\ChamCongDAL.class
 GUI\QuanLySach$3.class
 DTO\PhieuNhap.class
+GUI\ThongBaoNghi$11.class
 BUS\TaiKhoanBUS.class
 GUI\XemLuong$4.class
 DTO\ChiTietKhuyenMaiChoHoaDon.class
 GUI\QuanLyHoaDon$5.class
 GUI\ThemPN.class
 DTO\ChiTietHoaDon.class
+GUI\ThongBaoNghi$9.class
 GUI\QuanLyNhaCungCap$2.class
 GUI\ThemKhuyenMaiSach$2.class
 GUI\ThemPN$1.class
@@ -47,6 +51,7 @@ GUI\CachTinhLuong$1.class
 GUI\ThemHD$1.class
 GUI\QuanLyTaiKhoan$5.class
 GUI\XemLuong$5.class
+GUI\ThongBaoNghi$8.class
 GUI\QuanLyPhieuXuat.class
 GUI\ChamCong$3.class
 GUI\MainWindow$10.class
@@ -55,6 +60,7 @@ GUI\XemLuong$8.class
 GUI\ThemTBN.class
 DATABASE\TestConnection.class
 GUI\CachTinhLuong.class
+GUI\ThemTBN$2.class
 GUI\MainWindow$7.class
 GUI\ThemNV$1.class
 GUI\MainWindow$4.class
@@ -63,12 +69,15 @@ GUI\ThemSach$1.class
 DTO\ChamCong.class
 GUI\QL_ThongTinCaNhanVaTaiKhoan$2.class
 GUI\XemLuong$7.class
+GUI\ThongBaoNghi$7.class
 BUS\LuongBUS.class
 GUI\MainWindow$6.class
 GUI\QuanLyNhanVien$1.class
 GUI\KhuyenMaiTheoHoaDon.class
 DTO\LichSuGiaBan.class
+BUS\DonXinNghiBUS.class
 GUI\QuanLySach$1.class
+GUI\ThemTBN$4.class
 DTO\DonXinNghi.class
 GUI\ThemKMTheoHD$2.class
 GUI\QuanLyTaiKhoan$3.class

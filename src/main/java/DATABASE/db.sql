@@ -923,6 +923,31 @@ BEGIN
 END;
 GO
 
+-- SP duyệt đơn xin nghỉ
+CREATE PROCEDURE sp_ApproveDonXinNghi
+    @maDon INT
+AS
+BEGIN
+    -- Cập nhật trạng thái thành 'Đã duyệt'
+    UPDATE DonXinNghi
+    SET trangThai = N'Đã duyệt'
+    WHERE maDon = @maDon;
+END;
+GO
+
+-- SP từ chối đơn xin nghỉ
+CREATE PROCEDURE sp_RejectDonXinNghi
+    @maDon INT
+AS
+BEGIN
+    -- Cập nhật trạng thái thành 'Bị từ chối'
+    UPDATE DonXinNghi
+    SET trangThai = N'Bị từ chối'
+    WHERE maDon = @maDon;
+END;
+GO
+
+
 -- Mục đích: Lấy toàn bộ danh sách tài khoản từ bảng TaiKhoan.
 CREATE PROCEDURE sp_LayTaiKhoan
 AS

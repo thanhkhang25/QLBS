@@ -3,7 +3,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package GUI;
-
+import BUS.DonXinNghiBUS;
+import DTO.DonXinNghi;
+import SESSION.CurrentSession;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -14,8 +21,70 @@ public class ThemTBN extends javax.swing.JFrame {
     /**
      * Creates new form ThemNV
      */
+    // Định dạng ngày chuẩn
+    private final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     public ThemTBN() {
         initComponents();
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        // Cho phép cửa sổ nhận focus
+        setFocusableWindowState(true);
+        // Cập nhật thông tin nhân viên từ phiên đăng nhập
+        txtMaNhanVien.setText(String.valueOf(CurrentSession.getMaNV()));
+        txtTenNhanVien.setText(CurrentSession.getTenNV());
+
+        // Cho phép người dùng nhập vào ô ngày bắt đầu, số ngày nghỉ, và ngày kết thúc
+        txtNgayBatDau.setEditable(true);
+        txtSoNgayNghi.setEditable(true);
+        txtNgayKetThuc.setEditable(true);
+
+        // Thêm listener cho txtSoNgayNghi: khi mất focus, tự tính ngày kết thúc dựa trên ngày bắt đầu
+        txtSoNgayNghi.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                updateNgayKetThucFromSoNgay();
+            }
+        });
+        // Thêm listener cho txtNgayKetThuc: khi mất focus, tự tính số ngày nghỉ dựa trên ngày bắt đầu
+        txtNgayKetThuc.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                updateSoNgayFromNgayKetThuc();
+            }
+        });
+    }
+    // Phương thức tính toán ngày kết thúc từ ngày bắt đầu và số ngày nghỉ
+    private void updateNgayKetThucFromSoNgay() {
+        String startStr = txtNgayBatDau.getText().trim();
+        String soNgayStr = txtSoNgayNghi.getText().trim();
+        if(startStr.isEmpty() || soNgayStr.isEmpty()){
+            return;
+        }
+        try {
+            LocalDate ngayBatDau = LocalDate.parse(startStr, dtf);
+            int soNgay = Integer.parseInt(soNgayStr);
+            // Giả sử: Ngày kết thúc = ngày bắt đầu + số ngày nghỉ (có thể điều chỉnh nếu cần)
+            LocalDate ngayKetThuc = ngayBatDau.plusDays(soNgay);
+            txtNgayKetThuc.setText(ngayKetThuc.format(dtf));
+        } catch (DateTimeParseException | NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Lỗi định dạng ngày hoặc số ngày nghỉ: " + ex.getMessage());
+        }
+    }
+    
+    // Nếu bạn muốn cho phép nhập ngày kết thúc và tự động tính số ngày nghỉ, bạn có thể thêm:
+    private void updateSoNgayFromNgayKetThuc() {
+        String startStr = txtNgayBatDau.getText().trim();
+        String endStr = txtNgayKetThuc.getText().trim();
+        if(startStr.isEmpty() || endStr.isEmpty()){
+            return;
+        }
+        try {
+            LocalDate ngayBatDau = LocalDate.parse(startStr, dtf);
+            LocalDate ngayKetThuc = LocalDate.parse(endStr, dtf);
+            // Tính số ngày nghỉ là hiệu của hai ngày (có thể điều chỉnh theo nghiệp vụ)
+            int soNgay = (int) java.time.temporal.ChronoUnit.DAYS.between(ngayBatDau, ngayKetThuc);
+            txtSoNgayNghi.setText(String.valueOf(soNgay));
+        } catch (DateTimeParseException ex) {
+            JOptionPane.showMessageDialog(this, "Lỗi định dạng ngày: " + ex.getMessage());
+        }
     }
 
     /**
@@ -35,14 +104,14 @@ public class ThemTBN extends javax.swing.JFrame {
         pnlThemTBN = new javax.swing.JPanel();
         lblMaNhanVien = new javax.swing.JLabel();
         lblTenNhanVien = new javax.swing.JLabel();
-        lblSoNgayNghi = new javax.swing.JLabel();
-        lblLyDo = new javax.swing.JLabel();
         lblNgayBatDau = new javax.swing.JLabel();
+        lblLyDo = new javax.swing.JLabel();
+        lblSoNgayNghi = new javax.swing.JLabel();
         lblNgayKetThuc = new javax.swing.JLabel();
         txtMaNhanVien = new javax.swing.JTextField();
         txtTenNhanVien = new javax.swing.JTextField();
-        txtSoNgayNghi = new javax.swing.JTextField();
         txtNgayBatDau = new javax.swing.JTextField();
+        txtSoNgayNghi = new javax.swing.JTextField();
         txtNgayKetThuc = new javax.swing.JTextField();
         cmbLyDo = new javax.swing.JComboBox<>();
         btnThem = new javax.swing.JButton();
@@ -69,19 +138,25 @@ public class ThemTBN extends javax.swing.JFrame {
         lblTenNhanVien.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         lblTenNhanVien.setText("Tên Nhân Viên");
 
-        lblSoNgayNghi.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        lblSoNgayNghi.setText("Số Ngày Nghỉ");
+        lblNgayBatDau.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        lblNgayBatDau.setText("Ngày Bắt đầu");
 
         lblLyDo.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         lblLyDo.setText("Lý Do");
 
-        lblNgayBatDau.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        lblNgayBatDau.setText("Ngày Bắt đâu");
+        lblSoNgayNghi.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        lblSoNgayNghi.setText("Số Ngày Nghỉ");
 
         lblNgayKetThuc.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         lblNgayKetThuc.setText("Ngày Kết Thúc");
 
-        cmbLyDo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        txtMaNhanVien.setEditable(false);
+        txtMaNhanVien.setEnabled(false);
+
+        txtTenNhanVien.setEditable(false);
+        txtTenNhanVien.setEnabled(false);
+
+        cmbLyDo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Xin nghỉ việc", "Nghỉ thai sản", "Lý do khác(bệnh, gia đình)" }));
 
         btnThem.setBackground(new java.awt.Color(0, 71, 171));
         btnThem.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
@@ -89,6 +164,11 @@ public class ThemTBN extends javax.swing.JFrame {
         btnThem.setText("Thêm");
         btnThem.setToolTipText("");
         btnThem.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemActionPerformed(evt);
+            }
+        });
 
         lblThemTBN.setBackground(new java.awt.Color(186, 224, 243));
         lblThemTBN.setFont(new java.awt.Font("Times New Roman", 3, 36)); // NOI18N
@@ -111,14 +191,14 @@ public class ThemTBN extends javax.swing.JFrame {
                                 .addGroup(pnlThemTBNLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblMaNhanVien)
                                     .addComponent(lblTenNhanVien)
-                                    .addComponent(lblSoNgayNghi)
+                                    .addComponent(lblNgayBatDau)
                                     .addComponent(lblNgayKetThuc)
-                                    .addComponent(lblNgayBatDau))
+                                    .addComponent(lblSoNgayNghi))
                                 .addGap(53, 53, 53)
                                 .addGroup(pnlThemTBNLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtNgayKetThuc, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtNgayBatDau, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtSoNgayNghi, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtNgayBatDau, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtTenNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtMaNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(cmbLyDo, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -147,12 +227,12 @@ public class ThemTBN extends javax.swing.JFrame {
                     .addComponent(txtTenNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlThemTBNLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblSoNgayNghi)
-                    .addComponent(txtSoNgayNghi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(9, 9, 9)
-                .addGroup(pnlThemTBNLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblNgayBatDau)
                     .addComponent(txtNgayBatDau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(9, 9, 9)
+                .addGroup(pnlThemTBNLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblSoNgayNghi)
+                    .addComponent(txtSoNgayNghi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlThemTBNLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNgayKetThuc)
@@ -184,6 +264,101 @@ public class ThemTBN extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+        // TODO add your handling code here:
+                // Lấy thông tin từ giao diện
+        try {
+            int maNV = Integer.parseInt(txtMaNhanVien.getText().trim());
+            String tenNV = txtTenNhanVien.getText().trim();  // Từ phiên đăng nhập, không cho sửa
+            String ngayBatDauStr = txtNgayBatDau.getText().trim();
+            String soNgayStr = txtSoNgayNghi.getText().trim();
+            String ngayKetThucStr = txtNgayKetThuc.getText().trim();
+            String lyDo = (String) cmbLyDo.getSelectedItem();
+            // Kiểm tra ô ngày bắt đầu phải không rỗng
+            if (ngayBatDauStr.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Bạn phải nhập ngày bắt đầu nghỉ!");
+                return;
+            }
+            // Phải nhập ít nhất số ngày nghỉ hoặc ngày kết thúc
+            if (soNgayStr.isEmpty() && ngayKetThucStr.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Bạn phải nhập số ngày nghỉ hoặc ngày kết thúc nghỉ!");
+                return;
+            }
+
+            LocalDate ngayBatDau;
+            try {
+                ngayBatDau = LocalDate.parse(ngayBatDauStr, dtf);
+            } catch (DateTimeParseException ex) {
+                JOptionPane.showMessageDialog(this, "Ngày bắt đầu không hợp lệ! Vui lòng nhập theo định dạng yyyy-MM-dd.");
+                return;
+            }
+
+            // Điều kiện: ngày bắt đầu phải ít nhất sau ngày hôm nay 1 ngày
+            if (!ngayBatDau.isAfter(LocalDate.now())) {
+                JOptionPane.showMessageDialog(this, "Ngày bắt đầu nghỉ phải sau ngày hôm nay ít nhất 1 ngày!");
+                return;
+            }
+
+            int soNgayNghi = 0;
+            LocalDate ngayKetThuc = null;
+            if (!soNgayStr.isEmpty()) {
+                try {
+                    soNgayNghi = Integer.parseInt(soNgayStr);
+                    if (soNgayNghi <= 0) {
+                        JOptionPane.showMessageDialog(this, "Số ngày nghỉ phải lớn hơn 0.");
+                        return;
+                    }
+                    ngayKetThuc = ngayBatDau.plusDays(soNgayNghi);
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(this, "Số ngày nghỉ không hợp lệ!");
+                    return;
+                }
+            } else {
+                try {
+                    ngayKetThuc = LocalDate.parse(ngayKetThucStr, dtf);
+                    soNgayNghi = (int) ChronoUnit.DAYS.between(ngayBatDau, ngayKetThuc);
+                    if (soNgayNghi <= 0) {
+                        JOptionPane.showMessageDialog(this, "Ngày kết thúc phải sau ngày bắt đầu và số ngày nghỉ > 0.");
+                        return;
+                    }
+                } catch (DateTimeParseException ex) {
+                    JOptionPane.showMessageDialog(this, "Ngày kết thúc không hợp lệ! Vui lòng nhập theo định dạng yyyy-MM-dd.");
+                    return;
+                }
+            }
+            
+            // Tạo đối tượng DonXinNghi
+            DonXinNghi don = new DonXinNghi();
+            don.setMaNV(CurrentSession.getMaNV());
+            // maNguoiDuyet ban đầu để NULL vì chưa duyệt
+            don.setMaNguoiDuyet(0);  
+            // Sử dụng ngày hiện tại làm ngày nộp đơn
+            don.setNgayNopDon(java.time.LocalDateTime.now());
+            don.setNoiDung(lyDo);
+            don.setNgayBatDau(ngayBatDau);
+            don.setSoNgayNghi(soNgayNghi);
+            // Ngày kết thúc được tính tự động
+            // (Nếu bảng sử dụng computed column, bạn có thể không cần set, nhưng nếu cần, set luôn)
+            //don.setNgayKetThuc(ngayKetThuc); 
+            don.setNgayDuyet(null);
+            don.setTrangThai("Chờ duyệt");
+            
+            // Gọi BUS để thêm đơn xin nghỉ
+            DonXinNghiBUS donBUS = new DonXinNghiBUS();
+            boolean success = donBUS.addDonXinNghi(don);
+            if (success) {
+                JOptionPane.showMessageDialog(this, "Thêm đơn xin nghỉ thành công!");
+                // Bạn có thể xóa sạch các trường nhập hoặc đóng form
+                dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, "Thêm đơn xin nghỉ thất bại!");
+            }
+            
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Có lỗi xảy ra: " + ex.getMessage());
+        }
+    }//GEN-LAST:event_btnThemActionPerformed
 
     /**
      * @param args the command line arguments

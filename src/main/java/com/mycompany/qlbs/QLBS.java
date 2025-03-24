@@ -5,13 +5,15 @@ import GUI.QL_ThongTinCaNhanVaTaiKhoan;
 import javax.swing.JFrame;
 import GUI.QuanLyNhanVien;
 import GUI.QuanLyTaiKhoan;
+import GUI.ThongBaoNghi;
 
 public class QLBS {
     public static void main(String[] args) {
         JFrame frame = new JFrame("Quản Lý Tài Khoản");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(new QL_ThongTinCaNhanVaTaiKhoan());
+        //frame.add(new QL_ThongTinCaNhanVaTaiKhoan());
         //frame.add(new QuanLyNhanVien());
+        frame.add(new ThongBaoNghi());
         frame.pack(); // Tự động tính toán kích thước theo các thành phần trong frame
 //        frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Mở rộng toàn màn hình (tùy chọn)
         frame.setLocationRelativeTo(null);
