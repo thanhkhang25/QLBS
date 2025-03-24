@@ -4,6 +4,12 @@
  */
 package GUI;
 
+import BUS.NhanVienBUS;
+import BUS.TaiKhoanBUS;
+import DTO.NhanVien;
+import DTO.TaiKhoan;
+import SESSION.CurrentSession;
+import javax.swing.JOptionPane;
 /**
  *
  * @author LENOVO
@@ -15,6 +21,55 @@ public class QL_ThongTinCaNhanVaTaiKhoan extends javax.swing.JPanel {
      */
     public QL_ThongTinCaNhanVaTaiKhoan() {
         initComponents();
+        // Ẩn panel đổi mật khẩu ban đầu
+        //pnlDoiMatKhau.setVisible(false);
+
+        // Đặt kích thước cố định cho pnlDoiMatKhau để layout không thay đổi khi ẩn/hiện
+        pnlDoiMatKhau.setPreferredSize(new java.awt.Dimension(422, 90)); // ví dụ: điều chỉnh theo ý bạn
+        pnlDoiMatKhau.setMinimumSize(new java.awt.Dimension(422, 90));
+        pnlDoiMatKhau.setMaximumSize(new java.awt.Dimension(422, 90));
+        // Ẩn nội dung bên trong bằng cách ẩn từng thành phần
+        lblMatKhauHienTai.setVisible(false);
+        pwdMatKhauHienTai.setVisible(false);
+        lblMatKhauMoi.setVisible(false);
+        pwdMatKhauMoi.setVisible(false);
+        lblNhapLaiMatKhauMoi.setVisible(false);
+        pwdNhapLaiMatKhauMoi.setVisible(false);
+        loadThongTinCaNhanVaTaiKhoan();
+    }
+    
+    // Phương thức load thông tin cá nhân và tài khoản dựa vào mã NV đang đăng nhập
+    private void loadThongTinCaNhanVaTaiKhoan() {
+        // Lấy thông tin từ phiên đăng nhập (CurrentSession)
+        int maNV = CurrentSession.getMaNV();
+        
+        // Sử dụng BUS để lấy thông tin nhân viên và tài khoản theo maNV
+        NhanVienBUS nvBUS = new NhanVienBUS();
+        TaiKhoanBUS tkBUS = new TaiKhoanBUS();
+        
+        NhanVien nv = nvBUS.getNhanVienByMaNV(maNV);
+        if (nv != null) {
+            txtMaNhanVien.setText(String.valueOf(nv.getMaNV()));
+            txtTenNhanVien.setText(nv.getTenNV());
+            txtNgaySinh.setText(nv.getNgaySinh().toString());
+            cmbGioiTinh.setSelectedItem(nv.getGioiTinh());
+            txtSDT.setText(nv.getSdt());
+            txtEmail.setText(nv.getEmail());
+            txtDiaChi.setText(nv.getDiaChi());
+            txtChiNhanh.setText(nv.getChiNhanh());
+        } else {
+            JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin nhân viên!");
+        }
+        
+        TaiKhoan tk = tkBUS.getTaiKhoanByMaNV(maNV);
+        if (tk != null) {
+            // Ở đây đăng nhập sử dụng mã NV làm tên đăng nhập (theo yêu cầu của bạn)
+            txtTenTaiKhoan.setText(String.valueOf(nv.getMaNV()));
+            pwdMatKhau.setText(tk.getMatKhau());
+            //txtTrangThai.setText(tk.getTrangThai());
+        } else {
+            JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin tài khoản!");
+        }
     }
 
     /**
@@ -49,13 +104,15 @@ public class QL_ThongTinCaNhanVaTaiKhoan extends javax.swing.JPanel {
         lblThongTinTaiKhoan = new javax.swing.JLabel();
         lblTenTaiKhoan = new javax.swing.JLabel();
         lblMatKhau = new javax.swing.JLabel();
-        lblDoiMatKhau = new javax.swing.JLabel();
+        btnCapNhatThongTinTaiKhoan = new javax.swing.JButton();
+        txtTenTaiKhoan = new javax.swing.JTextField();
+        pwdMatKhau = new javax.swing.JPasswordField();
+        btnHienMatKhau = new javax.swing.JToggleButton();
+        btnDoiMatKhau = new javax.swing.JButton();
+        pnlDoiMatKhau = new javax.swing.JPanel();
         lblMatKhauHienTai = new javax.swing.JLabel();
         lblMatKhauMoi = new javax.swing.JLabel();
         lblNhapLaiMatKhauMoi = new javax.swing.JLabel();
-        btnCapNhatThongTinTaiKhoan = new javax.swing.JButton();
-        txtTenTaiKhoan = new javax.swing.JTextField();
-        txtMatKhau = new javax.swing.JTextField();
         pwdNhapLaiMatKhauMoi = new javax.swing.JPasswordField();
         pwdMatKhauMoi = new javax.swing.JPasswordField();
         pwdMatKhauHienTai = new javax.swing.JPasswordField();
@@ -175,7 +232,7 @@ public class QL_ThongTinCaNhanVaTaiKhoan extends javax.swing.JPanel {
                     .addComponent(lblChiNhanh)
                     .addComponent(txtChiNhanh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(btnCapNhatThongTinCaNhan, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
+                .addComponent(btnCapNhatThongTinCaNhan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -191,9 +248,30 @@ public class QL_ThongTinCaNhanVaTaiKhoan extends javax.swing.JPanel {
         lblMatKhau.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         lblMatKhau.setText("Mật Khẩu");
 
-        lblDoiMatKhau.setFont(new java.awt.Font("Times New Roman", 3, 14)); // NOI18N
-        lblDoiMatKhau.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblDoiMatKhau.setText("Đổi Mật Khẩu");
+        btnCapNhatThongTinTaiKhoan.setFont(new java.awt.Font("Times New Roman", 3, 18)); // NOI18N
+        btnCapNhatThongTinTaiKhoan.setText("Cập Nhật");
+        btnCapNhatThongTinTaiKhoan.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnCapNhatThongTinTaiKhoan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCapNhatThongTinTaiKhoanActionPerformed(evt);
+            }
+        });
+
+        pwdMatKhau.setText("jPasswordField1");
+
+        btnHienMatKhau.setText("Hiện mật khẩu");
+        btnHienMatKhau.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHienMatKhauActionPerformed(evt);
+            }
+        });
+
+        btnDoiMatKhau.setText("Đổi mật khẩu");
+        btnDoiMatKhau.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDoiMatKhauActionPerformed(evt);
+            }
+        });
 
         lblMatKhauHienTai.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         lblMatKhauHienTai.setText("Mật Khẩu Hiện Tại");
@@ -204,57 +282,76 @@ public class QL_ThongTinCaNhanVaTaiKhoan extends javax.swing.JPanel {
         lblNhapLaiMatKhauMoi.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         lblNhapLaiMatKhauMoi.setText("Nhập Lại Mật Khẩu Mới");
 
-        btnCapNhatThongTinTaiKhoan.setFont(new java.awt.Font("Times New Roman", 3, 18)); // NOI18N
-        btnCapNhatThongTinTaiKhoan.setText("Cập Nhật");
-        btnCapNhatThongTinTaiKhoan.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnCapNhatThongTinTaiKhoan.addActionListener(new java.awt.event.ActionListener() {
+        pwdMatKhauHienTai.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCapNhatThongTinTaiKhoanActionPerformed(evt);
+                pwdMatKhauHienTaiActionPerformed(evt);
             }
         });
 
-        txtMatKhau.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtMatKhauActionPerformed(evt);
-            }
-        });
-
-        pwdNhapLaiMatKhauMoi.setText("jPasswordField1");
-
-        pwdMatKhauMoi.setText("jPasswordField2");
-
-        pwdMatKhauHienTai.setText("jPasswordField3");
+        javax.swing.GroupLayout pnlDoiMatKhauLayout = new javax.swing.GroupLayout(pnlDoiMatKhau);
+        pnlDoiMatKhau.setLayout(pnlDoiMatKhauLayout);
+        pnlDoiMatKhauLayout.setHorizontalGroup(
+            pnlDoiMatKhauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlDoiMatKhauLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlDoiMatKhauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlDoiMatKhauLayout.createSequentialGroup()
+                        .addComponent(lblNhapLaiMatKhauMoi)
+                        .addGap(18, 18, 18)
+                        .addGroup(pnlDoiMatKhauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(pwdMatKhauMoi)
+                            .addComponent(pwdNhapLaiMatKhauMoi)
+                            .addComponent(pwdMatKhauHienTai)))
+                    .addGroup(pnlDoiMatKhauLayout.createSequentialGroup()
+                        .addGroup(pnlDoiMatKhauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblMatKhauHienTai)
+                            .addComponent(lblMatKhauMoi))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        pnlDoiMatKhauLayout.setVerticalGroup(
+            pnlDoiMatKhauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlDoiMatKhauLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlDoiMatKhauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblMatKhauHienTai, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pwdMatKhauHienTai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlDoiMatKhauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblMatKhauMoi)
+                    .addComponent(pwdMatKhauMoi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlDoiMatKhauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblNhapLaiMatKhauMoi)
+                    .addComponent(pwdNhapLaiMatKhauMoi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout pnlThongTinTaiKhoanLayout = new javax.swing.GroupLayout(pnlThongTinTaiKhoan);
         pnlThongTinTaiKhoan.setLayout(pnlThongTinTaiKhoanLayout);
         pnlThongTinTaiKhoanLayout.setHorizontalGroup(
             pnlThongTinTaiKhoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlThongTinTaiKhoanLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnDoiMatKhau)
+                .addGap(152, 152, 152))
             .addGroup(pnlThongTinTaiKhoanLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlThongTinTaiKhoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlThongTinTaiKhoanLayout.createSequentialGroup()
-                        .addGroup(pnlThongTinTaiKhoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblMatKhauHienTai)
-                            .addComponent(lblMatKhauMoi))
-                        .addGap(0, 287, Short.MAX_VALUE))
+                    .addComponent(lblThongTinTaiKhoan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCapNhatThongTinTaiKhoan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnlThongTinTaiKhoanLayout.createSequentialGroup()
                         .addGroup(pnlThongTinTaiKhoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblTenTaiKhoan)
                             .addComponent(lblMatKhau))
                         .addGap(48, 48, 48)
                         .addGroup(pnlThongTinTaiKhoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtTenTaiKhoan)
-                            .addComponent(txtMatKhau)))
-                    .addGroup(pnlThongTinTaiKhoanLayout.createSequentialGroup()
-                        .addComponent(lblNhapLaiMatKhauMoi)
-                        .addGap(18, 18, 18)
-                        .addGroup(pnlThongTinTaiKhoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(pwdMatKhauMoi, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
-                            .addComponent(pwdNhapLaiMatKhauMoi)
-                            .addComponent(pwdMatKhauHienTai)))
-                    .addComponent(lblThongTinTaiKhoan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblDoiMatKhau, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCapNhatThongTinTaiKhoan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(pnlThongTinTaiKhoanLayout.createSequentialGroup()
+                                .addComponent(pwdMatKhau, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnHienMatKhau))
+                            .addComponent(txtTenTaiKhoan)))
+                    .addComponent(pnlDoiMatKhau, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnlThongTinTaiKhoanLayout.setVerticalGroup(
@@ -266,26 +363,17 @@ public class QL_ThongTinCaNhanVaTaiKhoan extends javax.swing.JPanel {
                 .addGroup(pnlThongTinTaiKhoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblTenTaiKhoan)
                     .addComponent(txtTenTaiKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlThongTinTaiKhoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblMatKhau)
-                    .addComponent(txtMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblDoiMatKhau)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(8, 8, 8)
                 .addGroup(pnlThongTinTaiKhoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblMatKhauHienTai, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pwdMatKhauHienTai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblMatKhau)
+                    .addComponent(pwdMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnHienMatKhau))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnDoiMatKhau)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlThongTinTaiKhoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblMatKhauMoi)
-                    .addComponent(pwdMatKhauMoi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlThongTinTaiKhoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblNhapLaiMatKhauMoi)
-                    .addComponent(pwdNhapLaiMatKhauMoi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(62, 62, 62)
-                .addComponent(btnCapNhatThongTinTaiKhoan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pnlDoiMatKhau, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(43, 43, 43)
+                .addComponent(btnCapNhatThongTinTaiKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -296,8 +384,7 @@ public class QL_ThongTinCaNhanVaTaiKhoan extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(pnlThongTinCaNhan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(pnlThongTinTaiKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(pnlThongTinTaiKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -312,24 +399,195 @@ public class QL_ThongTinCaNhanVaTaiKhoan extends javax.swing.JPanel {
 
     private void btnCapNhatThongTinCaNhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhatThongTinCaNhanActionPerformed
         // TODO add your handling code here:
+        try {
+            int maNV = Integer.parseInt(txtMaNhanVien.getText().trim());
+
+            // Lấy dữ liệu hiện tại từ DB
+            NhanVienBUS nvBUS = new NhanVienBUS();
+            DTO.NhanVien nvCurrent = nvBUS.getNhanVienByMaNV(maNV);
+            if(nvCurrent == null){
+                JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin nhân viên hiện tại!");
+                return;
+            }
+
+            // Lấy dữ liệu từ form
+            String tenNVNew = txtTenNhanVien.getText().trim();
+            String ngaySinhStrNew = txtNgaySinh.getText().trim(); // Định dạng YYYY-MM-DD
+            String sdtNew = txtSDT.getText().trim();
+            String emailNew = txtEmail.getText().trim();
+            String diaChiNew = txtDiaChi.getText().trim();
+            String chiNhanhNew = txtChiNhanh.getText().trim();
+            String gioiTinhNew = cmbGioiTinh.getSelectedItem().toString();
+
+            // So sánh dữ liệu mới với dữ liệu cũ (sử dụng toString() cho ngày)
+            boolean changed = false;
+            if(!tenNVNew.equals(nvCurrent.getTenNV())){
+                changed = true;
+            }
+            if(!ngaySinhStrNew.equals(nvCurrent.getNgaySinh().toString())){
+                changed = true;
+            }
+            if(!sdtNew.equals(nvCurrent.getSdt())){
+                changed = true;
+            }
+            if(!emailNew.equals(nvCurrent.getEmail())){
+                changed = true;
+            }
+            if(!diaChiNew.equals(nvCurrent.getDiaChi())){
+                changed = true;
+            }
+            if(!chiNhanhNew.equals(nvCurrent.getChiNhanh())){
+                changed = true;
+            }
+            if(!gioiTinhNew.equals(nvCurrent.getGioiTinh())){
+                changed = true;
+            }
+
+            if(!changed) {
+                JOptionPane.showMessageDialog(this, "Bạn chưa chỉnh sửa gì!");
+                return;
+            }
+
+            // Nếu có thay đổi, tạo đối tượng cập nhật
+            DTO.NhanVien nvUpdate = new DTO.NhanVien();
+            nvUpdate.setMaNV(maNV);
+            nvUpdate.setTenNV(tenNVNew);
+            // Chuyển chuỗi ngày sinh sang java.sql.Date (đảm bảo định dạng đúng YYYY-MM-DD)
+            nvUpdate.setNgaySinh(java.sql.Date.valueOf(ngaySinhStrNew));
+            nvUpdate.setGioiTinh(gioiTinhNew);
+            nvUpdate.setSdt(sdtNew);
+            nvUpdate.setEmail(emailNew);
+            nvUpdate.setDiaChi(diaChiNew);
+            nvUpdate.setChiNhanh(chiNhanhNew);
+            // Giữ lại những thông tin khác không thay đổi
+            nvUpdate.setNgayVaoLam(nvCurrent.getNgayVaoLam());
+            nvUpdate.setTrangThai(nvCurrent.getTrangThai());
+
+            boolean updated = nvBUS.updateNhanVien(nvUpdate);
+            if(updated){
+                JOptionPane.showMessageDialog(this, "Cập nhật thông tin cá nhân thành công!");
+            } else {
+                JOptionPane.showMessageDialog(this, "Cập nhật thông tin cá nhân thất bại!");
+            }
+        } catch(Exception ex) {
+            JOptionPane.showMessageDialog(this, "Lỗi: " + ex.getMessage());
+        }
     }//GEN-LAST:event_btnCapNhatThongTinCaNhanActionPerformed
 
-    private void txtMatKhauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMatKhauActionPerformed
+    private void pwdMatKhauHienTaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pwdMatKhauHienTaiActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtMatKhauActionPerformed
+    }//GEN-LAST:event_pwdMatKhauHienTaiActionPerformed
+
+    private void btnDoiMatKhauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoiMatKhauActionPerformed
+        // TODO add your handling code here:
+        boolean currentlyVisible = lblMatKhauHienTai.isVisible();
+    
+        // Toggle trạng thái hiển thị của các thành phần đổi mật khẩu
+        lblMatKhauHienTai.setVisible(!currentlyVisible);
+        pwdMatKhauHienTai.setVisible(!currentlyVisible);
+        lblMatKhauMoi.setVisible(!currentlyVisible);
+        pwdMatKhauMoi.setVisible(!currentlyVisible);
+        lblNhapLaiMatKhauMoi.setVisible(!currentlyVisible);
+        pwdNhapLaiMatKhauMoi.setVisible(!currentlyVisible);
+
+        if (!currentlyVisible) {
+            btnDoiMatKhau.setText("Hủy đổi mật khẩu");
+        } else {
+            btnDoiMatKhau.setText("Đổi mật khẩu");
+        }
+
+        // Không cần ẩn panel chứa vì kích thước đã cố định
+        pnlThongTinTaiKhoan.revalidate();
+        pnlThongTinTaiKhoan.repaint();
+    }//GEN-LAST:event_btnDoiMatKhauActionPerformed
+
+    private void btnHienMatKhauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHienMatKhauActionPerformed
+        // TODO add your handling code here:
+        if (btnHienMatKhau.isSelected()) {
+            // Hiện mật khẩu: đặt echoChar là 0
+            pwdMatKhau.setEchoChar((char)0);
+        } else {
+            // Ẩn mật khẩu: đặt echoChar về ký tự mặc định, ví dụ '*'
+            pwdMatKhau.setEchoChar('*');
+        }
+    }//GEN-LAST:event_btnHienMatKhauActionPerformed
 
     private void btnCapNhatThongTinTaiKhoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhatThongTinTaiKhoanActionPerformed
         // TODO add your handling code here:
+        try {
+            int maNV = Integer.parseInt(txtMaNhanVien.getText().trim());
+            // Lấy thông tin tài khoản hiện tại từ DB thông qua BUS
+            TaiKhoanBUS tkBUS = new TaiKhoanBUS();
+            DTO.TaiKhoan tkCurrent = tkBUS.getTaiKhoanByMaNV(maNV);
+            if (tkCurrent == null) {
+                JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin tài khoản hiện tại!");
+                return;
+            }
+
+            // Nếu người dùng chưa nhấn nút "Đổi mật khẩu" (ví dụ các ô đổi mật khẩu chưa hiển thị)
+            if (!pwdMatKhauMoi.isVisible()) {
+                JOptionPane.showMessageDialog(this, "Bạn chưa nhấn nút đổi mật khẩu!");
+                return;
+            }
+
+            // Lấy mật khẩu hiện tại do người dùng nhập vào (ô pwdMatKhauHienTai)
+            String matKhauHienTaiInput = new String(pwdMatKhauHienTai.getPassword()).trim();
+            // Kiểm tra mật khẩu hiện tại nhập vào có khớp với mật khẩu lưu trong DB không
+            if (!matKhauHienTaiInput.equals(tkCurrent.getMatKhau())) {
+                JOptionPane.showMessageDialog(this, "Mật khẩu hiện tại không đúng!");
+                return;
+            }
+
+            // Lấy mật khẩu mới và nhập lại mật khẩu mới
+            String matKhauMoi = new String(pwdMatKhauMoi.getPassword()).trim();
+            String nhapLaiMatKhauMoi = new String(pwdNhapLaiMatKhauMoi.getPassword()).trim();
+
+            if(matKhauMoi.isEmpty()){
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập mật khẩu mới!");
+                return;
+            }
+
+            // Mật khẩu mới phải khác mật khẩu hiện tại
+            if(matKhauMoi.equals(tkCurrent.getMatKhau())){
+                JOptionPane.showMessageDialog(this, "Mật khẩu mới phải khác mật khẩu hiện tại!");
+                return;
+            }
+
+            if (!matKhauMoi.equals(nhapLaiMatKhauMoi)) {
+                JOptionPane.showMessageDialog(this, "Mật khẩu mới và nhập lại mật khẩu không khớp!");
+                return;
+            }
+
+            // Tạo đối tượng cập nhật, giữ nguyên các thuộc tính khác của tkCurrent
+            DTO.TaiKhoan tkUpdate = new DTO.TaiKhoan();
+            tkUpdate.setMaTK(tkCurrent.getMaTK());
+            tkUpdate.setMaNV(tkCurrent.getMaNV());
+            tkUpdate.setChucVu(tkCurrent.getChucVu());
+            tkUpdate.setTrangThai(tkCurrent.getTrangThai());
+            tkUpdate.setMatKhau(matKhauMoi);
+
+            boolean updated = tkBUS.updateTaiKhoan(tkUpdate);
+            if(updated){
+                // Cập nhật lại ô hiển thị mật khẩu (pwdMatKhau) với mật khẩu mới
+                pwdMatKhau.setText(matKhauMoi);
+                JOptionPane.showMessageDialog(this, "Đổi mật khẩu thành công!");
+            } else {
+                JOptionPane.showMessageDialog(this, "Đổi mật khẩu thất bại!");
+            }
+        } catch(Exception ex){
+            JOptionPane.showMessageDialog(this, "Lỗi: " + ex.getMessage());
+        }
     }//GEN-LAST:event_btnCapNhatThongTinTaiKhoanActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCapNhatThongTinCaNhan;
     private javax.swing.JButton btnCapNhatThongTinTaiKhoan;
+    private javax.swing.JButton btnDoiMatKhau;
+    private javax.swing.JToggleButton btnHienMatKhau;
     private javax.swing.JComboBox<String> cmbGioiTinh;
     private javax.swing.JLabel lblChiNhanh;
     private javax.swing.JLabel lblDiaChi;
-    private javax.swing.JLabel lblDoiMatKhau;
     private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblGioiTinh;
     private javax.swing.JLabel lblMaNhanVien;
@@ -343,8 +601,10 @@ public class QL_ThongTinCaNhanVaTaiKhoan extends javax.swing.JPanel {
     private javax.swing.JLabel lblTenTaiKhoan;
     private javax.swing.JLabel lblThongTinCaNhan;
     private javax.swing.JLabel lblThongTinTaiKhoan;
+    private javax.swing.JPanel pnlDoiMatKhau;
     private javax.swing.JPanel pnlThongTinCaNhan;
     private javax.swing.JPanel pnlThongTinTaiKhoan;
+    private javax.swing.JPasswordField pwdMatKhau;
     private javax.swing.JPasswordField pwdMatKhauHienTai;
     private javax.swing.JPasswordField pwdMatKhauMoi;
     private javax.swing.JPasswordField pwdNhapLaiMatKhauMoi;
@@ -352,7 +612,6 @@ public class QL_ThongTinCaNhanVaTaiKhoan extends javax.swing.JPanel {
     private javax.swing.JTextField txtDiaChi;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtMaNhanVien;
-    private javax.swing.JTextField txtMatKhau;
     private javax.swing.JTextField txtNgaySinh;
     private javax.swing.JTextField txtSDT;
     private javax.swing.JTextField txtTenNhanVien;

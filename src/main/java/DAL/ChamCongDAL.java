@@ -10,6 +10,7 @@ import java.util.List;
 
 import DATABASE.ConnectDB;
 import DTO.ChamCong;
+import java.time.LocalDate;
 
 public class ChamCongDAL {
     private Connection conn;
@@ -71,6 +72,21 @@ public class ChamCongDAL {
         try (CallableStatement stmt = conn.prepareCall(sql)) {
             stmt.setInt(1, maCC);
             return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    public boolean hasChamCongToday(int maNV, LocalDate today) {
+        String sql = "{CALL sp_CheckChamCongToday(?)}"; // Bạn sẽ tạo stored procedure sp_CheckChamCongToday
+        try (CallableStatement stmt = conn.prepareCall(sql)) {
+            stmt.setInt(1, maNV);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    // Nếu có bản ghi, trả về true
+                    return rs.getInt(1) > 0;
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

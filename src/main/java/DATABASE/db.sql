@@ -52,7 +52,7 @@ CREATE TABLE Luong (
     phuCapBHYT FLOAT,
     phuCapBHTN FLOAT,
     tongLuongNhan FLOAT,
-    trangThai NVARCHAR(20) CHECK (trangThai IN ('Đã thanh toán', 'Chưa thanh toán', 'Đang xử lý')) DEFAULT N'Chưa thanh toán',
+    trangThai NVARCHAR(20) CHECK (trangThai IN (N'Đã thanh toán', N'Chưa thanh toán', N'Đang xử lý')) DEFAULT N'Chưa thanh toán',
     FOREIGN KEY (maNV) REFERENCES NhanVien(maNV)
 );
 GO
@@ -992,5 +992,19 @@ BEGIN
     SELECT maTK, maNV, matKhau, chucVu, trangThai
     FROM TaiKhoan
     WHERE maNV = @maNV;
+END;
+GO
+
+-- Stored Procedure: sp_CheckChamCongToday
+-- Đếm số bản ghi chấm công của một nhân viên trong ngày hôm nay
+CREATE PROCEDURE sp_CheckChamCongToday
+    @maNV INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SELECT COUNT(*) 
+    FROM ChamCong 
+    WHERE maNV = @maNV 
+      AND CAST(thoiGianChamCong AS DATE) = CAST(GETDATE() AS DATE);
 END;
 GO
