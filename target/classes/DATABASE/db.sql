@@ -37,23 +37,31 @@ CREATE TABLE ChamCong (
 );
 GO
 
+-- Bảng tính lương hàng tháng của từng nhân viên
 CREATE TABLE Luong (
     maLuong INT PRIMARY KEY IDENTITY(1,1),
-    maNV INT,
-    thang INT,
-    nam INT,
-    soNgayLam INT,
-    heSoLuong FLOAT DEFAULT 2.34,
-    luongCoBan FLOAT DEFAULT 1800000,
+    maNV INT NOT NULL,
+    thang INT NOT NULL,
+    nam INT NOT NULL,
+    soNgayLam INT NOT NULL,
+    maHeSoLuong VARCHAR(20) NOT NULL,
     thuong FLOAT,
-    khauTru FLOAT,
-    phuCapXang FLOAT,
-    phuCapBHXH FLOAT,
-    phuCapBHYT FLOAT,
-    phuCapBHTN FLOAT,
+    chuyencan FLOAT,
     tongLuongNhan FLOAT,
     trangThai NVARCHAR(20) CHECK (trangThai IN (N'Đã thanh toán', N'Chưa thanh toán', N'Đang xử lý')) DEFAULT N'Chưa thanh toán',
-    FOREIGN KEY (maNV) REFERENCES NhanVien(maNV)
+    FOREIGN KEY (maNV) REFERENCES NhanVien(maNV),
+    FOREIGN KEY (maHeSoLuong) REFERENCES HeSoLuong(maHeSoLuong)
+);
+GO
+
+-- Bảng lưu thông tin cấu hình lương theo loại nhân viên
+CREATE TABLE HeSoLuong (
+    maHeSoLuong VARCHAR(20) PRIMARY KEY,
+    luongCoBan FLOAT NOT NULL,
+    phuCapXang FLOAT NOT NULL,
+    phuCapBHXH FLOAT NOT NULL,
+    phuCapBHYT FLOAT NOT NULL,
+    phuCapBHTN FLOAT NOT NULL
 );
 GO
 
@@ -664,18 +672,14 @@ CREATE PROCEDURE sp_ThemLuong
     @thang INT,
     @nam INT,
     @soNgayLam INT,
-    @luongCoBan FLOAT,
+    @maHeSoLuong FLOAT,
     @thuong FLOAT,
-    @khauTru FLOAT,
-    @phuCapXang FLOAT,
-    @phuCapBHYT FLOAT,
-    @phuCapBHXH FLOAT,
-    @phuCapBHTN FLOAT,
+    @chuyencan FLOAT,
     @tongLuongNhan FLOAT
 AS
 BEGIN
-    INSERT INTO Luong (maNV, thang, nam, soNgayLam, luongCoBan, thuong, khauTru, phuCapXang, phuCapBHYT, phuCapBHXH, phuCapBHTN, tongLuongNhan)
-    VALUES (@maNV, @thang, @nam, @soNgayLam, @luongCoBan, @thuong, @khauTru, @phuCapXang, @phuCapBHYT, @phuCapBHXH, @phuCapBHTN, @tongLuongNhan);
+    INSERT INTO Luong (maNV, thang, nam, soNgayLam, maHeSoLuong, thuong, chuyencan, tongLuongNhan)
+    VALUES (@maNV, @thang, @nam, @soNgayLam, @maHeSoLuong, @thuong, @chuyencan, @tongLuongNhan);
 END;
 GO
 
@@ -686,24 +690,27 @@ CREATE PROCEDURE sp_CapNhatLuong
     @thang INT,
     @nam INT,
     @soNgayLam INT,
-    @luongCoBan FLOAT,
+    @maHeSoLuong FLOAT,
     @thuong FLOAT,
-    @khauTru FLOAT,
-    @phuCapXang FLOAT,
-    @phuCapBHYT FLOAT,
-    @phuCapBHXH FLOAT,
-    @phuCapBHTN FLOAT,
-    @tongLuongNhan FLOAT
+    @chuyencan FLOAT,
+    @tongLuongNhan FLOAT,
+    @trangThai NVARCHAR(20)
 AS
 BEGIN
     UPDATE Luong
-    SET maNV = @maNV, thang = @thang, nam = @nam, soNgayLam = @soNgayLam,
-        luongCoBan = @luongCoBan, thuong = @thuong, khauTru = @khauTru,
-        phuCapXang = @phuCapXang, phuCapBHYT = @phuCapBHYT, phuCapBHXH = @phuCapBHXH,
-        phuCapBHTN = @phuCapBHTN, tongLuongNhan = @tongLuongNhan
+    SET maNV = @maNV,
+        thang = @thang,
+        nam = @nam,
+        soNgayLam = @soNgayLam,
+        maHeSoLuong = @maHeSoLuong,
+        thuong = @thuong,
+        chuyencan = @chuyencan,
+        tongLuongNhan = @tongLuongNhan,
+        trangThai = @trangThai
     WHERE maLuong = @maLuong;
 END;
 GO
+
 
 -- Xóa Luong
 CREATE PROCEDURE sp_XoaLuong
@@ -713,6 +720,61 @@ BEGIN
     DELETE FROM Luong WHERE maLuong = @maLuong;
 END;
 GO
+
+
+-- Thêm Hệ Số Lương
+CREATE PROCEDURE sp_ThemHeSoLuong
+    @maHeSoLuong VARCHAR(10),
+    @luongCoBan FLOAT,
+    @phuCapXang FLOAT,
+    @phuCapBHXH FLOAT,
+    @phuCapBHYT FLOAT,
+    @phuCapBHTN FLOAT
+AS
+BEGIN
+    INSERT INTO HeSoLuong (maHeSoLuong, luongCoBan, phuCapXang, phuCapBHXH, phuCapBHYT, phuCapBHTN)
+    VALUES (@maHeSoLuong, @luongCoBan, @phuCapXang, @phuCapBHXH, @phuCapBHYT, @phuCapBHTN);
+END
+GO
+
+-- Lấy danh sách hệ số lương
+CREATE PROCEDURE sp_LayDanhSachHeSoLuong
+AS
+BEGIN
+    SELECT * FROM HeSoLuong;
+END;
+GO
+
+-- Cập nhật hệ số lương
+CREATE PROCEDURE sp_CapNhatHeSoLuong
+    @maHeSoLuong NVARCHAR(50),
+    @luongCoBan FLOAT,
+    @phuCapXang FLOAT,
+    @phuCapBHXH FLOAT,
+    @phuCapBHYT FLOAT,
+    @phuCapBHTN FLOAT
+AS
+BEGIN
+    UPDATE HeSoLuong
+    SET luongCoBan = @luongCoBan,
+        phuCapXang = @phuCapXang,
+        phuCapBHXH = @phuCapBHXH,
+        phuCapBHYT = @phuCapBHYT,
+        phuCapBHTN = @phuCapBHTN
+    WHERE maHeSoLuong = @maHeSoLuong;
+END;
+GO
+
+-- Xóa hệ số lương theo mã
+CREATE PROCEDURE sp_XoaHeSoLuong
+    @maHeSoLuong NVARCHAR(50)
+AS
+BEGIN
+    DELETE FROM HeSoLuong
+    WHERE maHeSoLuong = @maHeSoLuong;
+END;
+GO
+
 
 -- Lấy danh sách NhanVien
 CREATE PROCEDURE sp_LayDanhSachNhanVien
@@ -1033,3 +1095,7 @@ BEGIN
       AND CAST(thoiGianChamCong AS DATE) = CAST(GETDATE() AS DATE);
 END;
 GO
+
+INSERT INTO HeSoLuong (maHeSoLuong, luongCoBan, phuCapXang, phuCapBHXH, phuCapBHYT, phuCapBHTN)
+VALUES ('NVBH', 1800000, 300000, 144000, 27000, 18000);
+
