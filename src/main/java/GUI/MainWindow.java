@@ -10,6 +10,7 @@ import java.awt.Dimension;
 import java.awt.PopupMenu;
 import java.awt.event.MouseEvent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -26,7 +27,74 @@ public class MainWindow extends javax.swing.JFrame {
     public MainWindow() {
         initComponents();
         SetUpPanel();
+        setRoleVisibility();  // Gọi để điều chỉnh các button theo chức vụ
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
     }
+    // Phương thức setRoleVisibility() để ẩn/hiển thị các button dựa trên chức vụ của tài khoản đang đăng nhập
+    private void setRoleVisibility() {
+        String role = SESSION.CurrentSession.getChucVu(); // Lấy chức vụ từ CurrentSession
+
+        // Ẩn hết các button trước
+        trangChu.setVisible(false);
+        dangXuat.setVisible(false);
+        quanLyNhanVienButton.setVisible(false);
+        quanLySachButton.setVisible(false);
+        quanLyPhieuNhapButton.setVisible(false);
+        quanLyHoaDonButton.setVisible(false);
+        quanLyXuatKhoButton.setVisible(false);
+        quanLyTaiKhoanButton.setVisible(false);
+        nopDonXinNghiButton.setVisible(false);
+        thongKeButton.setVisible(false);
+        QuanLyKhuyenMaiButton.setVisible(false);
+        CachTinhLuongButton.setVisible(false);
+        xemLuongButton.setVisible(false);
+        quanLyThongTinCaNhan.setVisible(false);
+        
+        // Sau đó hiển thị theo yêu cầu:
+        if (role.equalsIgnoreCase("Nhân viên bán hàng")) {
+            trangChu.setVisible(true);
+            dangXuat.setVisible(true);
+            nopDonXinNghiButton.setVisible(true);
+            quanLyHoaDonButton.setVisible(true);
+            xemLuongButton.setVisible(true);
+            quanLyThongTinCaNhan.setVisible(true);
+        } else if (role.equalsIgnoreCase("Quản lý nhân viên")) {
+            trangChu.setVisible(true);
+            dangXuat.setVisible(true);
+            CachTinhLuongButton.setVisible(true);
+            nopDonXinNghiButton.setVisible(true);
+            quanLyNhanVienButton.setVisible(true);
+            quanLyTaiKhoanButton.setVisible(true);
+            xemLuongButton.setVisible(true);
+            quanLyThongTinCaNhan.setVisible(true);
+        } else if (role.equalsIgnoreCase("Quản lý kho hàng")) {
+            trangChu.setVisible(true);
+            dangXuat.setVisible(true);
+            nopDonXinNghiButton.setVisible(true);
+            quanLySachButton.setVisible(true);
+            quanLyPhieuNhapButton.setVisible(true);
+            quanLyHoaDonButton.setVisible(true);
+            quanLyXuatKhoButton.setVisible(true);
+            xemLuongButton.setVisible(true);
+            quanLyThongTinCaNhan.setVisible(true);
+        } else if (role.equalsIgnoreCase("Admin")) {
+            // Hiển thị tất cả các button
+            trangChu.setVisible(true);
+            dangXuat.setVisible(true);
+            quanLyNhanVienButton.setVisible(true);
+            quanLySachButton.setVisible(true);
+            quanLyPhieuNhapButton.setVisible(true);
+            quanLyHoaDonButton.setVisible(true);
+            quanLyXuatKhoButton.setVisible(true);
+            quanLyTaiKhoanButton.setVisible(true);
+            nopDonXinNghiButton.setVisible(true);
+            thongKeButton.setVisible(true);
+            QuanLyKhuyenMaiButton.setVisible(true);
+            CachTinhLuongButton.setVisible(true);
+        }
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -48,13 +116,15 @@ public class MainWindow extends javax.swing.JFrame {
         thongKeButton = new javax.swing.JButton();
         QuanLyKhuyenMaiButton = new javax.swing.JButton();
         CachTinhLuongButton = new javax.swing.JButton();
-        jButton11 = new javax.swing.JButton();
-        jButton12 = new javax.swing.JButton();
+        dangXuat = new javax.swing.JButton();
+        trangChu = new javax.swing.JButton();
+        xemLuongButton = new javax.swing.JButton();
+        quanLyThongTinCaNhan = new javax.swing.JButton();
         QuyenPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         HienThiPanel = new javax.swing.JPanel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         ChucNangPanel.setPreferredSize(new java.awt.Dimension(230, 582));
 
@@ -138,19 +208,35 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
-        jButton11.setText("Đăng xuất");
-        jButton11.setPreferredSize(new java.awt.Dimension(220, 42));
-        jButton11.addActionListener(new java.awt.event.ActionListener() {
+        dangXuat.setText("Đăng xuất");
+        dangXuat.setPreferredSize(new java.awt.Dimension(220, 42));
+        dangXuat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton11ActionPerformed(evt);
+                dangXuatActionPerformed(evt);
             }
         });
 
-        jButton12.setLabel("Trang chủ");
-        jButton12.setPreferredSize(new java.awt.Dimension(220, 42));
-        jButton12.addActionListener(new java.awt.event.ActionListener() {
+        trangChu.setLabel("Trang chủ");
+        trangChu.setPreferredSize(new java.awt.Dimension(220, 42));
+        trangChu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton12ActionPerformed(evt);
+                trangChuActionPerformed(evt);
+            }
+        });
+
+        xemLuongButton.setText("Xem Lương");
+        xemLuongButton.setPreferredSize(new java.awt.Dimension(220, 42));
+        xemLuongButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                xemLuongButtonActionPerformed(evt);
+            }
+        });
+
+        quanLyThongTinCaNhan.setText("Quản lý thông tin cá nhân");
+        quanLyThongTinCaNhan.setPreferredSize(new java.awt.Dimension(220, 42));
+        quanLyThongTinCaNhan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                quanLyThongTinCaNhanActionPerformed(evt);
             }
         });
 
@@ -161,32 +247,36 @@ public class MainWindow extends javax.swing.JFrame {
             .addGroup(ChucNangPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(ChucNangPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(ChucNangPanelLayout.createSequentialGroup()
-                        .addGroup(ChucNangPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(quanLyNhanVienButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(quanLySachButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(quanLyPhieuNhapButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(quanLyHoaDonButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(quanLyXuatKhoButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(thongKeButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ChucNangPanelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(dangXuat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(ChucNangPanelLayout.createSequentialGroup()
                         .addGroup(ChucNangPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(CachTinhLuongButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(quanLyTaiKhoanButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(nopDonXinNghiButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(QuanLyKhuyenMaiButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(trangChu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(xemLuongButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(ChucNangPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(CachTinhLuongButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(quanLyTaiKhoanButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(nopDonXinNghiButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(QuanLyKhuyenMaiButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(quanLyNhanVienButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(quanLySachButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(quanLyPhieuNhapButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(quanLyHoaDonButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(quanLyXuatKhoButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(thongKeButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(quanLyThongTinCaNhan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         ChucNangPanelLayout.setVerticalGroup(
             ChucNangPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ChucNangPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(trangChu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(quanLyThongTinCaNhan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(quanLyNhanVienButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(quanLySachButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -207,27 +297,29 @@ public class MainWindow extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(CachTinhLuongButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(xemLuongButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(dangXuat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
-        jLabel1.setText("                        ADMIN");
+        jLabel1.setText("ADMIN");
 
         javax.swing.GroupLayout QuyenPanelLayout = new javax.swing.GroupLayout(QuyenPanel);
         QuyenPanel.setLayout(QuyenPanelLayout);
         QuyenPanelLayout.setHorizontalGroup(
             QuyenPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(QuyenPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(91, 91, 91)
+                .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         QuyenPanelLayout.setVerticalGroup(
             QuyenPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(QuyenPanelLayout.createSequentialGroup()
-                .addGap(46, 46, 46)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(37, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, QuyenPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25))
         );
 
         HienThiPanel.setPreferredSize(new java.awt.Dimension(1140, 720));
@@ -251,9 +343,9 @@ public class MainWindow extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(QuyenPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(QuyenPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(ChucNangPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ChucNangPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 672, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addComponent(HienThiPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -275,13 +367,35 @@ public class MainWindow extends javax.swing.JFrame {
         HienThiPanel.repaint();
     }//GEN-LAST:event_quanLyXuatKhoButtonActionPerformed
 
-    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton11ActionPerformed
+    private void dangXuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dangXuatActionPerformed
+        int confirm = JOptionPane.showConfirmDialog(this, 
+                "Bạn có chắc chắn muốn đăng xuất?", "Đăng xuất", JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            // Xóa thông tin phiên đăng nhập
+            SESSION.CurrentSession.clear();
 
-    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
+            // Hiển thị lại cửa sổ đăng nhập (bọc JPanel Login bên trong JFrame)
+            LoginFrame loginFrame = new LoginFrame();
+            loginFrame.setVisible(true);
+
+            // Đóng MainWindow mà không tắt toàn bộ ứng dụng
+            this.dispose();
+        }
+    }//GEN-LAST:event_dangXuatActionPerformed
+
+    private void trangChuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_trangChuActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton12ActionPerformed
+            // Giả sử bạn có một panel trang chủ, nếu chưa có thì tạo mới một JPanel mặc định với thông báo
+        JPanel homePanel = new JPanel();
+        homePanel.setBackground(Color.WHITE);
+        homePanel.add(new JLabel("Chào mừng đến trang chủ!"));
+
+        HienThiPanel.removeAll();
+        HienThiPanel.setLayout(new BorderLayout());
+        HienThiPanel.add(homePanel, BorderLayout.CENTER);
+        HienThiPanel.revalidate();
+        HienThiPanel.repaint();
+    }//GEN-LAST:event_trangChuActionPerformed
 
     private void quanLySachButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quanLySachButtonActionPerformed
         HienThiPanel.removeAll();
@@ -340,6 +454,23 @@ public class MainWindow extends javax.swing.JFrame {
         HienThiPanel.repaint();
     }//GEN-LAST:event_CachTinhLuongButtonActionPerformed
 
+    private void xemLuongButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_xemLuongButtonActionPerformed
+        // TODO add your handling code here:
+        HienThiPanel.removeAll();
+        HienThiPanel.add(xemluongPanel);
+        HienThiPanel.revalidate();
+        HienThiPanel.repaint();
+    }//GEN-LAST:event_xemLuongButtonActionPerformed
+
+    private void quanLyThongTinCaNhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quanLyThongTinCaNhanActionPerformed
+        // TODO add your handling code here:
+        HienThiPanel.removeAll();
+        HienThiPanel.add(quanlythongtincanhanPanel);
+        HienThiPanel.revalidate();
+        HienThiPanel.repaint();
+        
+    }//GEN-LAST:event_quanLyThongTinCaNhanActionPerformed
+
     private void SetUpPanel(){
         quanLySachPanel.setPreferredSize(new Dimension(1140, 720));        
         quanLySachPanel.setBackground(Color.GRAY);
@@ -370,7 +501,8 @@ public class MainWindow extends javax.swing.JFrame {
     JPanel quanLyPhieuXuatPanel = new QuanLyPhieuXuat();
     JPanel quanlykhuyenmaipanel = new QuanLyKhuyenMai();
     JPanel cachtinhluongPanel = new CachTinhLuong();
-
+    JPanel xemluongPanel = new XemLuong();
+    JPanel quanlythongtincanhanPanel = new QL_ThongTinCaNhanVaTaiKhoan();
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -409,8 +541,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JPanel HienThiPanel;
     private javax.swing.JButton QuanLyKhuyenMaiButton;
     private javax.swing.JPanel QuyenPanel;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
+    private javax.swing.JButton dangXuat;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JButton nopDonXinNghiButton;
     private javax.swing.JButton quanLyHoaDonButton;
@@ -418,8 +549,11 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JButton quanLyPhieuNhapButton;
     private javax.swing.JButton quanLySachButton;
     private javax.swing.JButton quanLyTaiKhoanButton;
+    private javax.swing.JButton quanLyThongTinCaNhan;
     private javax.swing.JButton quanLyXuatKhoButton;
     private javax.swing.JButton thongKeButton;
+    private javax.swing.JButton trangChu;
+    private javax.swing.JButton xemLuongButton;
     // End of variables declaration//GEN-END:variables
 
 }

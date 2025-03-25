@@ -14,12 +14,16 @@ DTO\ChiTietPhieuNhap.class
 GUI\CachTinhLuong$2.class
 DTO\KhuyenMai.class
 DTO\Sach.class
+GUI\LoginFrame$1.class
 GUI\QuanLySach$2.class
+GUI\Login$1.class
+GUI\Login.class
 GUI\QuanLyPhieuXuat$2.class
 GUI\XemLuong$9.class
 GUI\ThongBaoNghi$4.class
 GUI\QL_ThongTinCaNhanVaTaiKhoan.class
 GUI\ThemPX$2.class
+GUI\MainWindow$14.class
 GUI\QuanLyPhieuNhap$3.class
 GUI\ThongBaoNghi$10.class
 DTO\ChiTietKhuyenMaiChoSach.class
@@ -34,6 +38,7 @@ DAL\ChamCongDAL.class
 GUI\QuanLySach$3.class
 DTO\PhieuNhap.class
 GUI\ThongBaoNghi$11.class
+GUI\Login$2.class
 BUS\TaiKhoanBUS.class
 GUI\XemLuong$4.class
 DTO\ChiTietKhuyenMaiChoHoaDon.class
@@ -65,6 +70,7 @@ GUI\MainWindow$7.class
 GUI\ThemNV$1.class
 GUI\MainWindow$4.class
 GUI\QuanLyNhanVien$3.class
+GUI\ThemHSL$4.class
 GUI\ThemSach$1.class
 DTO\ChamCong.class
 GUI\QL_ThongTinCaNhanVaTaiKhoan$2.class
@@ -88,6 +94,7 @@ GUI\ThongBaoNghi$6.class
 GUI\ThemKhuyenMaiSach$1.class
 GUI\ThemNV$3.class
 GUI\ThemKhuyenMaiSach.class
+BUS\HeSoLuongBUS.class
 GUI\ThemPX.class
 GUI\QuanLyTaiKhoan$4.class
 DTO\ChiTietKhuyenMaiHoaDon.class
@@ -114,6 +121,7 @@ DAL\TaiKhoanDAL.class
 GUI\ChamCong$2.class
 GUI\QuanLyNhaCungCap$4.class
 GUI\QuanLySach.class
+GUI\XemLuong$15.class
 GUI\QuanLyNhanVien$10.class
 DTO\PhieuXuat.class
 GUI\ThemKMTheoHD$1.class
@@ -131,6 +139,7 @@ DAL\DonXinNghiDAL.class
 GUI\ThemHD$2.class
 GUI\KhuyenMaiSach.class
 GUI\ThemNCC.class
+GUI\Login$3.class
 GUI\MainWindow$3.class
 GUI\QuanLyNhanVien$4.class
 GUI\ThemTBN$1.class
@@ -155,10 +164,12 @@ GUI\ThemSach.class
 GUI\XemLuong$2.class
 GUI\QuanLyPhieuXuat$4.class
 GUI\XemLuong$11.class
+DTO\HeSoLuong.class
 GUI\MainWindow$1.class
 GUI\QuanLyNhanVien$6.class
 GUI\QuanLyKhuyenMai$2.class
 GUI\QuanLyHoaDon$4.class
+GUI\LoginFrame.class
 GUI\ThongBaoNghi$2.class
 GUI\ThemPX$3.class
 GUI\ThemPN$4.class
@@ -167,6 +178,7 @@ GUI\QuanLySach$6.class
 GUI\ThemHD$4.class
 GUI\KhuyenMaiSach$2.class
 GUI\QuanLyHoaDon$1.class
+DAL\HeSoLuongDAL.class
 GUI\QuanLyNhanVien$9.class
 BUS\NhanVienBUS.class
 GUI\MainWindow.class
@@ -175,15 +187,18 @@ GUI\ThemKMTheoHD.class
 com\mycompany\qlbs\QLBS.class
 GUI\ThemHSL$1.class
 GUI\ThongBaoNghi.class
+GUI\CachTinhLuong$6.class
 GUI\QuanLyNhanVien$8.class
 GUI\KhuyenMaiSach$3.class
 GUI\QuanLyHoaDon$2.class
 GUI\XemLuong$13.class
 GUI\QuanLyPhieuNhap.class
+GUI\MainWindow$15.class
 GUI\KhuyenMaiTheoHoaDon$1.class
 GUI\QuanLyNhaCungCap.class
 GUI\XemLuong$1.class
 GUI\ThemPX$1.class
+GUI\XemLuong$14.class
 GUI\KhuyenMaiTheoHoaDon$2.class
 DTO\ChiTietKhuyenMaiSach.class
 GUI\QuanLyPhieuNhap$1.class

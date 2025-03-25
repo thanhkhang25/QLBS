@@ -8,15 +8,181 @@ package GUI;
  *
  * @author LENOVO
  */
+import BUS.HeSoLuongBUS;
+import DAL.ChamCongDAL;
+import DAL.LuongDAL;
+import DAL.NhanVienDAL;
+import DTO.ChamCong;
+import DTO.HeSoLuong;
+import DTO.Luong;
+import DTO.NhanVien;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 public class XemLuong extends javax.swing.JPanel {
 
     /**
      * Creates new form XemLuong
      */
+    // Model cho table và các đối tượng DAL/BUS
+    private DefaultTableModel tableModel;
+    private LuongDAL luongDAL;
+    private NhanVienDAL nhanVienDAL;
+    private HeSoLuongBUS heSoLuongBUS;
+    private ChamCongDAL chamCongDAL;
+    // Thêm biến toàn cục để lưu giá trị thưởng ban đầu
+private double originalThuong = 0;
+        // Danh sách lương được load từ DB
+    private List<Luong> listLuong;
     public XemLuong() {
         initComponents();
+        // Khởi tạo các đối tượng truy xuất dữ liệu
+        luongDAL = new LuongDAL();
+        nhanVienDAL = new NhanVienDAL();
+        heSoLuongBUS = new HeSoLuongBUS();
+        chamCongDAL = new ChamCongDAL();
+        // Khởi tạo table và load dữ liệu
+        initTable();
+        loadDataLuong();
+        initTableListener();
+    }
+      // Khởi tạo model cho bảng XemLuong
+    private void initTable() {
+        String[] columnNames = {"Mã Lương", "Mã NV", "Tên NV", "Tháng", "Năm"};
+        tableModel = new DefaultTableModel(columnNames, 0);
+        tblXemLuong.setModel(tableModel);
+    }
+    
+    private void loadDataLuong() {
+        tableModel.setRowCount(0);
+        listLuong = luongDAL.getAllLuong();
+
+        int currentMaNV = SESSION.CurrentSession.getMaNV();
+        String role = SESSION.CurrentSession.getChucVu();
+
+        for (Luong l : listLuong) {
+            // Nếu chức vụ không phải "Quản lý nhân viên" và không phải "Admin", chỉ thêm nếu mã NV trùng với phiên hiện tại
+            if (!role.equalsIgnoreCase("Quản lý nhân viên") &&
+                !role.equalsIgnoreCase("Admin") &&
+                l.getMaNV() != currentMaNV) {
+                continue;
+            }
+
+            NhanVien nv = nhanVienDAL.getAllNhanVien().stream()
+                    .filter(n -> n.getMaNV() == l.getMaNV())
+                    .findFirst()
+                    .orElse(null);
+            String tenNV = (nv != null) ? nv.getTenNV() : "";
+            tableModel.addRow(new Object[]{
+                l.getMaLuong(), l.getMaNV(), tenNV, l.getThang(), l.getNam()
+            });
+        }
     }
 
+    
+    // Tính số ngày làm thực tế dựa trên số lần chấm công trong tháng/năm của NV
+    private int getSoNgayLamThucTe(int maNV, int thang, int nam) {
+        int count = 0;
+        List<ChamCong> listCC = chamCongDAL.getAllChamCong();
+        for (ChamCong cc : listCC) {
+            if (cc.getMaNV() == maNV &&
+                cc.getThoiGianChamCong().getMonthValue() == thang &&
+                cc.getThoiGianChamCong().getYear() == nam) {
+                count++;
+            }
+        }
+        return count;
+    }
+    
+    // Hàm tính lương thực nhận theo công thức:
+    // (LuongCoBan/26)*soNgayLamThucTe + phuCapXang + thuong + chuyenCan - BHXH - BHYT - BHTN
+    private double computeLuongThucNhan(double luongCoBan, double phuCapXang, double thuong,
+                                          double chuyenCan, double phuCapBHYT, double phuCapBHXH, double phuCapBHTN,
+                                          int soNgayLamThucTe) {
+        return (luongCoBan / 26.0) * soNgayLamThucTe + phuCapXang + thuong + chuyenCan - phuCapBHXH - phuCapBHYT - phuCapBHTN;
+    }
+    
+       // Load thông tin chi tiết của bản ghi lương khi chọn dòng trong bảng
+    private void loadLuongDetails(Luong luong) {
+        NhanVien nv = nhanVienDAL.getAllNhanVien().stream()
+                .filter(n -> n.getMaNV() == luong.getMaNV())
+                .findFirst()
+                .orElse(null);
+        int soNgayLamThucTe = getSoNgayLamThucTe(luong.getMaNV(), luong.getThang(), luong.getNam());
+        double chuyenCan = (soNgayLamThucTe >= 26) ? 200000 : 0;
+
+        double luongThucNhan = 0;
+        if (luong.getTrangThai().equalsIgnoreCase("Đã thanh toán")) {
+            // Nếu đã chốt, dùng giá trị lưu trong Luong
+            luongThucNhan = luong.getTongLuongNhan();
+            txtThuong.setEditable(false);
+            txtThuong.setEnabled(false);
+            // Bạn hiển thị các giá trị đã lưu (thuong, chuyencan, tongLuongNhan) từ Luong
+            txtChuyenCan.setText(String.valueOf(luong.getChuyencan()));
+            txtLuongThucNhan.setText(String.valueOf(luong.getTongLuongNhan()));
+            // Lưu ý: Các giá trị như lương cơ bản, phụ cấp,... vẫn được lấy theo mã hệ số lương hiện hành
+            // vì không có snapshot trong Luong.
+        } else {
+            // Nếu chưa chốt, tính lại từ HeSoLuong
+            List<HeSoLuong> listHSL = heSoLuongBUS.searchHeSoLuongByMa(luong.getMaHeSoLuong());
+            HeSoLuong hsl = (listHSL != null && !listHSL.isEmpty()) ? listHSL.get(0) : null;
+            if (hsl != null) {
+                luongThucNhan = computeLuongThucNhan(
+                    hsl.getLuongCoBan(),
+                    hsl.getPhuCapXang(),
+                    luong.getThuong(),
+                    chuyenCan,
+                    hsl.getPhuCapBHYT(),
+                    hsl.getPhuCapBHXH(),
+                    hsl.getPhuCapBHTN(),
+                    soNgayLamThucTe
+                );
+                txtLuongCoBan.setText(String.valueOf(hsl.getLuongCoBan()));
+                txtPhuCapXangXe.setText(String.valueOf(hsl.getPhuCapXang()));
+                txtBHYT.setText(String.valueOf(hsl.getPhuCapBHYT()));
+                txtBHXH.setText(String.valueOf(hsl.getPhuCapBHXH()));
+                txtBHTN.setText(String.valueOf(hsl.getPhuCapBHTN()));
+            }
+            txtThuong.setEditable(true);
+            txtThuong.setEnabled(true);
+            txtChuyenCan.setText(String.valueOf(chuyenCan));
+            txtLuongThucNhan.setText(String.valueOf(luongThucNhan));
+        }
+        txtMaNhanVien.setText(String.valueOf(luong.getMaNV()));
+        if (nv != null) {
+            txtTenNhanVien.setText(nv.getTenNV());
+        }
+        txtMaHeSoLuong.setText(luong.getMaHeSoLuong());
+        txtSoNgayLamThucTe.setText(String.valueOf(soNgayLamThucTe));
+        txtThuong.setText(String.valueOf(luong.getThuong()));
+
+        if (!luong.getTrangThai().equalsIgnoreCase("Đã thanh toán")) {
+            originalThuong = luong.getThuong();
+        }
+    }
+
+    
+     // Khởi tạo sự kiện khi chọn một dòng trong bảng
+    private void initTableListener() {
+        tblXemLuong.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                int selectedRow = tblXemLuong.getSelectedRow();
+                if (selectedRow >= 0) {
+                    int maLuong = Integer.parseInt(tableModel.getValueAt(selectedRow, 0).toString());
+                    Luong selectedLuong = null;
+                    for (Luong l : listLuong) {
+                        if (l.getMaLuong() == maLuong) {
+                            selectedLuong = l;
+                            break;
+                        }
+                    }
+                    if (selectedLuong != null) {
+                        loadLuongDetails(selectedLuong);
+                    }
+                }
+            }
+        });
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -87,6 +253,11 @@ public class XemLuong extends javax.swing.JPanel {
         btnXemTatCa.setAutoscrolls(true);
         btnXemTatCa.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnXemTatCa.setPreferredSize(new java.awt.Dimension(95, 30));
+        btnXemTatCa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXemTatCaActionPerformed(evt);
+            }
+        });
 
         btnTimKiem.setBackground(new java.awt.Color(0, 100, 168));
         btnTimKiem.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
@@ -94,6 +265,11 @@ public class XemLuong extends javax.swing.JPanel {
         btnTimKiem.setText("Tìm kiếm");
         btnTimKiem.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnTimKiem.setPreferredSize(new java.awt.Dimension(85, 30));
+        btnTimKiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTimKiemActionPerformed(evt);
+            }
+        });
 
         tblXemLuong.setBackground(new java.awt.Color(237, 242, 251));
         tblXemLuong.setForeground(new java.awt.Color(0, 71, 171));
@@ -105,7 +281,7 @@ public class XemLuong extends javax.swing.JPanel {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Mã Nhân Viên", "Tên Nhân Viên", "Mã Hệ Số Lương", "Tháng ", "Năm"
+                "Mã Lương", "Mã Nhân Viên", "Tên Nhân Viên", "Tháng ", "Năm"
             }
         ));
         tblXemLuong.setGridColor(new java.awt.Color(0, 71, 171));
@@ -168,7 +344,9 @@ public class XemLuong extends javax.swing.JPanel {
         lblMaNhanVien.setForeground(new java.awt.Color(0, 71, 171));
         lblMaNhanVien.setText("Mã nhân viên");
 
+        txtMaNhanVien.setEditable(false);
         txtMaNhanVien.setBackground(new java.awt.Color(237, 242, 251));
+        txtMaNhanVien.setEnabled(false);
         txtMaNhanVien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtMaNhanVienActionPerformed(evt);
@@ -179,8 +357,10 @@ public class XemLuong extends javax.swing.JPanel {
         lblTenNhanVien.setForeground(new java.awt.Color(0, 71, 171));
         lblTenNhanVien.setText("Tên nhân viên");
 
+        txtSoNgayLamThucTe.setEditable(false);
         txtSoNgayLamThucTe.setBackground(new java.awt.Color(237, 242, 251));
         txtSoNgayLamThucTe.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtSoNgayLamThucTe.setEnabled(false);
         txtSoNgayLamThucTe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtSoNgayLamThucTeActionPerformed(evt);
@@ -191,7 +371,9 @@ public class XemLuong extends javax.swing.JPanel {
         lblLuongThucNhan.setForeground(new java.awt.Color(0, 71, 171));
         lblLuongThucNhan.setText("Lương Thực Nhận");
 
+        txtLuongThucNhan.setEditable(false);
         txtLuongThucNhan.setBackground(new java.awt.Color(237, 242, 251));
+        txtLuongThucNhan.setEnabled(false);
         txtLuongThucNhan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtLuongThucNhanActionPerformed(evt);
@@ -202,18 +384,22 @@ public class XemLuong extends javax.swing.JPanel {
         lblMaHeSoLuong.setForeground(new java.awt.Color(0, 71, 171));
         lblMaHeSoLuong.setText("Mã Hệ Số Lương");
 
+        txtMaHeSoLuong.setEditable(false);
         txtMaHeSoLuong.setBackground(new java.awt.Color(237, 242, 251));
+        txtMaHeSoLuong.setEnabled(false);
 
         lblLuongCoBan.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         lblLuongCoBan.setForeground(new java.awt.Color(0, 71, 171));
-        lblLuongCoBan.setText("Lương Cơ Bảng");
+        lblLuongCoBan.setText("Lương Cơ Bản");
 
+        txtTenNhanVien.setEditable(false);
         txtTenNhanVien.setBackground(new java.awt.Color(237, 242, 251));
+        txtTenNhanVien.setEnabled(false);
 
         btnCapNhatHeSoLuong.setBackground(new java.awt.Color(0, 100, 168));
         btnCapNhatHeSoLuong.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         btnCapNhatHeSoLuong.setForeground(new java.awt.Color(237, 242, 251));
-        btnCapNhatHeSoLuong.setText("Cập Nhật Hệ Số Lương");
+        btnCapNhatHeSoLuong.setText("Cập Nhật Lương");
         btnCapNhatHeSoLuong.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnCapNhatHeSoLuong.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -225,7 +411,9 @@ public class XemLuong extends javax.swing.JPanel {
         lblSoNgayLamThucTe.setForeground(new java.awt.Color(0, 71, 171));
         lblSoNgayLamThucTe.setText("Số Ngày Làm thực Tế");
 
+        txtBHXH.setEditable(false);
         txtBHXH.setBackground(new java.awt.Color(237, 242, 251));
+        txtBHXH.setEnabled(false);
         txtBHXH.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtBHXHActionPerformed(evt);
@@ -260,7 +448,9 @@ public class XemLuong extends javax.swing.JPanel {
         lblBHTN.setForeground(new java.awt.Color(0, 71, 171));
         lblBHTN.setText("Bảo Hiểm Thất Nghiệp");
 
+        txtChuyenCan.setEditable(false);
         txtChuyenCan.setBackground(new java.awt.Color(237, 242, 251));
+        txtChuyenCan.setEnabled(false);
         txtChuyenCan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtChuyenCanActionPerformed(evt);
@@ -274,28 +464,36 @@ public class XemLuong extends javax.swing.JPanel {
             }
         });
 
+        txtBHYT.setEditable(false);
         txtBHYT.setBackground(new java.awt.Color(237, 242, 251));
+        txtBHYT.setEnabled(false);
         txtBHYT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtBHYTActionPerformed(evt);
             }
         });
 
+        txtLuongCoBan.setEditable(false);
         txtLuongCoBan.setBackground(new java.awt.Color(237, 242, 251));
+        txtLuongCoBan.setEnabled(false);
         txtLuongCoBan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtLuongCoBanActionPerformed(evt);
             }
         });
 
+        txtPhuCapXangXe.setEditable(false);
         txtPhuCapXangXe.setBackground(new java.awt.Color(237, 242, 251));
+        txtPhuCapXangXe.setEnabled(false);
         txtPhuCapXangXe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtPhuCapXangXeActionPerformed(evt);
             }
         });
 
+        txtBHTN.setEditable(false);
         txtBHTN.setBackground(new java.awt.Color(237, 242, 251));
+        txtBHTN.setEnabled(false);
         txtBHTN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtBHTNActionPerformed(evt);
@@ -320,42 +518,6 @@ public class XemLuong extends javax.swing.JPanel {
             .addGroup(pnlChiTietLuongLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlChiTietLuongLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlChiTietLuongLayout.createSequentialGroup()
-                        .addGroup(pnlChiTietLuongLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlChiTietLuongLayout.createSequentialGroup()
-                                .addComponent(lblBHTN)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtBHTN, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnlChiTietLuongLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlChiTietLuongLayout.createSequentialGroup()
-                                    .addComponent(lblBHXH)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txtBHXH, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlChiTietLuongLayout.createSequentialGroup()
-                                    .addComponent(lblBHYT)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txtBHYT, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlChiTietLuongLayout.createSequentialGroup()
-                                    .addComponent(lblThuong)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txtThuong, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlChiTietLuongLayout.createSequentialGroup()
-                                    .addComponent(lblChuyenCan)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txtChuyenCan, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlChiTietLuongLayout.createSequentialGroup()
-                                    .addComponent(lblPhuCapXangXe)
-                                    .addGap(33, 33, 33)
-                                    .addComponent(txtPhuCapXangXe, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlChiTietLuongLayout.createSequentialGroup()
-                                    .addComponent(lblSoNgayLamThucTe)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(txtSoNgayLamThucTe, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(pnlChiTietLuongLayout.createSequentialGroup()
-                                .addComponent(lblLuongCoBan)
-                                .addGap(44, 44, 44)
-                                .addComponent(txtLuongCoBan, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlChiTietLuongLayout.createSequentialGroup()
                         .addGroup(pnlChiTietLuongLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnChotLuong, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -373,7 +535,43 @@ public class XemLuong extends javax.swing.JPanel {
                                     .addComponent(txtMaHeSoLuong, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(txtLuongThucNhan, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(txtMaNhanVien, javax.swing.GroupLayout.Alignment.TRAILING))))
-                        .addGap(58, 58, 58))))
+                        .addGap(58, 58, 58))
+                    .addGroup(pnlChiTietLuongLayout.createSequentialGroup()
+                        .addGroup(pnlChiTietLuongLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlChiTietLuongLayout.createSequentialGroup()
+                                .addComponent(lblBHTN)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtBHTN, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnlChiTietLuongLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlChiTietLuongLayout.createSequentialGroup()
+                                    .addComponent(lblLuongCoBan)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtLuongCoBan, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlChiTietLuongLayout.createSequentialGroup()
+                                    .addComponent(lblThuong)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtThuong, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlChiTietLuongLayout.createSequentialGroup()
+                                    .addComponent(lblChuyenCan)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtChuyenCan, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlChiTietLuongLayout.createSequentialGroup()
+                                    .addGroup(pnlChiTietLuongLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lblSoNgayLamThucTe)
+                                        .addComponent(lblPhuCapXangXe))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addGroup(pnlChiTietLuongLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(txtPhuCapXangXe, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtSoNgayLamThucTe, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(pnlChiTietLuongLayout.createSequentialGroup()
+                                .addComponent(lblBHXH)
+                                .addGap(39, 39, 39)
+                                .addComponent(txtBHXH, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnlChiTietLuongLayout.createSequentialGroup()
+                                .addComponent(lblBHYT)
+                                .addGap(54, 54, 54)
+                                .addComponent(txtBHYT, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         pnlChiTietLuongLayout.setVerticalGroup(
             pnlChiTietLuongLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -443,7 +641,7 @@ public class XemLuong extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(pnlXemLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(44, 44, 44)
-                .addComponent(pnlChiTietLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlChiTietLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 384, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
@@ -492,6 +690,83 @@ public class XemLuong extends javax.swing.JPanel {
 
     private void btnCapNhatHeSoLuongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhatHeSoLuongActionPerformed
         // TODO add your handling code here:
+     int selectedRow = tblXemLuong.getSelectedRow();
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn bản ghi cần cập nhật!");
+            return;
+        }
+        
+        double newThuong = 0;
+        try {
+            newThuong = Double.parseDouble(txtThuong.getText().trim());
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Giá trị thưởng không hợp lệ!");
+            return;
+        }
+        
+        if (newThuong == originalThuong) {
+            JOptionPane.showMessageDialog(this, "Bạn chưa chỉnh sửa gì!");
+            return;
+        }
+        
+        int maLuong = Integer.parseInt(tableModel.getValueAt(selectedRow, 0).toString());
+        Luong selectedLuong = null;
+        for (Luong l : listLuong) {
+            if (l.getMaLuong() == maLuong) {
+                selectedLuong = l;
+                break;
+            }
+        }
+        if (selectedLuong == null) {
+            JOptionPane.showMessageDialog(this, "Không tìm thấy bản ghi lương!");
+            return;
+        }
+        
+        // Nếu đã chốt, không cho cập nhật
+        if (selectedLuong.getTrangThai().equalsIgnoreCase("Đã thanh toán")) {
+            JOptionPane.showMessageDialog(this, "Bản ghi đã chốt lương, không thể cập nhật!");
+            return;
+        }
+        
+        selectedLuong.setThuong(newThuong);
+        
+        int soNgayLamThucTe = 0;
+        try {
+            soNgayLamThucTe = Integer.parseInt(txtSoNgayLamThucTe.getText().trim());
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Số ngày làm thực tế không hợp lệ!");
+            return;
+        }
+        double newChuyenCan = (soNgayLamThucTe >= 26) ? 200000 : 0;
+        selectedLuong.setChuyencan(newChuyenCan);
+        
+        List<HeSoLuong> listHSL = heSoLuongBUS.searchHeSoLuongByMa(selectedLuong.getMaHeSoLuong());
+        HeSoLuong hsl = (listHSL != null && !listHSL.isEmpty()) ? listHSL.get(0) : null;
+        if (hsl == null) {
+            JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin hệ số lương!");
+            return;
+        }
+        
+        double newTongLuongNhan = computeLuongThucNhan(
+            hsl.getLuongCoBan(),
+            hsl.getPhuCapXang(),
+            selectedLuong.getThuong(),   // giá trị thưởng mới
+            newChuyenCan,
+            hsl.getPhuCapBHYT(),
+            hsl.getPhuCapBHXH(),
+            hsl.getPhuCapBHTN(),
+            soNgayLamThucTe
+        );
+        selectedLuong.setTongLuongNhan(newTongLuongNhan);
+        
+        boolean result = luongDAL.updateLuong(selectedLuong);
+        if (result) {
+            JOptionPane.showMessageDialog(this, "Cập nhật lương thành công!");
+            loadDataLuong();
+            loadLuongDetails(selectedLuong);
+        } else {
+            JOptionPane.showMessageDialog(this, "Cập nhật lương thất bại!");
+        }
     }//GEN-LAST:event_btnCapNhatHeSoLuongActionPerformed
 
     private void txtBHXHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBHXHActionPerformed
@@ -524,11 +799,126 @@ public class XemLuong extends javax.swing.JPanel {
 
     private void btnChotLuongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChotLuongActionPerformed
         // TODO add your handling code here:
+        int selectedRow = tblXemLuong.getSelectedRow();
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn bản ghi lương cần chốt!");
+            return;
+        }
+
+        int confirm = JOptionPane.showConfirmDialog(this, 
+            "Bạn có chắc chắn muốn chốt lương không?\nSau khi chốt, dữ liệu sẽ không thể chỉnh sửa được nữa.", 
+            "Xác nhận chốt lương", JOptionPane.YES_NO_OPTION);
+        if (confirm != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        int maLuong = Integer.parseInt(tableModel.getValueAt(selectedRow, 0).toString());
+        Luong selectedLuong = null;
+        for (Luong l : listLuong) {
+            if (l.getMaLuong() == maLuong) {
+                selectedLuong = l;
+                break;
+            }
+        }
+        if (selectedLuong == null) {
+            JOptionPane.showMessageDialog(this, "Không tìm thấy bản ghi lương!");
+            return;
+        }
+
+        // Lấy thông tin hệ số lương hiện hành
+        List<HeSoLuong> listHSL = heSoLuongBUS.searchHeSoLuongByMa(selectedLuong.getMaHeSoLuong());
+        HeSoLuong hsl = (listHSL != null && !listHSL.isEmpty()) ? listHSL.get(0) : null;
+        if (hsl == null) {
+            JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin hệ số lương!");
+            return;
+        }
+
+        int soNgayLamThucTe = getSoNgayLamThucTe(selectedLuong.getMaNV(), selectedLuong.getThang(), selectedLuong.getNam());
+        double chuyenCan = (soNgayLamThucTe >= 26) ? 200000 : 0;
+
+        // Tính tổng lương thực nhận tại thời điểm chốt
+        double frozenTongLuongNhan = computeLuongThucNhan(
+            hsl.getLuongCoBan(),
+            hsl.getPhuCapXang(),
+            selectedLuong.getThuong(),
+            chuyenCan,
+            hsl.getPhuCapBHYT(),
+            hsl.getPhuCapBHXH(),
+            hsl.getPhuCapBHTN(),
+            soNgayLamThucTe
+        );
+
+        // Cập nhật các cột trong bảng Luong mà có thể thay đổi
+        selectedLuong.setTongLuongNhan(frozenTongLuongNhan);
+        selectedLuong.setChuyencan(chuyenCan);
+        selectedLuong.setTrangThai("Đã thanh toán");
+        // Lưu ý: không thay đổi maHeSoLuong để tránh vi phạm ràng buộc FK
+
+        boolean result = luongDAL.updateLuong(selectedLuong);
+        if (result) {
+            JOptionPane.showMessageDialog(this, "Chốt lương thành công!");
+            loadDataLuong();
+            loadLuongDetails(selectedLuong);
+            txtThuong.setEditable(false);
+            txtThuong.setEnabled(false);
+        } else {
+            JOptionPane.showMessageDialog(this, "Chốt lương thất bại!");
+        }
     }//GEN-LAST:event_btnChotLuongActionPerformed
 
     private void btnXuatExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXuatExcelActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnXuatExcelActionPerformed
+
+    private void btnXemTatCaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXemTatCaActionPerformed
+        // TODO add your handling code here:
+        loadDataLuong();
+    }//GEN-LAST:event_btnXemTatCaActionPerformed
+
+    private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
+        // TODO add your handling code here:
+        String keyword = txtTimKiem.getText().trim();
+       if (keyword.isEmpty()) {
+           loadDataLuong();
+           return;
+       }
+
+       int currentMaNV = SESSION.CurrentSession.getMaNV();
+       String role = SESSION.CurrentSession.getChucVu();
+
+       DefaultTableModel model = (DefaultTableModel) tblXemLuong.getModel();
+       model.setRowCount(0);
+       for (Luong l : listLuong) {
+           // Nếu chức vụ không phải "Quản lý nhân viên" và không phải "Admin", chỉ xét nếu l.getMaNV() bằng currentMaNV
+           if (!role.equalsIgnoreCase("Quản lý nhân viên") &&
+               !role.equalsIgnoreCase("Admin") &&
+               l.getMaNV() != currentMaNV) {
+               continue;
+           }
+
+           NhanVien nv = nhanVienDAL.getAllNhanVien().stream()
+                   .filter(n -> n.getMaNV() == l.getMaNV())
+                   .findFirst()
+                   .orElse(null);
+           String tenNV = (nv != null) ? nv.getTenNV() : "";
+           boolean match = false;
+           if (keyword.matches("\\d+")) {
+               if (l.getMaNV() == Integer.parseInt(keyword)) {
+                   match = true;
+               }
+           } else {
+               if (!keyword.isEmpty() && tenNV.toLowerCase().contains(keyword.toLowerCase())) {
+                   match = true;
+               }
+           }
+           if (match) {
+               model.addRow(new Object[]{l.getMaLuong(), l.getMaNV(), tenNV, l.getThang(), l.getNam()});
+           }
+       }
+       if (model.getRowCount() == 0) {
+           JOptionPane.showMessageDialog(this, "Không tìm thấy kết quả phù hợp!");
+       }
+    }//GEN-LAST:event_btnTimKiemActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

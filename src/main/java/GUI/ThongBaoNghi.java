@@ -25,7 +25,6 @@ public class ThongBaoNghi extends javax.swing.JPanel {
      */
     private DefaultTableModel tableModel;
     private DonXinNghiBUS donBUS;
-    
     // Lấy thông tin từ phiên đăng nhập
     private int currentMaNV;
     private String currentChucVu;
@@ -559,6 +558,10 @@ public class ThongBaoNghi extends javax.swing.JPanel {
         // TODO add your handling code here:
         ThemTBN n = new ThemTBN();
         n.setVisible(true);
+        if (n.isAdded()) {  
+            loadDataThongBaoNghi();
+        }
+        
     }//GEN-LAST:event_bthThemMouseClicked
 
     private void bthThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bthThemActionPerformed

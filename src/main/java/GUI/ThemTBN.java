@@ -21,6 +21,7 @@ public class ThemTBN extends javax.swing.JFrame {
     /**
      * Creates new form ThemNV
      */
+    private boolean added = false; // Biến kiểm tra việc thêm thành công
     // Định dạng ngày chuẩn
     private final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     public ThemTBN() {
@@ -86,7 +87,10 @@ public class ThemTBN extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Lỗi định dạng ngày: " + ex.getMessage());
         }
     }
-
+    // Getter cho biến added để kiểm tra xem nhân viên đã được thêm hay chưa
+    public boolean isAdded() {
+        return added;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -350,10 +354,12 @@ public class ThemTBN extends javax.swing.JFrame {
             if (success) {
                 JOptionPane.showMessageDialog(this, "Thêm đơn xin nghỉ thành công!");
                 // Bạn có thể xóa sạch các trường nhập hoặc đóng form
+                added = true;
                 dispose();
             } else {
                 JOptionPane.showMessageDialog(this, "Thêm đơn xin nghỉ thất bại!");
             }
+
             
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Có lỗi xảy ra: " + ex.getMessage());
