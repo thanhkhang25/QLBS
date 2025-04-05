@@ -4,6 +4,16 @@
  */
 package GUI;
 
+import BUS.ChamCongBUS;
+import BUS.NhanVienBUS;
+//import DTO.ChamCong;
+import DTO.NhanVien;
+import SESSION.CurrentSession;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author LENOVO
@@ -13,8 +23,58 @@ public class ChamCong extends javax.swing.JPanel {
     /**
      * Creates new form ChamCong
      */
+    // Các thành phần giao diện
+    private DefaultTableModel tableModel;
+    private BUS.ChamCongBUS ccBUS;
+    private BUS.NhanVienBUS nvBUS;
     public ChamCong() {
         initComponents();
+        // Khởi tạo BUS
+        ccBUS = new ChamCongBUS();
+        nvBUS = new NhanVienBUS();
+        // Khởi tạo bảng hiển thị
+        initTable();
+        // Load dữ liệu ban đầu
+        loadDataChamCong();
+    }
+
+    private void initTable() {
+        String[] columnNames = {"Mã nhân viên", "Tên nhân viên", "Ngày", "Thời gian chấm công"};
+        tableModel = new DefaultTableModel(columnNames, 0);
+        tblChamCong.setModel(tableModel);
+    }
+
+    // Hàm tải dữ liệu chấm công vào bảng, kết hợp với tên nhân viên (lấy từ NhanVienBUS)
+    private void loadChamCongToTable(List<DTO.ChamCong> list) {
+        tableModel.setRowCount(0);
+        BUS.NhanVienBUS nvBUS = new BUS.NhanVienBUS();
+        for (DTO.ChamCong cc : list) {
+            // Lấy tên nhân viên từ maNV
+            DTO.NhanVien nv = nvBUS.getNhanVienByMaNV(cc.getMaNV());
+            String tenNV = (nv != null) ? nv.getTenNV() : "";
+            // Định dạng thời gian chấm công: tách ngày và giờ
+            String ngay = cc.getThoiGianChamCong().toLocalDate().toString();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+            String gio = cc.getThoiGianChamCong().toLocalTime().format(formatter);
+            Object[] row = { cc.getMaNV(), tenNV, ngay, gio };
+            tableModel.addRow(row);
+        }
+    }
+
+    // Load dữ liệu chấm công vào bảng, kết hợp thông tin tên NV từ BUS.NhanVienBUS
+    private void loadDataChamCong() {
+        List<DTO.ChamCong> list = ccBUS.getAllChamCong();
+        tableModel.setRowCount(0);
+        for (DTO.ChamCong cc : list) {
+            // Lấy tên nhân viên dựa trên maNV
+            NhanVien nv = nvBUS.getNhanVienByMaNV(cc.getMaNV());
+            String tenNV = (nv != null) ? nv.getTenNV() : "";
+            // Tách ngày và giờ từ thoiGianChamCong
+            String ngay = cc.getThoiGianChamCong().toLocalDate().toString();
+            String gio = cc.getThoiGianChamCong().toLocalTime().toString();
+            Object[] row = { cc.getMaNV(), tenNV, ngay, gio };
+            tableModel.addRow(row);
+        }
     }
 
     /**
@@ -26,22 +86,22 @@ public class ChamCong extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
+        scrChamCong = new javax.swing.JScrollPane();
+        tblChamCong = new javax.swing.JTable();
+        lblTimKiem = new javax.swing.JLabel();
+        txtTimKiem = new javax.swing.JTextField();
+        btnTimKiem = new javax.swing.JButton();
+        btnXemTatCa = new javax.swing.JButton();
+        btnChamCong = new javax.swing.JButton();
+        lblTuNgay = new javax.swing.JLabel();
+        txtTuNgay = new javax.swing.JTextField();
+        lblDenNgay = new javax.swing.JLabel();
+        txtDenNgay = new javax.swing.JTextField();
+        btnLoc = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblChamCong.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -52,32 +112,52 @@ public class ChamCong extends javax.swing.JPanel {
                 "Mã nhân viên", "Tên nhân viên", "Ngày", "thời gian chấm công"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        scrChamCong.setViewportView(tblChamCong);
 
-        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel1.setText("Tìm kiếm");
+        lblTimKiem.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        lblTimKiem.setText("Tìm kiếm");
 
-        jButton1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jButton1.setText("Tìm kiếm");
-        jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnTimKiem.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        btnTimKiem.setText("Tìm kiếm");
+        btnTimKiem.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnTimKiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTimKiemActionPerformed(evt);
+            }
+        });
 
-        jButton2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jButton2.setText("Xem tất cả");
-        jButton2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnXemTatCa.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        btnXemTatCa.setText("Xem tất cả");
+        btnXemTatCa.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnXemTatCa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXemTatCaActionPerformed(evt);
+            }
+        });
 
-        jButton3.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jButton3.setText("Chấm Công");
-        jButton3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnChamCong.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        btnChamCong.setText("Chấm Công");
+        btnChamCong.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnChamCong.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnChamCongActionPerformed(evt);
+            }
+        });
 
-        jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel3.setText("Từ ngày");
+        lblTuNgay.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        lblTuNgay.setText("Từ ngày");
 
-        jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel4.setText("Đến");
+        lblDenNgay.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        lblDenNgay.setText("Đến");
 
-        jButton4.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jButton4.setText("Lọc");
-        jButton4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnLoc.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        btnLoc.setText("Lọc");
+        btnLoc.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnLoc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLocActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -86,30 +166,30 @@ public class ChamCong extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(scrChamCong)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnChamCong, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel3)
+                                        .addComponent(lblTuNgay)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtTuNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lblDenNgay)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabel4)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(txtDenNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnLoc, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
+                                .addComponent(lblTimKiem)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 547, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 547, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(btnXemTatCa, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 32, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -118,38 +198,136 @@ public class ChamCong extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(lblTimKiem)
+                    .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnTimKiem)
+                    .addComponent(btnXemTatCa))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4)
-                    .addComponent(jLabel3))
+                    .addComponent(txtTuNgay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblDenNgay)
+                    .addComponent(txtDenNgay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLoc)
+                    .addComponent(lblTuNgay))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3)
+                .addComponent(btnChamCong)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(scrChamCong, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
+        // TODO add your handling code here:
+        String keyword = txtTimKiem.getText().trim();
+        BUS.ChamCongBUS ccBUS = new BUS.ChamCongBUS();
+        List<DTO.ChamCong> list;
+        if (keyword.isEmpty()) {
+            list = ccBUS.getAllChamCong();
+        } else {
+            list = ccBUS.searchChamCongByKeyword(keyword);
+        }
+        if (list.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Không tìm thấy bản ghi nào phù hợp với từ khóa: " + keyword);
+        }
+        loadChamCongToTable(list);
+    }//GEN-LAST:event_btnTimKiemActionPerformed
+
+    private void btnXemTatCaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXemTatCaActionPerformed
+        // TODO add your handling code here:
+        loadDataChamCong();
+    }//GEN-LAST:event_btnXemTatCaActionPerformed
+
+    private void btnLocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocActionPerformed
+        // TODO add your handling code here:
+        // Lấy chuỗi từ 2 ô nhập
+           String fromStr = txtTuNgay.getText().trim();
+           String toStr = txtDenNgay.getText().trim();
+
+           // 1. Kiểm tra rỗng
+           if (fromStr.isEmpty() || toStr.isEmpty()) {
+               JOptionPane.showMessageDialog(this, "Vui lòng nhập đủ ngày bắt đầu và ngày kết thúc!");
+               return;
+           }
+
+           try {
+               // 2. Kiểm tra định dạng bằng LocalDate.parse
+               java.time.LocalDate fromDate = java.time.LocalDate.parse(fromStr);
+               java.time.LocalDate toDate = java.time.LocalDate.parse(toStr);
+
+               // 3. Không cho nhập ngày tương lai
+               java.time.LocalDate today = java.time.LocalDate.now();
+               if (fromDate.isAfter(today)) {
+                   JOptionPane.showMessageDialog(this, "Ngày bắt đầu không được sau ngày hiện tại!");
+                   return;
+               }
+               if (toDate.isAfter(today)) {
+                   JOptionPane.showMessageDialog(this, "Ngày kết thúc không được sau ngày hiện tại!");
+                   return;
+               }
+
+               // 4. Kiểm tra thứ tự: từ ngày <= đến ngày
+               if (fromDate.isAfter(toDate)) {
+                   JOptionPane.showMessageDialog(this, "Ngày bắt đầu phải trước hoặc bằng ngày kết thúc!");
+                   return;
+               }
+
+               // Nếu tất cả đều hợp lệ, tiến hành lọc
+               BUS.ChamCongBUS ccBUS = new BUS.ChamCongBUS();
+               List<DTO.ChamCong> list = ccBUS.filterChamCongByDate(fromDate, toDate);
+               if (list.isEmpty()) {
+                   JOptionPane.showMessageDialog(this, "Không có bản ghi chấm công nào trong khoảng thời gian này.");
+               }
+               // Gọi hàm loadChamCongToTable hoặc tương tự để hiển thị kết quả
+               loadChamCongToTable(list);
+
+           } catch (java.time.format.DateTimeParseException ex) {
+               // Nếu parse bị lỗi, nghĩa là sai định dạng YYYY-MM-DD
+               JOptionPane.showMessageDialog(this, "Định dạng ngày không hợp lệ! Vui lòng nhập theo dạng YYYY-MM-DD.");
+           } catch (Exception ex) {
+               // Bắt lỗi chung
+               JOptionPane.showMessageDialog(this, "Có lỗi xảy ra: " + ex.getMessage());
+           }
+    }//GEN-LAST:event_btnLocActionPerformed
+
+    private void btnChamCongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChamCongActionPerformed
+        // TODO add your handling code here:
+        // Giả sử lớp CurrentSession cung cấp thông tin của nhân viên đang đăng nhập
+        int maNV = CurrentSession.getMaNV();
+        String tenNV = CurrentSession.getTenNV();
+
+        BUS.ChamCongBUS ccBUS = new BUS.ChamCongBUS();
+        // Kiểm tra xem nhân viên đã chấm công hôm nay chưa.
+        if(ccBUS.hasChamCongToday(maNV)) {
+            JOptionPane.showMessageDialog(this, 
+                    "Nhân viên đã chấm công hôm nay!", 
+                    "Thông báo", 
+                    JOptionPane.WARNING_MESSAGE);
+            return; // Dừng xử lý nếu đã chấm công
+        }
+        boolean success = ccBUS.addChamCong(maNV);
+
+        if(success){
+            JOptionPane.showMessageDialog(this, "Chấm công thành công cho: " + tenNV);
+            loadDataChamCong(); 
+        } else {
+            JOptionPane.showMessageDialog(this, "Chấm công thất bại!");
+        }
+    }//GEN-LAST:event_btnChamCongActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JButton btnChamCong;
+    private javax.swing.JButton btnLoc;
+    private javax.swing.JButton btnTimKiem;
+    private javax.swing.JButton btnXemTatCa;
+    private javax.swing.JLabel lblDenNgay;
+    private javax.swing.JLabel lblTimKiem;
+    private javax.swing.JLabel lblTuNgay;
+    private javax.swing.JScrollPane scrChamCong;
+    private javax.swing.JTable tblChamCong;
+    private javax.swing.JTextField txtDenNgay;
+    private javax.swing.JTextField txtTimKiem;
+    private javax.swing.JTextField txtTuNgay;
     // End of variables declaration//GEN-END:variables
 }
