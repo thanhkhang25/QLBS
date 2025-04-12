@@ -4,6 +4,12 @@
  */
 package GUI;
 
+import BUS.KhuyenMaiHoaDonBUS;
+import DTO.ChiTietKhuyenMaiHoaDon;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author LENOVO
@@ -27,47 +33,42 @@ public class ThemKMTheoHD extends javax.swing.JFrame {
     private void initComponents() {
 
         ThemKMHD = new javax.swing.JPanel();
-        jLabel20 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
-        jLabel23 = new javax.swing.JLabel();
-        jTextField16 = new javax.swing.JTextField();
-        jTextField17 = new javax.swing.JTextField();
-        jTextField18 = new javax.swing.JTextField();
-        jTextField19 = new javax.swing.JTextField();
+        ngayBDLabel = new javax.swing.JLabel();
+        ngayKTLabel = new javax.swing.JLabel();
+        giaHDLabel = new javax.swing.JLabel();
+        giaHDTextField = new javax.swing.JTextField();
+        phanGiamGiamTextField = new javax.swing.JTextField();
+        ngayKTTextField = new javax.swing.JTextField();
         jLabel24 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jButton6 = new javax.swing.JButton();
-        jTextField20 = new javax.swing.JTextField();
+        phanTramGiamLabel = new javax.swing.JLabel();
+        addButton = new javax.swing.JButton();
+        ngayBDTextField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         ThemKMHD.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jLabel20.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel20.setText("Mã Khuyến Mãi");
+        ngayBDLabel.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        ngayBDLabel.setText("Ngày Bắt Đầu");
 
-        jLabel21.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel21.setText("Ngày Bắt Đầu");
+        ngayKTLabel.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        ngayKTLabel.setText("Ngày Kết Thúc");
 
-        jLabel22.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel22.setText("Ngày Kết Thúc");
-
-        jLabel23.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel23.setText("Giá Hóa Đơn");
+        giaHDLabel.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        giaHDLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        giaHDLabel.setText("Giá Hóa Đơn");
 
         jLabel24.setFont(new java.awt.Font("Times New Roman", 3, 18)); // NOI18N
         jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel24.setText("Thêm Khuyến Mãi");
 
-        jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel3.setText("Phần Trăm Giảm");
+        phanTramGiamLabel.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        phanTramGiamLabel.setText("Phần Trăm Giảm");
 
-        jButton6.setText("Thêm");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        addButton.setText("Thêm");
+        addButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                addButtonActionPerformed(evt);
             }
         });
 
@@ -81,22 +82,20 @@ public class ThemKMTheoHD extends javax.swing.JFrame {
                     .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(ThemKMHDLayout.createSequentialGroup()
                         .addGroup(ThemKMHDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel20)
-                            .addComponent(jLabel21)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel23))
+                            .addComponent(ngayBDLabel)
+                            .addComponent(phanTramGiamLabel)
+                            .addComponent(giaHDLabel))
                         .addGap(28, 28, 28)
                         .addGroup(ThemKMHDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField16, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
-                            .addComponent(jTextField17)
-                            .addComponent(jTextField18)
-                            .addComponent(jTextField20))
+                            .addComponent(giaHDTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
+                            .addComponent(phanGiamGiamTextField)
+                            .addComponent(ngayBDTextField))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ThemKMHDLayout.createSequentialGroup()
-                        .addComponent(jLabel22)
+                        .addComponent(ngayKTLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextField19, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(ngayKTTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(addButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         ThemKMHDLayout.setVerticalGroup(
@@ -104,28 +103,24 @@ public class ThemKMTheoHD extends javax.swing.JFrame {
             .addGroup(ThemKMHDLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(jLabel24)
+                .addGap(41, 41, 41)
+                .addGroup(ThemKMHDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(giaHDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(giaHDLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(ThemKMHDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(phanGiamGiamTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(phanTramGiamLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(ThemKMHDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ngayBDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ngayBDLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(ThemKMHDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ngayKTTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ngayKTLabel))
                 .addGap(18, 18, 18)
-                .addGroup(ThemKMHDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel20)
-                    .addComponent(jTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(ThemKMHDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel23))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(ThemKMHDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(ThemKMHDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel21))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(ThemKMHDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel22))
-                .addGap(18, 18, 18)
-                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -153,10 +148,48 @@ public class ThemKMTheoHD extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        try {
+            double giaHD = Double.parseDouble(giaHDTextField.getText().trim());
+            int phanTramGiam = Integer.parseInt(phanGiamGiamTextField.getText().trim());
+            LocalDate ngayBD = LocalDate.parse(ngayBDTextField.getText().trim());
+            LocalDate ngayKT = LocalDate.parse(ngayKTTextField.getText().trim());
 
+            // Kiểm tra dữ liệu hợp lệ
+            if (giaHD < 0 || phanTramGiam < 0) {
+                JOptionPane.showMessageDialog(this, "Giá hóa đơn và phần trăm giảm phải lớn hơn hoặc bằng 0!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            if (ngayKT.isBefore(ngayBD)) {
+                JOptionPane.showMessageDialog(this, "Ngày kết thúc phải sau hoặc bằng ngày bắt đầu!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Tạo đối tượng KM
+            ChiTietKhuyenMaiHoaDon kmHD = new ChiTietKhuyenMaiHoaDon(ngayBD, ngayKT, giaHD, phanTramGiam);
+
+            boolean success = kmhdBUS.addKhuyenMaiHoaDon(kmHD);
+
+            if (success) {
+                JOptionPane.showMessageDialog(this, "Thêm khuyến mãi thành công!");
+                // Có thể gọi loadData() hoặc clearForm() ở đây nếu cần
+            } else {
+                JOptionPane.showMessageDialog(this, "Thêm khuyến mãi thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đúng định dạng số!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        } catch (DateTimeParseException e) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đúng định dạng ngày (yyyy-MM-dd)!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_addButtonActionPerformed
+
+    KhuyenMaiHoaDonBUS kmhdBUS = new KhuyenMaiHoaDonBUS();
+    
     /**
      * @param args the command line arguments
      */
@@ -193,48 +226,16 @@ public class ThemKMTheoHD extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel ThemKM;
-    private javax.swing.JPanel ThemKM1;
     private javax.swing.JPanel ThemKMHD;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
+    private javax.swing.JButton addButton;
+    private javax.swing.JLabel giaHDLabel;
+    private javax.swing.JTextField giaHDTextField;
     private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTable jTable3;
-    private javax.swing.JTable jTable4;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField13;
-    private javax.swing.JTextField jTextField14;
-    private javax.swing.JTextField jTextField15;
-    private javax.swing.JTextField jTextField16;
-    private javax.swing.JTextField jTextField17;
-    private javax.swing.JTextField jTextField18;
-    private javax.swing.JTextField jTextField19;
-    private javax.swing.JTextField jTextField20;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
+    private javax.swing.JLabel ngayBDLabel;
+    private javax.swing.JTextField ngayBDTextField;
+    private javax.swing.JLabel ngayKTLabel;
+    private javax.swing.JTextField ngayKTTextField;
+    private javax.swing.JTextField phanGiamGiamTextField;
+    private javax.swing.JLabel phanTramGiamLabel;
     // End of variables declaration//GEN-END:variables
 }

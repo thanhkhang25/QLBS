@@ -7,8 +7,7 @@ package GUI;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.PopupMenu;
-import java.awt.event.MouseEvent;
+import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -26,6 +25,8 @@ public class MainWindow extends javax.swing.JFrame {
      */
     public MainWindow() {
         initComponents();
+        //ChucNangPanel.setLayout(new BoxLayout(ChucNangPanel, BoxLayout.Y_AXIS));
+        roleLbl.setText(SESSION.CurrentSession.getChucVu());
         SetUpPanel();
         setRoleVisibility();  // Gọi để điều chỉnh các button theo chức vụ
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -68,6 +69,7 @@ public class MainWindow extends javax.swing.JFrame {
             quanLyTaiKhoanButton.setVisible(true);
             xemLuongButton.setVisible(true);
             quanLyThongTinCaNhan.setVisible(true);
+            thongKeButton.setVisible(true);
         } else if (role.equalsIgnoreCase("Quản lý kho hàng")) {
             trangChu.setVisible(true);
             dangXuat.setVisible(true);
@@ -78,6 +80,7 @@ public class MainWindow extends javax.swing.JFrame {
             quanLyXuatKhoButton.setVisible(true);
             xemLuongButton.setVisible(true);
             quanLyThongTinCaNhan.setVisible(true);
+            thongKeButton.setVisible(true);
         } else if (role.equalsIgnoreCase("Admin")) {
             // Hiển thị tất cả các button
             trangChu.setVisible(true);
@@ -121,10 +124,10 @@ public class MainWindow extends javax.swing.JFrame {
         xemLuongButton = new javax.swing.JButton();
         quanLyThongTinCaNhan = new javax.swing.JButton();
         QuyenPanel = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        roleLbl = new javax.swing.JLabel();
         HienThiPanel = new javax.swing.JPanel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         ChucNangPanel.setPreferredSize(new java.awt.Dimension(230, 582));
 
@@ -303,7 +306,7 @@ public class MainWindow extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jLabel1.setText("ADMIN");
+        roleLbl.setText("ADMIN");
 
         javax.swing.GroupLayout QuyenPanelLayout = new javax.swing.GroupLayout(QuyenPanel);
         QuyenPanel.setLayout(QuyenPanelLayout);
@@ -311,14 +314,14 @@ public class MainWindow extends javax.swing.JFrame {
             QuyenPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(QuyenPanelLayout.createSequentialGroup()
                 .addGap(91, 91, 91)
-                .addComponent(jLabel1)
+                .addComponent(roleLbl)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         QuyenPanelLayout.setVerticalGroup(
             QuyenPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, QuyenPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(roleLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25))
         );
 
@@ -542,7 +545,6 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JButton QuanLyKhuyenMaiButton;
     private javax.swing.JPanel QuyenPanel;
     private javax.swing.JButton dangXuat;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JButton nopDonXinNghiButton;
     private javax.swing.JButton quanLyHoaDonButton;
     private javax.swing.JButton quanLyNhanVienButton;
@@ -551,6 +553,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JButton quanLyTaiKhoanButton;
     private javax.swing.JButton quanLyThongTinCaNhan;
     private javax.swing.JButton quanLyXuatKhoButton;
+    private javax.swing.JLabel roleLbl;
     private javax.swing.JButton thongKeButton;
     private javax.swing.JButton trangChu;
     private javax.swing.JButton xemLuongButton;

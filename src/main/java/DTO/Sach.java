@@ -5,22 +5,21 @@ public class Sach {
     private String tenSach;
     private String theLoai;
     private String tacGia;
-    private String donViTinh;
     private double giaBan;
     private double giaDaGiam;
     private double giaNhap;
     private int soLuongTonKho;
     private String chiNhanh;
     private String trangThai;
+    
     public Sach() {
     }
-    public Sach(int maSach, String tenSach, String theLoai, String tacGia, String donViTinh, double giaBan,
+    public Sach(int maSach, String tenSach, String theLoai, String tacGia, double giaBan,
             double giaDaGiam, double giaNhap, int soLuongTonKho, String chiNhanh, String trangThai) {
         this.maSach = maSach;
         this.tenSach = tenSach;
         this.theLoai = theLoai;
         this.tacGia = tacGia;
-        this.donViTinh = donViTinh;
         this.giaBan = giaBan;
         this.giaDaGiam = giaDaGiam;
         this.giaNhap = giaNhap;
@@ -28,6 +27,25 @@ public class Sach {
         this.chiNhanh = chiNhanh;
         this.trangThai = trangThai;
     }
+    public Sach(int maSach, String tenSach, String theLoai, String tacGia, double giaBan, double giaNhap, String chiNhanh, String trangThai) {
+        this.maSach = maSach;
+        this.tenSach = tenSach;
+        this.theLoai = theLoai;
+        this.tacGia = tacGia;
+        this.giaBan = giaBan;
+        this.giaNhap = giaNhap;
+        this.chiNhanh = chiNhanh;
+        this.trangThai = trangThai;
+    }
+    public Sach(String tenSach, String theLoai, String tacGia, double giaBan, double giaNhap, String chiNhanh) {
+        this.tenSach = tenSach;
+        this.theLoai = theLoai;
+        this.tacGia = tacGia;
+        this.giaBan = giaBan;
+        this.giaNhap = giaNhap;
+        this.chiNhanh = chiNhanh;
+    }
+    
     public int getMaSach() {
         return maSach;
     }
@@ -51,12 +69,6 @@ public class Sach {
     }
     public void setTacGia(String tacGia) {
         this.tacGia = tacGia;
-    }
-    public String getDonViTinh() {
-        return donViTinh;
-    }
-    public void setDonViTinh(String donViTinh) {
-        this.donViTinh = donViTinh;
     }
     public double getGiaBan() {
         return giaBan;

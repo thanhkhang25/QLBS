@@ -17,6 +17,10 @@ public class PhieuXuat {
         this.chiNhanh = chiNhanh;
         this.trangThai = trangThai;
     }
+    public PhieuXuat(int maNV, String chiNhanh) {
+        this.maNV = maNV;
+        this.chiNhanh = chiNhanh;
+    }
     
     public int getMaPX() {
         return maPX;

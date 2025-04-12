@@ -19,6 +19,11 @@ public class PhieuNhap {
         this.tongTien = tongTien;
         this.trangThai = trangThai;
     }
+    public PhieuNhap(int maNV, int maNCC, double tongTien) {
+        this.maNV = maNV;
+        this.maNCC = maNCC;
+        this.tongTien = tongTien;
+    }
 
     public int getMaPN() {
         return maPN;

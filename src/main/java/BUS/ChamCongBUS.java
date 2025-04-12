@@ -84,6 +84,19 @@ public class ChamCongBUS {
         LocalDate today = LocalDate.now();
         return ccDAL.hasChamCongToday(maNV, today);
     }
-
-
+    
+    public int countChamCongByNV(int maNV, int year, int month) {
+        List<ChamCong> listChamCong = ccDAL.getAllChamCong();
+        int count = 0;
+        for (ChamCong cc : listChamCong) {
+            // Lấy thời gian chấm công dưới dạng LocalDateTime
+            LocalDateTime time = cc.getThoiGianChamCong();
+            if (cc.getMaNV() == maNV &&
+                time.getYear() == year &&
+                time.getMonthValue() == month) {
+                count++;
+            }
+        }
+        return count;
+    }
 }

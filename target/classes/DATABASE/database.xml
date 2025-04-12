@@ -1,0 +1,19 @@
+<mxGraphModel>
+  <root>
+    <!-- Example table: NhanVien -->
+    <table label="NhanVien" x="50" y="50">
+      <column name="maNV" primaryKey="true" />
+      <column name="tenNV" />
+      <column name="ngaySinh" />
+      <column name="gioiTinh" />
+      <column name="sdt" />
+      <column name="email" />
+      <column name="diaChi" />
+      <column name="ngayVaoLam" />
+      <column name="chiNhanh" />
+      <column name="trangThai" />
+    </table>
+    <!-- Example relationship: TaiKhoan refers to NhanVien -->
+    <relationship from="TaiKhoan.maNV" to="NhanVien.maNV" type="foreignKey" />
+  </root>
+</mxGraphModel>

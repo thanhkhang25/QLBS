@@ -17,7 +17,7 @@ public class QLBS {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //frame.add(new QL_ThongTinCaNhanVaTaiKhoan());
         //frame.add(new QuanLyNhanVien());
-        //frame.add(new LoginFrame());
+        frame.add(new LoginFrame());
         frame.pack(); // Tự động tính toán kích thước theo các thành phần trong frame
 //        frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Mở rộng toàn màn hình (tùy chọn)
         frame.setLocationRelativeTo(null);

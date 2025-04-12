@@ -16,6 +16,7 @@ import DTO.ChamCong;
 import DTO.HeSoLuong;
 import DTO.Luong;
 import DTO.NhanVien;
+import SESSION.CurrentSession;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -36,6 +37,22 @@ private double originalThuong = 0;
     private List<Luong> listLuong;
     public XemLuong() {
         initComponents();
+        String role = CurrentSession.getChucVu();
+        if (role == null) {
+            role = "";
+        }
+        
+        if (role.equalsIgnoreCase("Nhân viên bán hàng")) {
+            btnCapNhatHeSoLuong.setVisible(false);
+            btnChotLuong.setVisible(false);
+        } else if (role.equalsIgnoreCase("Quản lý kho hàng")) {
+            btnCapNhatHeSoLuong.setVisible(false);
+            btnChotLuong.setVisible(false);
+        } 
+        else if (role.equalsIgnoreCase("Quản lý nhân viên")){
+            btnCapNhatHeSoLuong.setVisible(true);
+            btnChotLuong.setVisible(true);
+        }
         // Khởi tạo các đối tượng truy xuất dữ liệu
         luongDAL = new LuongDAL();
         nhanVienDAL = new NhanVienDAL();

@@ -19,6 +19,13 @@ public class NhaCungCap {
         this.trangThai = trangThai;
     }
     
+    public NhaCungCap(String tenNCC, String email, String sdt, String diaChi) {
+        this.tenNCC = tenNCC;
+        this.email = email;
+        this.sdt = sdt;
+        this.diaChi = diaChi;
+    }
+    
     public int getMaNCC() {
         return maNCC;
     }

@@ -4,6 +4,16 @@
  */
 package GUI;
 
+import BUS.KhuyenMaiHoaDonBUS;
+import BUS.SachBUS;
+import DTO.Sach;
+import java.text.Normalizer;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author LENOVO
@@ -15,6 +25,7 @@ public class ThemKhuyenMaiSach extends javax.swing.JFrame {
      */
     public ThemKhuyenMaiSach() {
         initComponents();
+        loadData();
     }
 
     /**
@@ -27,52 +38,55 @@ public class ThemKhuyenMaiSach extends javax.swing.JFrame {
     private void initComponents() {
 
         ThemKM = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
+        maKMLabel = new javax.swing.JLabel();
+        ngayBDLabel = new javax.swing.JLabel();
+        ngayKTLabel = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
-        jTextField9 = new javax.swing.JTextField();
-        jTextField10 = new javax.swing.JTextField();
-        jTextField12 = new javax.swing.JTextField();
+        maKMTextField = new javax.swing.JTextField();
+        phanTramGiamTextField = new javax.swing.JTextField();
+        ngayBDTextField = new javax.swing.JTextField();
+        ngayKTTextField = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        phanTramGiamLabel = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        kmTable = new javax.swing.JTable();
+        moveButton = new javax.swing.JButton();
+        addButton = new javax.swing.JButton();
         ThemKM1 = new javax.swing.JPanel();
-        jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTable4 = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
+        bookTable = new javax.swing.JTable();
+        addBookToKMButton = new javax.swing.JButton();
+        searchLabel = new javax.swing.JLabel();
+        searchTextField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         ThemKM.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jLabel10.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel10.setText("Mã Khuyến Mãi");
+        maKMLabel.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        maKMLabel.setText("Mã Khuyến Mãi");
 
-        jLabel12.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel12.setText("Ngày Bắt Đầu");
+        ngayBDLabel.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        ngayBDLabel.setText("Ngày Bắt Đầu");
 
-        jLabel13.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel13.setText("Ngày Kết Thúc");
+        ngayKTLabel.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        ngayKTLabel.setText("Ngày Kết Thúc");
 
         jLabel15.setFont(new java.awt.Font("Times New Roman", 3, 14)); // NOI18N
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel15.setText("Danh Sách Sản Phẩm");
 
+        maKMTextField.setEditable(false);
+
         jLabel16.setFont(new java.awt.Font("Times New Roman", 3, 18)); // NOI18N
         jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel16.setText("Thêm Khuyến Mãi");
 
-        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel1.setText("Phần Trăm Giảm");
+        phanTramGiamLabel.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        phanTramGiamLabel.setText("Phần Trăm Giảm");
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        kmTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -80,17 +94,22 @@ public class ThemKhuyenMaiSach extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Mã Sản Phẩm", "Tên Sản Phẩm", "Số Lượng ", "Giá Đã Giảm"
+                "Mã Sản Phẩm", "Tên Sản Phẩm", "Giá bán", "Giá Đã Giảm"
             }
         ));
-        jScrollPane3.setViewportView(jTable3);
+        jScrollPane3.setViewportView(kmTable);
 
-        jButton1.setText("Bỏ Sản Phẩm");
-
-        jButton3.setText("Thêm");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        moveButton.setText("Bỏ Sản Phẩm");
+        moveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                moveButtonActionPerformed(evt);
+            }
+        });
+
+        addButton.setText("Thêm khuyến mãi");
+        addButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addButtonActionPerformed(evt);
             }
         });
 
@@ -106,22 +125,22 @@ public class ThemKhuyenMaiSach extends javax.swing.JFrame {
                         .addGroup(ThemKMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(ThemKMLayout.createSequentialGroup()
                                 .addGroup(ThemKMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel10)
-                                    .addComponent(jLabel12)
-                                    .addComponent(jLabel13)
-                                    .addComponent(jLabel1))
+                                    .addComponent(maKMLabel)
+                                    .addComponent(ngayBDLabel)
+                                    .addComponent(ngayKTLabel)
+                                    .addComponent(phanTramGiamLabel))
                                 .addGap(28, 28, 28)
                                 .addGroup(ThemKMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextField8, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
-                                    .addComponent(jTextField9)
-                                    .addComponent(jTextField10)
-                                    .addComponent(jTextField12)))
+                                    .addComponent(maKMTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
+                                    .addComponent(phanTramGiamTextField)
+                                    .addComponent(ngayBDTextField)
+                                    .addComponent(ngayKTTextField)))
                             .addGroup(ThemKMLayout.createSequentialGroup()
                                 .addComponent(jLabel15)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE))
+                                .addComponent(moveButton, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE))
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(addButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -132,42 +151,38 @@ public class ThemKhuyenMaiSach extends javax.swing.JFrame {
                 .addComponent(jLabel16)
                 .addGap(18, 18, 18)
                 .addGroup(ThemKMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(maKMLabel)
+                    .addComponent(maKMTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(ThemKMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addComponent(phanTramGiamTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(phanTramGiamLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(ThemKMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel12))
+                    .addComponent(ngayBDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ngayBDLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(ThemKMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel13))
+                    .addComponent(ngayKTTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ngayKTLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(ThemKMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
-                    .addComponent(jButton1))
+                    .addComponent(moveButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+                .addComponent(addButton, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         ThemKM1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jLabel18.setFont(new java.awt.Font("Times New Roman", 3, 14)); // NOI18N
-        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel18.setText("Danh Sách Sản Phẩm");
-
         jLabel19.setFont(new java.awt.Font("Times New Roman", 3, 18)); // NOI18N
         jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel19.setText("Danh Sách Sản Phẩm");
 
-        jTable4.setModel(new javax.swing.table.DefaultTableModel(
+        bookTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -175,12 +190,30 @@ public class ThemKhuyenMaiSach extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Mã Sản Phẩm", "Tên Sản Phẩm", "Số Lượng ", "Giá Đã Giảm"
+                "Mã Sản Phẩm", "Tên Sản Phẩm", "Số Lượng tồn", "Giá Bán"
             }
         ));
-        jScrollPane4.setViewportView(jTable4);
+        bookTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bookTableMouseClicked(evt);
+            }
+        });
+        jScrollPane4.setViewportView(bookTable);
 
-        jButton2.setText("Thêm Sản Phẩm");
+        addBookToKMButton.setText("Thêm Sản Phẩm Vào Khuyến mãi");
+        addBookToKMButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addBookToKMButtonActionPerformed(evt);
+            }
+        });
+
+        searchLabel.setText("Tìm kiếm");
+
+        searchTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchTextFieldActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout ThemKM1Layout = new javax.swing.GroupLayout(ThemKM1);
         ThemKM1.setLayout(ThemKM1Layout);
@@ -193,24 +226,30 @@ public class ThemKhuyenMaiSach extends javax.swing.JFrame {
                     .addGroup(ThemKM1Layout.createSequentialGroup()
                         .addGroup(ThemKM1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(ThemKM1Layout.createSequentialGroup()
-                                .addComponent(jLabel18)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(searchLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 12, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(ThemKM1Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(addBookToKMButton, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         ThemKM1Layout.setVerticalGroup(
             ThemKM1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ThemKM1Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(jLabel19)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(ThemKM1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel18)
-                    .addComponent(jButton2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(addBookToKMButton)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addGroup(ThemKM1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(searchLabel)
+                    .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -241,13 +280,142 @@ public class ThemKhuyenMaiSach extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+//        String maKM = maKhuyenMaiTextField.getText().trim();
+//        String tenKM = tenKhuyenMaiTextField.getText().trim();
+//        Date ngayBatDau = (Date) ngayBatDauChooser.getDate();
+//        Date ngayKetThuc = (Date) ngayKetThucChooser.getDate();
+//        double phanTram = 0;
+//
+//        try {
+//            phanTram = Double.parseDouble(phanTramGiamGiaTextField.getText().trim());
+//        } catch (NumberFormatException e) {
+//            JOptionPane.showMessageDialog(this, "Phần trăm giảm giá không hợp lệ.");
+//            return;
+//        }
+//
+//        if (maKM.isEmpty() || tenKM.isEmpty() || ngayBatDau == null || ngayKetThuc == null) {
+//            JOptionPane.showMessageDialog(this, "Vui lòng điền đầy đủ thông tin khuyến mãi.");
+//            return;
+//        }
+//
+//        // Tạo đối tượng khuyến mãi
+//        KhuyenMaiDTO km = new KhuyenMaiDTO(maKM, tenKM, ngayBatDau, ngayKetThuc, phanTram);
+//
+//        // Thêm khuyến mãi vào DB
+//        boolean result = khuyenMaiHD_BUS.themKhuyenMai(km);
+//        if (!result) {
+//            JOptionPane.showMessageDialog(this, "Thêm khuyến mãi thất bại.");
+//            return;
+//        }
+//
+//        // Thêm sách vào khuyến mãi
+//        DefaultTableModel kmModel = (DefaultTableModel) kmTable.getModel();
+//        for (int i = 0; i < kmModel.getRowCount(); i++) {
+//            String maSach = kmModel.getValueAt(i, 0).toString(); // Cột mã sách
+//            khuyenMaiHD_BUS.themSachVaoKhuyenMai(maSach, maKM);
+//        }
+//
+//        JOptionPane.showMessageDialog(this, "Thêm khuyến mãi thành công.");
+    }//GEN-LAST:event_addButtonActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void addBookToKMButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBookToKMButtonActionPerformed
+//        int selectedRow = bookTable.getSelectedRow();
+//        if (selectedRow >= 0) {
+//            DefaultTableModel bookModel = (DefaultTableModel) bookTable.getModel();
+//            DefaultTableModel kmModel = (DefaultTableModel) kmTable.getModel();
+//
+//            // Lấy dữ liệu từ bookTable
+//            Vector rowData = (Vector) bookModel.getDataVector().elementAt(selectedRow);
+//
+//            // Kiểm tra trùng trong kmTable
+//            String maSach = rowData.get(0).toString();
+//            for (int i = 0; i < kmModel.getRowCount(); i++) {
+//                if (kmModel.getValueAt(i, 0).toString().equals(maSach)) {
+//                    JOptionPane.showMessageDialog(this, "Sách đã được thêm vào khuyến mãi.");
+//                    return;
+//                }
+//            }
+//
+//            // Thêm vào kmTable
+//            kmModel.addRow(new Vector(rowData));
+//        } else {
+//            JOptionPane.showMessageDialog(this, "Vui lòng chọn sách muốn thêm vào khuyến mãi.");
+//        }
+    }//GEN-LAST:event_addBookToKMButtonActionPerformed
+
+    private void moveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moveButtonActionPerformed
+        int selectedRow = kmTable.getSelectedRow();
+        if (selectedRow >= 0) {
+            DefaultTableModel kmModel = (DefaultTableModel) kmTable.getModel();
+            kmModel.removeRow(selectedRow);
+        } else {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn sách muốn loại khỏi khuyến mãi.");
+        }
+    }//GEN-LAST:event_moveButtonActionPerformed
+
+    private void bookTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bookTableMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bookTableMouseClicked
+
+    private void searchTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchTextFieldActionPerformed
+        String keyword = removeAccent(searchTextField.getText().trim().toLowerCase());
+        DefaultTableModel model = (DefaultTableModel) bookTable.getModel();
+        model.setRowCount(0);
+
+        for (Sach sach : listBook) {
+            if (removeAccent(sach.getTenSach().toLowerCase()).contains(keyword) ||
+                    removeAccent(sach.getTacGia().toLowerCase()).contains(keyword) ||
+                    removeAccent(sach.getTheLoai().toLowerCase()).contains(keyword) ||
+                    removeAccent(sach.getChiNhanh().toLowerCase()).contains(keyword) ||
+                    removeAccent(sach.getTrangThai().toLowerCase()).contains(keyword)) {
+                    model.addRow(new Object[] {
+                        sach.getMaSach(),
+                        sach.getTenSach(),
+                        sach.getTheLoai(),
+                        sach.getTacGia(),
+                        sach.getGiaBan(),
+                        sach.getGiaDaGiam(),
+                        sach.getGiaNhap(),
+                        sach.getSoLuongTonKho(),
+                        sach.getChiNhanh(),
+                        sach.getTrangThai()
+                    });
+            }
+        }
+    }//GEN-LAST:event_searchTextFieldActionPerformed
+    
+    private String removeAccent(String s) {
+        String temp = Normalizer.normalize(s, Normalizer.Form.NFD);
+        Pattern pattern = Pattern.compile("\\p{M}");
+        return pattern.matcher(temp).replaceAll("").replaceAll("đ", "d").replaceAll("Đ", "D");
+    }
+    
+    private void loadData() {
+        listBook = sachBUS.getAllSach();
+        DefaultTableModel model = (DefaultTableModel) bookTable.getModel();
+        model.setRowCount(0); // Xóa dữ liệu cũ
+
+        for (Sach sach : listBook) {
+            model.addRow(new Object[] {
+                    sach.getMaSach(),
+                    sach.getTenSach(),
+                    sach.getTheLoai(),
+                    sach.getTacGia(),
+                    sach.getGiaBan(),
+                    sach.getGiaDaGiam(),
+                    sach.getGiaNhap(),
+                    sach.getSoLuongTonKho(),
+                    sach.getChiNhanh(),
+                    sach.getTrangThai()
+            });
+        }
+    }
+    
+    List<Sach> listBook = new ArrayList<>();
+    SachBUS sachBUS = new SachBUS();
+    KhuyenMaiHoaDonBUS kmhdBUS = new KhuyenMaiHoaDonBUS();
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -283,24 +451,25 @@ public class ThemKhuyenMaiSach extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ThemKM;
     private javax.swing.JPanel ThemKM1;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
+    private javax.swing.JButton addBookToKMButton;
+    private javax.swing.JButton addButton;
+    private javax.swing.JTable bookTable;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTable jTable3;
-    private javax.swing.JTable jTable4;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
+    private javax.swing.JTable kmTable;
+    private javax.swing.JLabel maKMLabel;
+    private javax.swing.JTextField maKMTextField;
+    private javax.swing.JButton moveButton;
+    private javax.swing.JLabel ngayBDLabel;
+    private javax.swing.JTextField ngayBDTextField;
+    private javax.swing.JLabel ngayKTLabel;
+    private javax.swing.JTextField ngayKTTextField;
+    private javax.swing.JLabel phanTramGiamLabel;
+    private javax.swing.JTextField phanTramGiamTextField;
+    private javax.swing.JLabel searchLabel;
+    private javax.swing.JTextField searchTextField;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,6 +5,7 @@
 package GUI;
  
 
+import SESSION.CurrentSession;
 import javax.swing.JPanel;
 /**
  *
@@ -17,10 +18,42 @@ public class ThongKe extends javax.swing.JPanel {
      */
     public ThongKe() {
         initComponents();
-        XemTK.removeAll();
-        XemTK.add(thongkebanhang);
-        XemTK.revalidate();
-        XemTK.repaint();
+        // Lấy chức vụ từ phiên đăng nhập từ lớp CurrentSession
+        String role = CurrentSession.getChucVu();
+        if (role == null) {
+            role = "";
+        }
+        
+        if (role.equalsIgnoreCase("Admin")) {
+            // Nếu Admin: ẩn TK_BanHang và TK_LoiNhuan, hiển thị TK_NhanSu
+            TK_BanHang.setVisible(true);
+            TK_LoiNhuan.setVisible(true);
+            TK_NhanSu.setVisible(true);
+            
+            XemTK.removeAll();
+            XemTK.add(thongkenhansu);  // TK_NhanVien được dùng cho thống kê nhân sự
+            XemTK.revalidate();
+            XemTK.repaint();
+        } else if (role.equalsIgnoreCase("Quản lý kho hàng")) {
+            // Nếu Quản lý kho: ẩn TK_NhanSu, hiển thị TK_BanHang và TK_LoiNhuan
+            TK_NhanSu.setVisible(false);
+            TK_BanHang.setVisible(true);
+            TK_LoiNhuan.setVisible(true);
+            
+            XemTK.removeAll();
+            XemTK.add(thongkebanhang); // Panel thống kê bán hàng
+            XemTK.revalidate();
+            XemTK.repaint();
+        } else if (role.equalsIgnoreCase("Quản lý nhân viên")) {
+            TK_NhanSu.setVisible(true);
+            TK_BanHang.setVisible(false);
+            TK_LoiNhuan.setVisible(false);
+            
+            XemTK.removeAll();
+            XemTK.add(thongkenhansu); // Panel thống kê bán hàng
+            XemTK.revalidate();
+            XemTK.repaint();
+        } 
     }
       JPanel thongkebanhang = new TK_BanHang();
       JPanel thongkenhansu = new TK_NhanVien();

@@ -64,4 +64,9 @@ public class LuongBUS {
                 .mapToDouble(Luong::getTongLuongNhan)
                 .sum();
     }
+    public List<Luong> getLuongByMonth(int year, int month) {
+        return getAllLuong().stream()
+                .filter(l -> l.getNam() == year && l.getThang() == month)
+                .toList();
+    }
 }
